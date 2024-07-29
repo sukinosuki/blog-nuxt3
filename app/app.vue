@@ -1,11 +1,11 @@
 <template>
-  <NMessageProvider>
-    <NModalProvider>
-      <NuxtLayout>
-        <NuxtPage />
-      </NuxtLayout>
-    </NModalProvider>
-  </NMessageProvider>
+  <!-- <NMessageProvider>
+    <NModalProvider> -->
+  <!-- <NuxtLayout> -->
+  <NuxtPage />
+  <!-- </NuxtLayout> -->
+  <!-- </NModalProvider>
+  </NMessageProvider> -->
 </template>
 
 <script setup lang="ts">
