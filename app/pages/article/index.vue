@@ -18,5 +18,4 @@
 
 <script setup lang="tsx">
 const { data: articles } = await useAsyncData('/api/article', () => $fetch('/api/article'))
-console.log('articles ', articles)
 </script>
