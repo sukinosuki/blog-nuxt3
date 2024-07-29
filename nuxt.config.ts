@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/mdc',
     '@nuxt/image',
+    'nuxtjs-naive-ui',
   ],
   routeRules: {
     '/admin/**/*': {
