@@ -41,6 +41,11 @@ const postMessage = async () => {
 </script>
 
 <template>
+  <!-- <NuxtLayout> -->
+  <NuxtPage />
+  <!-- </NuxtLayout> -->
+</template>
+<!-- <template>
   <main>
     <div class="h-100" />
     <MDC
@@ -61,4 +66,4 @@ const postMessage = async () => {
       post message
     </button>
   </main>
-</template>
+</template> -->

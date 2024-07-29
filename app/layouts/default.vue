@@ -29,17 +29,17 @@
 </template>
 
 <script setup>
-import { useMessage } from 'naive-ui'
+// import { useMessage } from 'naive-ui'
 import useAppStore from '~/store/app.store'
 
 const colorMode = useColorMode()
 const themeIconClass = ref('i-ri:sun-foggy-fill')
 
 const appStore = useAppStore()
-const message = useMessage()
+// const message = useMessage()
 watch(() => appStore.fetchError.value, () => {
   console.log('fetch error ', appStore.fetchError.value.message)
-  message.error(appStore.fetchError.value.data.message)
+  // message.error(appStore.fetchError.value.data.message)
 })
 // watch(() => appStore.count.value, () => {
 //   // console.log('fetch error ', appStore.fetchError.value)
