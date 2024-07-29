@@ -9,17 +9,31 @@
     "deploy": "nuxthub deploy",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "db:generate": "drizzle-kit generate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@nuxt/eslint": "^0.3.13",
+    "@nuxt/image": "^1.7.0",
     "@nuxthub/core": "^0.7.0",
-    "nuxt": "^3.12.2"
+    "@nuxtjs/mdc": "^0.8.3",
+    "dayjs": "^1.11.12",
+    "drizzle-orm": "^0.32.1",
+    "naive-ui": "^2.39.0",
+    "nuxt": "^3.12.2",
+    "vditor": "^3.10.4"
   },
   "devDependencies": {
+    "@iconify-json/ri": "^1.1.21",
+    "@iconify-json/solar": "^1.1.9",
     "@nuxt/eslint-config": "^0.3.13",
+    "@nuxtjs/color-mode": "^3.4.2",
+    "@unocss/nuxt": "^0.61.5",
+    "@unocss/preset-typography": "^0.61.5",
+    "drizzle-kit": "^0.23.0",
     "eslint": "^9.5.0",
     "vue-tsc": "^2.0.22",
-    "wrangler": "^3.62.0"
+    "wrangler": "^3.57.1"
   }
 }

@@ -13,6 +13,11 @@ async function sendMessage (){
   newMessage.value = ''
   await refresh()
 }
+async function getMessages() {
+  const data = await $fetch('/api/messages')
+  console.log('data ', data);
+  
+}
 </script>
 
 <template>
@@ -30,5 +35,7 @@ async function sendMessage (){
     <p v-if="!messages?.length">
       No messages yet
     </p>
+
+    <button @click="getMessages" >get messages</button>
   </div>
 </template>
