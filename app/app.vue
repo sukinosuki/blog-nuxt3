@@ -1,15 +1,15 @@
 <template>
   <!-- <NMessageProvider>
     <NModalProvider> -->
-  <!-- <NuxtLayout> -->
-  <NuxtPage />
-  <!-- </NuxtLayout> -->
+  <NuxtLayout>
+    <NuxtPage />
+  </NuxtLayout>
   <!-- </NModalProvider>
   </NMessageProvider> -->
 </template>
 
 <script setup lang="ts">
-import { NMessageProvider, NModalProvider } from 'naive-ui'
+// import { NMessageProvider, NModalProvider } from 'naive-ui'
 
 useSeoMeta({
   title: 'NuxtHub Starter',
