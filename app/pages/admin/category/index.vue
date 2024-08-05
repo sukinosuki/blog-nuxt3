@@ -31,7 +31,7 @@
       />
     </NCard>
 
-    <CategoryFormModal
+    <AdminCategoryFormModal
       v-model:visible="pageData.modalVisible"
       :action="pageData.action!"
       :row="pageData.activeRow"
@@ -43,12 +43,11 @@
 <script setup lang="tsx">
 import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns } from 'naive-ui'
-import useCategoryApi from '~/api/useCategoryApi'
+import admin_categoryApi from '~/admin-api/categoryApi'
 import { FormModelAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { catchUseFetch } from '~/util/catchUseFetch'
-
-const categoryApi = useCategoryApi()
+import { toCatch } from '~/util/toCatch'
 
 type PageData<T> = {
   pageStatus: PageStatus
@@ -74,7 +73,7 @@ const handleEdit = (row: API_Category.Model) => {
 
 //
 const handleDelete = async (row: API_Category.Model) => {
-  const [err] = await catchUseFetch(categoryApi.delete(row.id))
+  const [err] = await catchUseFetch(admin_categoryApi.delete(row.id))
   if (err) return
 
   fetchData()
@@ -93,11 +92,12 @@ const handleFormModalAfterConfirm = () => {
   pageData.value.activeRow = null
   fetchData()
 }
+
 //
 const fetchData = async () => {
   pageData.value.pageStatus = PageStatus.LOADING
 
-  const [err, res] = await catchUseFetch(categoryApi.get())
+  const [err, res] = await toCatch(admin_categoryApi.get())
   pageData.value.pageStatus = PageStatus.SUCCESS
   if (err) return
 
@@ -116,6 +116,10 @@ const columns: DataTableColumns<API_Category.Model> = [
   {
     title: 'Name',
     key: 'name',
+  },
+  {
+    title: 'Alias',
+    key: 'alias',
   },
   {
     title: 'Created At',

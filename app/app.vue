@@ -1,14 +1,12 @@
 <template>
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
+  <!-- <NuxtLayout> -->
+  <NuxtPage />
+  <!-- </NuxtLayout> -->
 </template>
 
 <script setup lang="ts">
-useSeoMeta({
-  title: 'NuxtHub Starter',
-  description: 'A Nuxt template to build your full-stack application on the edge.',
-})
+// import '@unocss/reset/tailwind.css'
+import '@unocss/reset/tailwind-compat.css'
 </script>
 
 <style>
@@ -24,10 +22,6 @@ html.dark {
   color-scheme: dark;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 .page-enter-active, .page-leave-active {
   transition: all 0.4s;
 }
@@ -35,5 +29,11 @@ html.dark {
 .page-enter-from, .page-enter-to {
   opacity: 0;
   filter: blur(1rem);
+}
+
+body {
+  /* font-family: 'Inter', sans-serif; */
+  /* font-family: 'open-sans', Roboto, sans-serif; */
+  font-family: eafont, Roboto;
 }
 </style>

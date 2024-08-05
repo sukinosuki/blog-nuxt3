@@ -15,18 +15,22 @@
   },
   "dependencies": {
     "@nuxt/eslint": "^0.3.13",
+    "@nuxt/fonts": "^0.7.1",
     "@nuxt/image": "^1.7.0",
     "@nuxthub/core": "^0.7.0",
     "@nuxtjs/mdc": "^0.8.3",
+    "@vueuse/motion": "^2.2.3",
     "dayjs": "^1.11.12",
     "drizzle-orm": "^0.32.1",
     "naive-ui": "^2.39.0",
     "nuxt": "^3.12.2",
     "nuxtjs-naive-ui": "^1.0.2",
-    "vditor": "^3.10.4"
+    "vditor": "^3.10.4",
+    "vue-use-fixed-header": "^2.0.3"
   },
   "devDependencies": {
     "@iconify-json/ri": "^1.1.21",
+    "@iconify-json/simple-icons": "^1.1.111",
     "@iconify-json/solar": "^1.1.9",
     "@nuxt/eslint-config": "^0.3.13",
     "@nuxtjs/color-mode": "^3.4.2",

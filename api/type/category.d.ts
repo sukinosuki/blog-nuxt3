@@ -1,15 +1,17 @@
 declare namespace API_Category {
-    type Model = {
-      id: number
-      name: string
-      created_at: string
-    }
+  type Model = {
+    id: number
+    name: string
+    alias: string
+    created_at: string
+  }
 
-    type Add = {
-      name: string
-    }
+  type Add = {
+    alias: string | null
+    name: string
+  }
 
-    type Update = {
-      id: number
-    } & Add
+  type Update = {
+    id: number
+  } & Add
 }

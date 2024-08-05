@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="mt-20">
     <NMessageProvider>
       <NModalProvider>
         <NuxtPage />
@@ -12,6 +12,6 @@
 import { NMessageProvider, NModalProvider } from 'naive-ui'
 </script>
 
-  <style scoped>
+<style scoped>
 
-  </style>
+</style>

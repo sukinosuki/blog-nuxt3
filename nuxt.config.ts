@@ -13,6 +13,8 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     '@nuxt/image',
     'nuxtjs-naive-ui',
+    '@nuxt/fonts',
+    '@vueuse/motion/nuxt',
   ],
   routeRules: {
     '/admin/**/*': {
@@ -26,6 +28,25 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
     },
+  },
+  fonts: {
+    assets: {
+      // The baseURL where font files are served.
+      prefix: '/_fonts/',
+    },
+    // defaults: {
+    //   weights: [400],
+    //   styles: ['normal', 'italic'],
+    //   subsets: [
+    //     'cyrillic-ext',
+    //     'cyrillic',
+    //     'greek-ext',
+    //     'greek',
+    //     'vietnamese',
+    //     'latin-ext',
+    //     'latin',
+    //   ],
+    // },
   },
   mdc: {
     // highlight: {
@@ -75,6 +96,7 @@ export default defineNuxtConfig({
       collections: {
         // solar: () => import('@iconify-json/solar/icons.json').then(i => i.default),
         ri: () => import('@iconify-json/ri/icons.json').then(i => i.default),
+        simpleicons: () => import('@iconify-json/simple-icons/icons.json').then(i => i.default),
         // 'my-icons': FileSystemIconLoader('./assets/icons', svg => svg.replace('/#fff/', 'currentColor')),
         // 'my-icons': FileSystemIconLoader('./assets/icons'),
       },

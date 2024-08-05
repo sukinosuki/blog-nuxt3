@@ -31,7 +31,7 @@
       />
     </NCard>
 
-    <TagFormModal
+    <AdminTagFormModal
       v-model:visible="pageData.modalVisible"
       :action="pageData.action!"
       :row="pageData.activeRow"
@@ -43,12 +43,10 @@
 <script setup lang="tsx">
 import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns } from 'naive-ui'
-import useTagApi from '~/api/useTagApi'
+import admin_tagApi from '~/admin-api/tagApi'
 import { FormModelAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { catchUseFetch } from '~/util/catchUseFetch'
-
-const tagApi = useTagApi()
+import { toCatch } from '~/util/toCatch'
 
 type PageData<T> = {
   pageStatus: PageStatus
@@ -74,7 +72,7 @@ const handleEdit = (row: API_Tag.Model) => {
 
 //
 const handleDelete = async (row: API_Tag.Model) => {
-  const [err] = await catchUseFetch(tagApi.delete(row.id))
+  const [err] = await toCatch(admin_tagApi.delete(row.id))
   if (err) return
 
   fetchData()
@@ -93,11 +91,12 @@ const handleFormModalAfterConfirm = () => {
   pageData.value.activeRow = null
   fetchData()
 }
+
 //
 const fetchData = async () => {
   pageData.value.pageStatus = PageStatus.LOADING
 
-  const [err, res] = await catchUseFetch(tagApi.get())
+  const [err, res] = await toCatch(admin_tagApi.get())
   pageData.value.pageStatus = PageStatus.SUCCESS
   if (err) return
 
