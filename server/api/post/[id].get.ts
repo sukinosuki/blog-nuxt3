@@ -18,8 +18,7 @@ export default defineEventHandler(async (event) => {
   const drizzle = useDrizzle()
 
   const post = await drizzle.query.post.findFirst({
-    where: eq(tables.post.id, Number(id)),
-
+    where: or(eq(tables.post.id, Number(id)), eq(tables.post.alias, id)),
     with: {
       category: {
         columns: {

@@ -1,6 +1,17 @@
 <template>
   <Suspense>
-    <div>
+    <div
+      v-motion="{
+        initial: {
+          y: 20,
+          opacity: 0,
+        },
+        enter: {
+          y: 0,
+          opacity: 1,
+        },
+      }"
+    >
       <div>
         <h1 class="text-10">
           {{ post?.title }}
@@ -10,7 +21,7 @@
           <div class="space-x-1 flex items-center">
             <i class="i-ri:time-line w-4 h-4" />
             <span class="text-4">
-              {{ dayjs(post.created_at).format('YYYY 年 M 月 DD 日') }}
+              {{ dayjs(post?.created_at).format('YYYY 年 M 月 DD 日') }}
             </span>
           </div>
         </div>
@@ -51,7 +62,7 @@ import dayjs from 'dayjs'
 import postApi from '~/api/postApi'
 
 const route = useRoute()
-const id = Number(route.params.id)
+const id = route.params.id
 
 const parse = useMarkdownParser()
 const { data: post } = await useAsyncData(`article:${id}`, () => postApi.getById(id))

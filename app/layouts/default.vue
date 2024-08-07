@@ -1,8 +1,8 @@
 <template>
   <div>
     <header
-      class="py-2 px-2 bg-opacity-50 backdrop-blur-xl fixed w-full top-0  flex justify-around items-center z-999"
-      :class="[isLeave?'shadow':'']"
+      class="py-2 px-2 bg-opacity-50 backdrop-blur-xl fixed w-full top-0 flex justify-around items-center z-999"
+      :class="[isLeave ? 'shadow' : '']"
     >
       <div class="md:w-1000px flex justify-between items-center ">
         <div class="flex">
@@ -26,18 +26,40 @@
               class="flex sticky"
               :style="styles"
             >
-              <div class="rounded-full shadow">
+              <div class="rounded-full px-3 shadow bg-white">
                 <ul class="flex">
                   <li
-                    v-for="nav in navs"
-                    :key="nav.name"
+                    v-for="(nav, index) in navs"
+                    :key="index"
+                    class="relative group"
                   >
                     <NuxtLink
                       :href="nav.path"
-                      class="flex h-10 items-center px-2 mx-2"
+                      class="flex h-10 items-center px-2 mx-2 "
                     >
                       {{ nav.name }}
                     </NuxtLink>
+                    <div
+                      v-if="nav.children"
+                      class="absolute px-2 top-10 z-1 left-50% -translate-x-50% group-hover:opacity-100 opacity-0
+                      pointer-events-none group-hover:pointer-events-auto
+                      group-hover:block group-hover:opacity-100 group-hover:-translate-y-2 duration-300"
+                    >
+                      <div class="h-5" />
+                      <ul class="rounded-md shadow bg-white backdrop-blur-md">
+                        <li
+                          v-for="(subNav, subNavIndex) in nav.children"
+                          :key="subNavIndex"
+                        >
+                          <NuxtLink
+                            :href="subNav.path"
+                            class="flex justify-center items-center w-30 px-2 h-10 hover:text-sky hover:bg-gray/20 rounded-md"
+                          >
+                            {{ subNav.name }}
+                          </NuxtLink>
+                        </li>
+                      </ul>
+                    </div>
                   </li>
                 </ul>
               </div>
@@ -60,8 +82,7 @@
       </div>
     </header>
 
-    <!-- <main class="mx-auto min-h-100vh md:w-768px mt-100px"> -->
-    <main class="mx-auto min-h-100vh md:w-960px mt-100px">
+    <main class="mx-auto px-2 min-h-100vh md:w-960px mt-100px">
       <slot />
     </main>
 
@@ -89,36 +110,14 @@
 <script setup lang="ts">
 import { useFixedHeader } from 'vue-use-fixed-header'
 
+const { default: appConfig } = await import('../../app_config.json')
+
+console.log('appConfig ', appConfig)
+
 const headerRef = ref(null)
 const { styles, isEnter, isLeave } = useFixedHeader(headerRef)
 
-type Nav = {
-  name: string
-  path: string
-}
-
-const navs = ref<Nav[]>([
-  {
-    name: 'Home',
-    path: '/',
-  },
-  {
-    name: 'Friend',
-    path: '/friend',
-  },
-  {
-    name: 'Post',
-    path: '/post',
-  },
-  {
-    name: 'About',
-    path: '/about',
-  },
-  {
-    name: 'Project',
-    path: '/project',
-  },
-])
+const navs = appConfig.navs
 
 const colorMode = useColorMode()
 const themeIconClass = ref('i-ri:sun-foggy-fill')

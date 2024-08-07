@@ -1,3 +1,6 @@
+import { presetUno, presetAttributify, presetIcons } from 'unocss'
+import { presetScrollbar } from 'unocss-preset-scrollbar'
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Nuxt 4 directory structure and features
@@ -15,6 +18,7 @@ export default defineNuxtConfig({
     'nuxtjs-naive-ui',
     '@nuxt/fonts',
     '@vueuse/motion/nuxt',
+    '@vueuse/nuxt',
   ],
   routeRules: {
     '/admin/**/*': {
@@ -89,6 +93,13 @@ export default defineNuxtConfig({
     storageKey: 'nuxt-color-mode',
   },
   unocss: {
+    presets: [
+      presetUno(),
+      presetIcons(),
+      presetAttributify(),
+      presetScrollbar(),
+    ],
+    preflight: true,
     icons: {
       extraProperties: {
         display: 'inline-block',

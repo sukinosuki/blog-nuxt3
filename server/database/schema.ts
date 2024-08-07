@@ -51,7 +51,9 @@ export const category = sqliteTable('category', {
 export const says = sqliteTable('says', {
   id: integer('id').primaryKey({ autoIncrement: true }),
   author: text('author'),
-  from: text('from'),
+  source: text('source'),
+  text: text('text').notNull(),
+  enabled: integer('enabled', { mode: 'boolean' }).notNull(),
   created_at: integer('created_at', { mode: 'timestamp' }).notNull(),
   updated_at: integer('updated_at', { mode: 'timestamp' }).notNull(),
 })

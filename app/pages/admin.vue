@@ -1,15 +1,17 @@
 <template>
   <div class="mt-20">
-    <NMessageProvider>
-      <NModalProvider>
-        <NuxtPage />
-      </NModalProvider>
-    </NMessageProvider>
+    <NConfigProvider preflight-style-disabled>
+      <NMessageProvider>
+        <NModalProvider>
+          <NuxtPage />
+        </NModalProvider>
+      </NMessageProvider>
+    </NConfigProvider>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NMessageProvider, NModalProvider } from 'naive-ui'
+import { NConfigProvider, NMessageProvider, NModalProvider } from 'naive-ui'
 </script>
 
 <style scoped>

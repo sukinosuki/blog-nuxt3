@@ -1,12 +1,10 @@
 <template>
-  <!-- <NuxtLayout> -->
   <NuxtPage />
-  <!-- </NuxtLayout> -->
 </template>
 
 <script setup lang="ts">
 // import '@unocss/reset/tailwind.css'
-import '@unocss/reset/tailwind-compat.css'
+// import '@unocss/reset/tailwind-compat.css'
 </script>
 
 <style>
@@ -15,7 +13,7 @@ body {
   background-color: #f7fafc;
 }
 html.dark body {
-  background-color: rgb(25, 25, 25);
+  background-color: rgb(31, 31, 31);
 }
 
 html.dark {
@@ -35,5 +33,6 @@ body {
   /* font-family: 'Inter', sans-serif; */
   /* font-family: 'open-sans', Roboto, sans-serif; */
   font-family: eafont, Roboto;
+  @apply scrollbar scrollbar-rounded
 }
 </style>

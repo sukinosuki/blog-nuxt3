@@ -22,10 +22,10 @@ import Vditor from 'vditor'
 
 import 'vditor/dist/index.css'
 import { NButton, NCard, useMessage } from 'naive-ui'
-import postApi from '~/api/postApi'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { sleep } from '~/util'
 import { toCatch } from '~/util/toCatch'
+import admin_postApi from '~/admin-api/postApi'
 
 const message = useMessage()
 const route = useRoute()
@@ -44,7 +44,7 @@ const fetchData = async () => {
   if (!isUpdate) return
 
   pageStatus.value = PageStatus.LOADING
-  const [err, res] = await toCatch(postApi.getById(id))
+  const [err, res] = await toCatch(admin_postApi.getById(id))
 
   if (err) {
     pageStatus.value = PageStatus.FAILED
@@ -93,7 +93,7 @@ const handleSubmit = async () => {
   }
   console.log('data ', data)
 
-  const [err, res] = await toCatch(postApi.updateField(data))
+  const [err, res] = await toCatch(admin_postApi.updateField(data))
   confirmLoading.value = false
   if (err !== null) {
     return

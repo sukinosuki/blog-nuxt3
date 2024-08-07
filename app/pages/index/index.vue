@@ -6,18 +6,20 @@
           <span
             v-for="(letter, index) in 'Hi, I\'m'"
             :key="index"
-            v-motion
+            v-motion="{
+              initial: {
+                y: 10,
+                opacity: 0,
+              },
+              visibleOnce: {
+                y: 0,
+                opacity: 1,
+              },
+            }"
             class="inline-block"
-            :class="[letter === ' ' ? 'mx-1' :'']"
-            :initial="{
-              opacity: 0,
-              y: 20,
-            }"
-            :visible="{
-              opacity: 1,
-              y: 0,
-            }"
-            :delay="index *20"
+            :class="[letter === ' ' ? 'mx-1' : '']"
+            :delay="index * 20"
+            :duration="100"
           >
             {{ letter }}
           </span>
@@ -25,19 +27,21 @@
           <div class="ml-1">
             <span class="font-bold text-sky">
               <span
-                v-for="(letter, index) in 'Hanami'"
+                v-for="(letter, index) in 'hanami'"
                 :key="index"
-                v-motion
-                class="inline-block"
-                :initial="{
-                  opacity: 0,
-                  y: 20,
+                v-motion="{
+                  initial: {
+                    y: 20,
+                    opacity: 0,
+                  },
                 }"
+                class="inline-block"
                 :visible="{
                   opacity: 1,
                   y: 0,
                 }"
-                :delay="index * 30 + 400"
+                :delay=" 400"
+                :duration="200"
               >{{ letter }}</span>
             </span>
           </div>
@@ -47,41 +51,67 @@
           <span
             v-for="(letter, index) in 'A NodeJS Full Stack'"
             :key="index"
-            v-motion
+            v-motion="{
+              initial: {
+                y: 20,
+                opacity: 0,
+              },
+            }"
             class="inline-block"
             :class="[letter === ' ' ? 'mx-1' :'']"
-            :initial="{
-              opacity: 0,
-              y: 20,
-            }"
             :visible="{
               opacity: 1,
               y: 0,
             }"
-            :delay="index * 20 + 400 + ('hanami').length * 30"
+            :delay="index * 20 + 1000"
+            :duration="300"
+          >
+            {{ letter }}
+          </span>
+        </p>
+        <p class="text-6 mt-4">
+          <span
+            v-for="(letter, index) in 'An independent developer coding with love.'"
+            :key="index"
+            v-motion="{
+              initial: {
+                y: 20,
+                opacity: 0,
+              },
+            }"
+            class="inline-block text-14px"
+            :class="[letter === ' ' ? 'mx-1' :'']"
+            :visible="{
+              opacity: 1,
+              y: 0,
+            }"
+            :delay="(10 * (index + 1)) + 2000"
+            :duration="100"
           >
             {{ letter }}
           </span>
         </p>
 
-        <p class="text-4 mt-4">
+        <!-- <p class="text-4 mt-4">
           <span
-            v-for="(letter, index) in 'An independent developer coding with love.'"
+            v-for="(letter, index) in ('A NodeJS Full Stack').split('')"
             :key="index"
-            v-motion
-            class="inline-block"
-            :class="[letter === ' ' ? 'mx-1' :'']"
-            :initial="{
-              y: 10,
-              opacity: 0,
+            v-motion="{
+              initial: {
+                y: 10,
+                opacity: 0,
+              },
             }"
             :visible="{
               opacity: 1,
               y: 0,
             }"
-            :delay="10*index + 1200"
+            class="inline-block"
+            :class="[letter === ' ' ? 'mx-1' : '']"
+            :delay="10 * index + 1200"
+            :duration="200"
           >{{ letter }}</span>
-        </p>
+        </p> -->
 
         <ul class="mt-10">
           <li
@@ -234,8 +264,8 @@ const socialLinks: SocialLink[] = [
   },
   {
     icon: 'i-ri:mail-line',
-    name: 'Github',
-    path: 'https://github.com/sukinosuki',
+    name: 'Email',
+    path: 'mailto:miiro444@outlook.com',
     color: 'bg-gray',
   },
 ]
@@ -243,23 +273,23 @@ const socialLinks: SocialLink[] = [
 const blogLinks: BlogLink[] = [
   {
     icon: 'i-ri:article-line',
-    name: '文稿',
+    name: 'Post',
     path: '/post',
   },
   {
     icon: 'i-ri:booklet-line',
-    name: '语录',
-    path: '/',
+    name: 'Says',
+    path: '/says',
   },
   {
     icon: 'i-ri:user-5-line',
-    name: '友人',
-    path: '/',
+    name: 'Friends',
+    path: '/friend',
   },
   {
     icon: 'i-ri:palette-line',
-    name: '项目',
-    path: '/',
+    name: 'Project',
+    path: '/project',
   },
   {
     icon: 'i-ri:signpost-line',

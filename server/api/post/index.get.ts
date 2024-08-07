@@ -16,8 +16,6 @@ export default eventHandler(async (event) => {
 
   // await drizzle.delete(tables.article)
   // https://www.reddit.com/r/node/comments/1an4zz9/can_anyone_tell_me_whats_wrong_with_this_drizzle/
-  const [{ total }] = await countQuery
-
   const list = await drizzle.query.post.findMany({
     columns: {
       id: true,
@@ -61,10 +59,5 @@ export default eventHandler(async (event) => {
     delete post.post2tag
   })
 
-  // const data: Common.ListData<typeof list[0]> = {
-  const data: Common.ListData<typeof list[number]> = {
-    list,
-    total,
-  }
-  return data
+  return list
 })

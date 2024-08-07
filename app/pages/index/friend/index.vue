@@ -1,10 +1,21 @@
 <template>
-  <div>
+  <div
+    v-motion="{
+      initial: {
+        y: 20,
+        opacity: 0,
+      },
+      enter: {
+        y: 0,
+        opacity: 1,
+      },
+    }"
+    :duration="200"
+  >
     <ul class="grid grid-cols-3 ">
       <li
         v-for="(friend) in friends"
         :key="friend.id"
-        v-motion-fade
         class=" group mb-10"
       >
         <a
@@ -12,13 +23,12 @@
           :href="friend.link"
           class="flex flex-col justify-center items-center py-4"
         >
-          <div class="w-20 h-20 rounded-lg overflow-hidden relative">
+          <div class="w-20 h-20 rounded-lg overflow-hidden relative bg-sky-1/40">
             <NuxtImg
               v-if="friend.avatar"
               :src="friend.avatar"
               class="w-100% h-100% object-cover opacity-100 group-hover:scale-120 duration-300"
               loading="lazy"
-              placeholder="/favicon.ico"
             />
             <!-- <NuxtImg
               v-if="friend.avatar"
@@ -36,7 +46,7 @@
           <h4 class="text-4 font-bold mt-4">
             {{ friend.blog_name }}
           </h4>
-          <p class="text-center text-3 mt-2">
+          <p class="text-center text-13px mt-2">
             {{ friend.introduction }}
           </p>
         </a>

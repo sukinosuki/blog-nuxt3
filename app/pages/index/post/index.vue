@@ -1,10 +1,26 @@
 <template>
-  <div class="md:w-768px">
-    <ul>
+  <div>
+    <h2 class="text-10 font-bold">
+      # Post
+    </h2>
+
+    <ul class="mt-20">
       <li
-        v-for="post in posts"
+        v-for="(post, index) in posts"
         :key="post.id"
+        v-motion="{
+          initial: {
+            y: 20,
+            opacity: 0,
+          },
+          enter: {
+            y: 0,
+            opacity: 1,
+          },
+        }"
         class="mb-8 group"
+        :delay="index * 40"
+        :duration="200"
       >
         <NuxtLink :to="`/post/${post.id}`">
           <h2 class="text-5 font-bold text-black/70 dark:text-white">
@@ -64,7 +80,7 @@
 
         <i
           class="i-ri:arrow-right-line w-0 h-6 opacity-0 group-hover:w-6 group-hover:opacity-100 duration-200"
-          :class="[loadMoreLoading? '!w-0 !opacity-0' :'']"
+          :class="[loadMoreLoading ? '!w-0 !opacity-0' :'']"
         />
       </button>
 
@@ -87,7 +103,6 @@
 <script setup lang="tsx">
 import dayjs from 'dayjs'
 import postApi from '~/api/postApi'
-import { sleep } from '~/util'
 import { toCatch } from '~/util/toCatch'
 
 const LIMIT = 10
@@ -98,7 +113,8 @@ const params: API_Post.Get = {
 }
 const loadMoreLoading = ref(false)
 const hasMore = ref(false)
-const { data: posts } = await useAsyncData('/api/post', () => postApi.get(params))
+const data = await useAsyncData('/api/post', () => postApi.get(params))
+const posts = data.data
 
 if (posts.value?.length === LIMIT) {
   hasMore.value = true
