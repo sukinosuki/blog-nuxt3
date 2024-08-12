@@ -1,55 +1,26 @@
 <template>
-  <div
-    v-motion="{
-      initial: {
-        y: 20,
-        opacity: 0,
-      },
-      enter: {
-        y: 0,
-        opacity: 1,
-      },
-    }"
-    :duration="200"
-  >
-    <ul class="grid grid-cols-3 ">
+  <div>
+    <ul
+      :style="{ '--total': friends.length }"
+      class="grid grid-cols-3 max-md-grid-cols-1 max-lg-grid-cols-2"
+    >
       <li
-        v-for="(friend) in friends"
+        v-for="(friend, index) in friends"
         :key="friend.id"
-        class=" group mb-10"
+        v-motion="{
+          initial: {
+            opacity: 0,
+            y: 20,
+          },
+          visibleOnce: {
+            opacity: 1,
+            y: 0,
+          },
+        }"
+        :delay="(index % 20) * 70 "
+        :style="{ '--i': index }"
       >
-        <a
-          target="_blank"
-          :href="friend.link"
-          class="flex flex-col justify-center items-center py-4"
-        >
-          <div class="w-20 h-20 rounded-lg overflow-hidden relative bg-sky-1/40">
-            <NuxtImg
-              v-if="friend.avatar"
-              :src="friend.avatar"
-              class="w-100% h-100% object-cover opacity-100 group-hover:scale-120 duration-300"
-              loading="lazy"
-            />
-            <!-- <NuxtImg
-              v-if="friend.avatar"
-              :src="friend.avatar"
-              class="w-100% h-100% object-cover group-hover:scale-100 delay-100 scale-120 group-hover:opacity-100 opacity-0 duration-200 absolute top-0 z-1"
-              loading="lazy"
-              placeholder="/favicon.ico"
-            /> -->
-            <span
-              v-else
-              class="bg-sky-1 w-100% h-100% flex justify-center items-center text-8 absolute z-1 left-0 top-0"
-            > {{ friend.blog_name[0] }}</span>
-          </div>
-
-          <h4 class="text-4 font-bold mt-4">
-            {{ friend.blog_name }}
-          </h4>
-          <p class="text-center text-13px mt-2">
-            {{ friend.introduction }}
-          </p>
-        </a>
+        <FriendItem :friend="friend" />
       </li>
     </ul>
 
@@ -73,12 +44,10 @@
 </template>
 
 <script setup lang="ts">
-import friendApi from '~/api/friendApi'
-import { FriendStatus } from '~~/api/enum/FriendStatus'
+import friendApi from '~/api/app-api/friendApi'
+import { FriendStatus } from '~~/type/enum/FriendStatus'
 
 const data = await useAsyncData('/api/friend', friendApi.get)
-
-// const friends = reactive(data.data.value || [])
 
 const friends = computed(() => {
   return data.data.value?.filter(friend => friend.status === FriendStatus.NORMAL) || []
@@ -88,3 +57,37 @@ const outOfContracts = computed(() => {
   return data.data.value?.filter(friend => friend.status === FriendStatus.OUT_OF_CONTACT) || []
 })
 </script>
+
+<style>
+/* .list-enter-active,
+.list-leave-active {
+  transition: all 5s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.slide-in-move {
+  transition: opacity 9.5s linear, transform 9.5s ease-in-out;
+}
+
+.slide-in-leave-active {
+  transition: opacity 9.4s linear, transform 9.4s cubic-bezier(.5,0,.7,.4);
+  transition-delay: calc( 0.1s * (var(--total) - var(--i)) );
+}
+
+.slide-in-enter-active {
+  transition: opacity 9.5s linear, transform 9.5s cubic-bezier(.2,.5,.1,1);
+  transition-delay: calc( 0.1s * var(--i) );
+}
+
+.slide-in-enter,
+.slide-in-leave-to {
+  opacity: 0;
+}
+
+.slide-in-enter { transform: translateX(-1em); }
+.slide-in-leave-to { transform: translateX(1em); } */
+</style>

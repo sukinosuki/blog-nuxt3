@@ -1,9 +1,5 @@
 declare namespace API_Tag {
-    type Model = {
-      id: number
-      name: string
-      created_at: string
-    }
+    type Model = typeof tables.tag.$inferSelect
 
     type Add = {
       name: string

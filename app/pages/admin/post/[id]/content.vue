@@ -25,7 +25,7 @@ import { NButton, NCard, useMessage } from 'naive-ui'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { sleep } from '~/util'
 import { toCatch } from '~/util/toCatch'
-import admin_postApi from '~/admin-api/postApi'
+import admin_postApi from '~/api/admin-api/postApi'
 
 const message = useMessage()
 const route = useRoute()

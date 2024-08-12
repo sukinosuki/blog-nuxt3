@@ -1,11 +1,15 @@
-import { presetUno, presetAttributify, presetIcons } from 'unocss'
-import { presetScrollbar } from 'unocss-preset-scrollbar'
+import { presetUno, presetAttributify, presetIcons, presetTypography } from 'unocss'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Nuxt 4 directory structure and features
   // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
   future: { compatibilityVersion: 4 },
+
+  runtimeConfig: {
+    api_auth_username: '',
+    api_auth_password: '',
+  },
   // Nuxt Modules
   // https://nuxt.com/modules
   modules: [
@@ -15,10 +19,12 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/mdc',
     '@nuxt/image',
-    'nuxtjs-naive-ui',
+    'nuxt-auth-utils',
+    // 'nuxtjs-naive-ui',
     '@nuxt/fonts',
     '@vueuse/motion/nuxt',
     '@vueuse/nuxt',
+    '@pinia/nuxt',
   ],
   routeRules: {
     '/admin/**/*': {
@@ -27,6 +33,13 @@ export default defineNuxtConfig({
     '/admin/**': {
       ssr: false,
     },
+  },
+  app: {
+    // pageTransition: {
+    //   name: 'page',
+    //   mode: 'out-in',
+    // },
+    // layoutTransition: { name: 'layout', mode: 'out-in' },
   },
   eslint: {
     config: {
@@ -38,43 +51,17 @@ export default defineNuxtConfig({
       // The baseURL where font files are served.
       prefix: '/_fonts/',
     },
-    // defaults: {
-    //   weights: [400],
-    //   styles: ['normal', 'italic'],
-    //   subsets: [
-    //     'cyrillic-ext',
-    //     'cyrillic',
-    //     'greek-ext',
-    //     'greek',
-    //     'vietnamese',
-    //     'latin-ext',
-    //     'latin',
-    //   ],
-    // },
+    // families: [
+    //   { name: 'eafont', src: '/static/font/eafont.ttf' },
+    // ],
   },
   mdc: {
-    // highlight: {
-    //   // Theme used in all color schemes.
-    //   theme: 'github-light',
-    // },
-    // highlight: {
-    //   theme: {
-    //     default: 'vitesse-light',
-    //     dark: 'material-theme-palenight',
-    //   },
-    //   preload: [
-    //     'sql',
-    //   ],
-    // },
-    // remarkPlugins: {
-    //   'remark-mdc': {
-    //     options: {
-    //       experimental: {
-    //         autoUnwrap: true,
-    //       },
-    //     },
-    //   },
-    // },
+    highlight: {
+      theme: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    },
   },
   hub: {
     database: true,
@@ -92,14 +79,25 @@ export default defineNuxtConfig({
     classSuffix: '',
     storageKey: 'nuxt-color-mode',
   },
+  // https://nuxt.com/docs/getting-started/styling#the-css-property
+  css: [
+    // 'medium-zoom/dist/style.css',
+    '@unocss/reset/tailwind-compat.css',
+  ],
   unocss: {
     presets: [
       presetUno(),
       presetIcons(),
       presetAttributify(),
-      presetScrollbar(),
+      // presetScrollbar(),
+      presetTypography(),
     ],
-    preflight: true,
+    theme: {
+      colors: {
+        primary: 'rgb(var(--primary))',
+      },
+    },
+    // preflight: true,
     icons: {
       extraProperties: {
         display: 'inline-block',
@@ -133,4 +131,13 @@ export default defineNuxtConfig({
   },
   // Development
   devtools: { enabled: true },
+  // vite: {
+  //   build: {
+  //     rollupOptions: {
+  //       external: [
+  //         'shiki/onig.wasm',
+  //       ],
+  //     },
+  //   },
+  // },
 })

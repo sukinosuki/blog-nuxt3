@@ -12,6 +12,8 @@
 
           <NButton
             type="primary"
+            strong
+            secondary
             @click="handleAdd"
           >
             New
@@ -45,12 +47,12 @@
 
 <script setup lang="tsx">
 import dayjs from 'dayjs'
-import { NButton, NCard, NDataTable, NDropdown, NPopconfirm, NSelect, NSpace, NTag, type DataTableColumns, type PaginationProps } from 'naive-ui'
-import admin_friendApi from '~/admin-api/friendApi'
+import { NButton, NCard, NDataTable, NDropdown, NPopconfirm, NSpace, type DataTableColumns, type PaginationProps } from 'naive-ui'
+import admin_friendApi from '~/api/admin-api/friendApi'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { sleep } from '~/util'
 import { toCatch } from '~/util/toCatch'
-import { FriendStatus, friendStatus, friendStatusOptions } from '~~/api/enum/FriendStatus'
+import { FriendStatus, friendStatus, friendStatusOptions } from '~~/type/enum/FriendStatus'
 
 type PageData<T> = {
   pageStatus: PageStatus
@@ -165,9 +167,19 @@ const columns: DataTableColumns<API_Friend.Model> = [
     key: 'blog_name',
   },
   {
-    title: 'Introduction',
-    key: 'introduction',
+    title: 'Url',
+    key: 'link',
+    render: row => <a href={row.link} target="_blank" class="text-blue">{row.link}</a>,
   },
+  {
+    title: 'Avatar',
+    key: 'avatar',
+    render: row => <img src={row.avatar} class="w-10 h-10 rounded-full"></img>,
+  },
+  // {
+  //   title: 'Introduction',
+  //   key: 'introduction',
+  // },
   {
     title: 'Email',
     key: 'email',
@@ -183,31 +195,20 @@ const columns: DataTableColumns<API_Friend.Model> = [
             size="small"
             secondary
             iconPlacement="right"
-            class="w-24"
+            class="w-100% text-3 "
             type={row.status === FriendStatus.NORMAL ? 'success' : 'error'}
             loading={pageData.value.action === 'updateField:status' && pageData.value.activeRow?.id === row.id}
-            renderIcon={() => (
+          >
+            {/* renderIcon={() => (
               <i
                 class="i-ri:arrow-down-s-line"
               />
-            )}
-          >
+            )} */}
             {friendStatus[row.status]}
           </NButton>
         </NDropdown>
-        {/* <NTag type={row.status === FriendStatus.NORMAL ? 'success' : 'error'}>{friendStatus[row.status]}</NTag> */}
-
-        {/* <span class="relative flex">
-          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-          <span class="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-        </span> */}
       </div>
     ),
-  },
-  {
-    title: 'Created At',
-    key: 'created_at',
-    render: row => dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
   },
   {
     title: 'Created At',
@@ -219,32 +220,6 @@ const columns: DataTableColumns<API_Friend.Model> = [
     key: 'id',
     render: row => (
       <NSpace>
-        {/* <NSelect
-          class="w-24"
-          size="small"
-          loading={pageData.value.action === 'updateField:status' && pageData.value.activeRow?.id === row.id}
-          disabled={pageData.value.action === 'updateField:status' && pageData.value.activeRow?.id === row.id}
-          options={friendStatusOptions}
-          value={row.status}
-          onUpdate:value={value => handleUpdateStatus(row, value)}
-        >
-        </NSelect> */}
-
-        {/* <NDropdown trigger="hover" keyField="value" options={friendStatusOptions} onSelect={value => handleUpdateStatus(row, value)}>
-          <NButton
-            size="small"
-            iconPlacement="right"
-            loading={pageData.value.action === 'updateField:status' && pageData.value.activeRow?.id === row.id}
-            renderIcon={() => (
-              <i
-                class="i-ri:arrow-down-s-line"
-              />
-            )}
-          >
-            Status
-          </NButton>
-        </NDropdown> */}
-
         <NButton type="info" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
 
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>

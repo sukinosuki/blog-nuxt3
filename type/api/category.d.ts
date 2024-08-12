@@ -1,10 +1,5 @@
 declare namespace API_Category {
-  type Model = {
-    id: number
-    name: string
-    alias: string
-    created_at: string
-  }
+  type Model = typeof tables.category.$inferSelect
 
   type Add = {
     alias: string | null

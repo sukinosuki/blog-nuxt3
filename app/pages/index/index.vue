@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex flex-row max-md:justify-center max-md:items-center max-md:flex-col py-10 md:min-h-100vh justify-between lg:w-1000px md:w-768px mx-auto">
+    <div class="flex flex-row max-md:justify-center max-md:items-center max-md:flex-col py-10 md:min-h-70vh justify-between mx-auto">
       <div class="flex flex-col justify-center max-md:pt-40 ">
         <h2 class="text-10 font-normal flex">
           <span
@@ -69,6 +69,7 @@
             {{ letter }}
           </span>
         </p>
+
         <p class="text-6 mt-4">
           <span
             v-for="(letter, index) in 'An independent developer coding with love.'"
@@ -190,42 +191,39 @@
         </Motion>
       </div>
 
-      <ul class="flex justify-center mt-20">
+      <ul class="flex justify-center mt-30 max-md:flex-col">
         <li
           v-for="(blogLink, index) in blogLinks"
           :key="blogLink.name"
-        >
-          <Motion
-            :initial="{
+          v-motion="{
+            initial: {
               opacity: 0,
               y: 20,
-            }"
-            :visible="{
+            },
+            visibleOnce: {
               opacity: 1,
               y: 0,
-            }"
-            :delay="100 * index + 100"
+            },
+          }"
+          class="flex-inline items-center max-md-w-100% justify-center mb-2 max-md-flex-col"
+          :duration="200"
+          :delay="100 * index + 100"
+        >
+          <NuxtLink
+            :href="blogLink.path"
+            class="flex items-center hover:text-primary duration-200 hover:-translate-y-2"
           >
-            <div
-              class="flex-inline items-center"
-            >
-              <NuxtLink
-                :href="blogLink.path"
-                class="flex items-center  hover:text-sky duration-200 hover:-translate-y-2 "
-              >
-                <i
-                  class="w-6 h-6 opacity-80"
-                  :class="blogLink.icon"
-                />
-                <span class="ml-3 text-4  opacity-80">{{ blogLink.name }}</span>
-              </NuxtLink>
+            <i
+              class="w-6 h-6 opacity-80 max-md-hidden"
+              :class="blogLink.icon"
+            />
+            <span class="ml-3 text-4 opacity-80 font-600 max-md-ml-0">{{ blogLink.name }}</span>
+          </NuxtLink>
 
-              <span
-                v-if="index+1 != blogLinks.length"
-                class="inline mx-4"
-              > · </span>
-            </div>
-          </Motion>
+          <span
+            v-if="index + 1 !== blogLinks.length"
+            class="inline mx-4"
+          > · </span>
         </li>
       </ul>
     </div>

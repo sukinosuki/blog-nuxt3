@@ -1,22 +1,18 @@
+import useAppStore from '~/store/app.store'
+
 //
-export const toCatch = <T>(promise: Promise<T>): Promise<[Error | null, T | null]> => {
+export const toCatch = <T>(promise: Promise<T>): Promise<[FetchError | null, T | null]> => {
   //
   return promise.then((res) => {
-    // console.log('[catchUseFetch] res ', res)
+    console.log('[toCatch] 成功返回 ', res)
 
-    // console.log('[catchUseFetch] error ', error)
-    // console.log('[catchUseFetch] data ', data)
-
-    // if (status.value !== 'success') {
-
-    //   return [error.value, null]
-    // }
-
-    console.log('成功返回')
-
-    return [null, res]
+    return [null, res] as [FetchError | null, T | null]
   })
-    .catch((err) => {
+    .catch((err: FetchError) => {
+      console.log('err ', err)
+
+      useAppStore().setFetchError(err)
+
       return [err, null]
     })
 }

@@ -122,13 +122,12 @@ c<template>
 
 <script setup lang="ts">
 import { NButton, NForm, NFormItem, NInput, NModal, NSelect, NSwitch, useMessage, type FormInst, type FormRules } from 'naive-ui'
-import { catchUseFetch } from '~/util/catchUseFetch'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { sleep } from '~/util'
-import admin_postApi from '~/admin-api/postApi'
-import admin_categoryApi from '~/admin-api/categoryApi'
+import admin_postApi from '~/api/admin-api/postApi'
+import admin_categoryApi from '~/api/admin-api/categoryApi'
 import { toCatch } from '~/util/toCatch'
-import admin_tagApi from '~/admin-api/tagApi'
+import admin_tagApi from '~/api/admin-api/tagApi'
 
 const visible = defineModel<boolean>('visible', {
   default: false,
@@ -193,16 +192,16 @@ const fetchData = async () => {
   pageStatus.value = PageStatus.LOADING
   const [err, res] = await toCatch(admin_postApi.getById(id))
 
-  if (err) {
+  if (err || !res) {
     pageStatus.value = PageStatus.FAILED
     return
   }
 
   pageStatus.value = PageStatus.SUCCESS
   articleModel.value.category_id = String(res!.category_id)
-  articleModel.value.title = res!.title
-  articleModel.value.tag_ids = res!.tags.map(tag => tag.id + '')
-  articleModel.value.description = res!.description
+  articleModel.value.title = res.title
+  articleModel.value.tag_ids = res.tags?.map(tag => tag.id + '') || []
+  articleModel.value.description = res.description
 }
 
 const fetchTagOptions = async () => {
@@ -214,10 +213,10 @@ const fetchTagOptions = async () => {
 }
 
 const fetchCategoryOptions = async () => {
-  const [err, res] = await catchUseFetch(admin_categoryApi.get())
-  if (err) return
+  const [err, res] = await toCatch(admin_categoryApi.get())
+  if (err || !res) return
 
-  categoryOptions.value = res?.map(item => ({ label: item.name, value: item.id + '' })) || []
+  categoryOptions.value = res.map(item => ({ label: item.name, value: item.id + '' })) || []
 }
 
 onMounted(() => {

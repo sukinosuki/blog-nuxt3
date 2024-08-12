@@ -1,16 +1,5 @@
 declare namespace API_Friend {
-    type Model = {
-      id: number
-      nickname: string
-      email: string
-      created_at: string
-      updated_at: string
-      blog_name: string
-      link: string
-      introduction: string
-      avatar: string
-      status: number
-    }
+    type Model = typeof tables.friend.$inferSelect
 
     type Get = Api_Query
 

@@ -1,20 +1,9 @@
 declare namespace API_Post {
 
     type Model = {
-      id: number
-      title: string
-      content: string
-      description: string
-      created_at: string
-      updated_at: string
-      category_id: number
-      enabled: boolean
-      is_sticky: boolean
-      alias: string | null
-
-      tags: API_Tag.Model[]
-      category: API_Category.Model
-    }
+      tags?: API_Tag.Model[]
+      category?: API_Category.Model
+    } & typeof tables.post.$inferSelect
 
     type Add = {
       title: string

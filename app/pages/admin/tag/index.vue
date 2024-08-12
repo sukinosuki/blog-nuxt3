@@ -43,7 +43,7 @@
 <script setup lang="tsx">
 import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns } from 'naive-ui'
-import admin_tagApi from '~/admin-api/tagApi'
+import admin_tagApi from '~/api/admin-api/tagApi'
 import { FormModelAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { toCatch } from '~/util/toCatch'

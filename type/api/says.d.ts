@@ -1,15 +1,7 @@
 declare namespace API_Says {
-  type Model = {
-    id: number
-    author: string
-    source: string
-    text: string
-    enabled: boolean
-    created_at: string
-    updated_at: string
-  }
+  type Model = typeof tables.says.$inferSelect
 
-  type Get = {} & Api_Query
+  type Get = Api_Query
 
   type Add = {
     author: string | null

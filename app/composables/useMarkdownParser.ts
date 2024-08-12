@@ -7,6 +7,7 @@ import {
 } from '@nuxtjs/mdc/runtime'
   // Import desired Shiki themes and languages
 import MaterialThemePalenight from 'shiki/themes/material-theme-palenight.mjs'
+import GithubDarkDefault from 'shiki/themes/github-dark-default.mjs'
 import HtmlLang from 'shiki/langs/html.mjs'
 import MdcLang from 'shiki/langs/mdc.mjs'
 import TsLang from 'shiki/langs/typescript.mjs'
@@ -23,14 +24,18 @@ export default function useMarkdownParser() {
         rehype: {
           plugins: {
             highlight: {
-              instance: rehypeHighlight,
+              instance: GithubDarkDefault,
               options: {
                 // Pass in your desired theme(s)
-                theme: 'material-theme-palenight',
+                // theme: 'github-dark-default',
+                themes: {
+                  light: 'github-light-default',
+                  dark: 'github-dark-default',
+                },
                 // Create the Shiki highlighter
                 highlighter: createShikiHighlighter({
                   bundledThemes: {
-                    'material-theme-palenight': MaterialThemePalenight,
+                    'github-dark-default': GithubDarkDefault,
                   },
                   // Configure the bundled languages
                   bundledLangs: {

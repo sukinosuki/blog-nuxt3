@@ -102,7 +102,7 @@
 
 <script setup lang="tsx">
 import dayjs from 'dayjs'
-import postApi from '~/api/postApi'
+import postApi from '~/api/app-api/postApi'
 import { toCatch } from '~/util/toCatch'
 
 const LIMIT = 10

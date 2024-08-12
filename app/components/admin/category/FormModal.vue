@@ -5,12 +5,9 @@
       preset="card"
       class="w-200"
       title="Category"
-      @after-leave="handleAfterClose"
     >
       <NForm
         ref="formRef"
-        label-placement="left"
-        label-width="80"
         :model="formModel"
         :rules="formRules"
       >
@@ -49,7 +46,7 @@
             v-if="formModel.alias?.trim()"
             #feedback
           >
-            你可以通过 <span class="text-gray">`/api/category/<span class="text-blue">{{ formModel.alias }}</span>/post`</span> 获取该分类下的文章
+            你可以通过 <span class="text-gray">`/api/category/<span class="text-[var(--n-color-target)]">{{ formModel.alias }}</span>/post`</span> 获取该分类下的文章
           </template>
         </NFormItem>
       </NForm>
@@ -62,6 +59,7 @@
             </NButton>
             <NButton
               type="primary"
+              class="!text-white"
               :loading="confirmLoading"
               @click="handleConfirm"
             >
@@ -75,24 +73,29 @@
 </template>
 
 <script setup lang="tsx">
-import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, useMessage, type FormInst, type FormRules } from 'naive-ui'
-import admin_categoryApi from '~/admin-api/categoryApi'
+import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, type FormRules } from 'naive-ui'
+import admin_categoryApi from '~/api/admin-api/categoryApi'
+import { useForm } from '~/hook/useForm'
 import { FormModelAction } from '~/type/enum/formModalAction'
 import { toCatch } from '~/util/toCatch'
-
-const message = useMessage()
 
 type CategoryForm = {
   id: number | null
   alias: string | null
 } & Pick<API_Category.Model, 'name'>
 
-const formRef = ref<FormInst>()
-
 const emit = defineEmits<{
-  (e: 'close'): void
   (e: 'after-confirm'): void
 }>()
+
+const props = defineProps<{ row?: API_Category.Model | null, action: FormModelAction }>()
+
+const formRules: FormRules = {
+  name: {
+    required: true,
+    trigger: ['change'],
+  },
+}
 
 const defaultFormValue: CategoryForm = {
   id: null,
@@ -104,20 +107,16 @@ const visible = defineModel<boolean>('visible', {
   default: false,
   required: true,
 })
-
-const props = defineProps<{ row?: API_Category.Model | null, action: FormModelAction }>()
-
-const formRules: FormRules = {
-  name: {
-    required: true,
-    trigger: ['change'],
-  },
-}
-const formModel = ref<CategoryForm>({ ...defaultFormValue })
 const confirmLoading = ref(false)
+const form = useForm(defaultFormValue)
+const formRef = form.ref
+const formModel = form.data
 
 watch(visible, () => {
-  if (!visible.value) return
+  if (!visible.value) {
+    form.reset()
+    return
+  }
 
   if (props.action === FormModelAction.EDIT) {
     formModel.value.id = props.row!.id
@@ -126,26 +125,17 @@ watch(visible, () => {
   }
 })
 
-// modal close event
-const handleAfterClose = () => {
-  Object.entries(defaultFormValue).forEach(([k, v]) => {
-    formModel.value[k] = v
-  })
-}
-
 // close modal
 const handleCloseModal = () => {
   visible.value = false
-  emit('close')
 }
 
 // confirm
 const handleConfirm = async () => {
-  const validate = await formRef.value?.validate().catch((err) => {
-    message.warning(err[0][0].message)
-  })
-
-  if (!validate) return
+  const [validateOk] = await form.validate()
+  if (!validateOk) {
+    return
+  }
 
   confirmLoading.value = true
   const { id, name, alias } = formModel.value

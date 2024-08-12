@@ -12,7 +12,9 @@
 
           <NButton
             type="primary"
-            @click="() => toDetailPage()"
+            strong
+            secondary
+            @click="() => handleAdd()"
           >
             New
             <template #icon>
@@ -33,14 +35,22 @@
         :row-key="rowKey"
         @update:page="handlePageChange"
       />
+
+      <AdminPostFormModal
+        v-model:visible="pageData.modalVisible"
+        :action="pageData.modalAction"
+        :row="pageData.activeRow"
+        @after-confirm="() => fetchData()"
+      />
     </NCard>
   </div>
 </template>
 
 <script setup lang="tsx">
 import dayjs from 'dayjs'
-import { NButton, NCard, NDataTable, NSpace, NSwitch, NTag, type DataTableColumns, type PaginationProps } from 'naive-ui'
-import admin_postApi from '~/admin-api/postApi'
+import { NButton, NCard, NDataTable, NPopconfirm, NSpace, NSwitch, NTag, type DataTableColumns, type PaginationProps } from 'naive-ui'
+import admin_postApi from '~/api/admin-api/postApi'
+import { FormModelAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { toCatch } from '~/util/toCatch'
 
@@ -50,7 +60,9 @@ type PageData<T> = {
   pageStatus: PageStatus
   data: T
   activeRow: API_Post.Model | null
-  action: 'delete' | 'updateField:enabled' | null
+  action: 'delete' | 'update:enabled' | 'add' | 'edit' | null
+  modalVisible: boolean
+  modalAction: FormModelAction
 }
 
 const pageData = ref<PageData<API_Post.Model[]>>({
@@ -58,11 +70,12 @@ const pageData = ref<PageData<API_Post.Model[]>>({
   pageStatus: PageStatus.LOADING,
   activeRow: null,
   action: null,
+  modalVisible: false,
+  modalAction: FormModelAction.ADD,
 })
 
 const rowKey = (row: API_Post.Model) => row.id
 
-//
 const handleDelete = async (row: API_Post.Model) => {
   const [err] = await toCatch(admin_postApi.delete(row.id))
   if (err) return
@@ -70,9 +83,17 @@ const handleDelete = async (row: API_Post.Model) => {
   fetchData()
 }
 
-//
-const toDetailPage = async (row?: API_Post.Model) => {
-  router.push(`/admin/post/${row?.id ?? 0}`)
+const handleAdd = async () => {
+  console.log('pageData.value.modalVisible', pageData.value.modalVisible)
+
+  pageData.value.modalAction = FormModelAction.ADD
+  pageData.value.modalVisible = true
+}
+
+const handleEdit = async (row: API_Post.Model) => {
+  pageData.value.modalAction = FormModelAction.EDIT
+  pageData.value.activeRow = row
+  pageData.value.modalVisible = true
 }
 
 const toContentPage = async (row: API_Post.Model) => {
@@ -109,10 +130,10 @@ const handlePageChange = (page: number) => {
 }
 
 const handleToggleValue = async (row: API_Post.Model, field: keyof API_Post.Model) => {
-  if (pageData.value.activeRow === row && pageData.value.action === 'updateField:enabled') return
+  if (pageData.value.activeRow === row && pageData.value.action === 'update:enabled') return
 
   pageData.value.activeRow = row
-  pageData.value.action = 'updateField:enabled'
+  pageData.value.action = 'update:enabled'
 
   const data: API_Post.UpdateField = {
     id: row.id,
@@ -148,7 +169,7 @@ const columns: DataTableColumns<API_Post.Model> = [
   {
     title: 'Category',
     key: 'category_id',
-    render: row => row.category.name,
+    render: row => row.category?.name,
   },
   {
     title: 'Tags',
@@ -156,7 +177,7 @@ const columns: DataTableColumns<API_Post.Model> = [
     render: row => (
       <NSpace>
         {
-          row.tags.map(tag => (
+          row.tags?.map(tag => (
             <NTag type="success">{tag?.name}</NTag>
           ))
         }
@@ -168,7 +189,7 @@ const columns: DataTableColumns<API_Post.Model> = [
     key: 'enabled',
     render: row => (
       <NSwitch
-        loading={pageData.value.activeRow === row && pageData.value.action === 'updateField:enabled'}
+        loading={pageData.value.activeRow === row && pageData.value.action === 'update:enabled'}
         value={row.enabled}
         onUpdateValue={() => handleToggleValue(row, 'enabled')}
       >
@@ -180,7 +201,7 @@ const columns: DataTableColumns<API_Post.Model> = [
     key: 'is_sticky',
     render: row => (
       <NSwitch
-        loading={pageData.value.activeRow === row && pageData.value.action === 'updateField:enabled'}
+        loading={pageData.value.activeRow === row && pageData.value.action === 'update:enabled'}
         value={row.is_sticky}
         onUpdateValue={() => handleToggleValue(row, 'is_sticky')}
       >
@@ -197,9 +218,18 @@ const columns: DataTableColumns<API_Post.Model> = [
     key: 'id',
     render: row => (
       <NSpace>
-        <NButton type="error" size="small" onClick={() => handleDelete(row)}>Del</NButton>
-        <NButton type="info" size="small" onClick={() => toDetailPage(row)}>Edit</NButton>
-        <NButton type="info" size="small" onClick={() => toContentPage(row)}>Content</NButton>
+
+        <NPopconfirm onPositiveClick={() => handleDelete(row)}>
+          {{
+            default: () => 'Delete this record?',
+            trigger: () => (
+              <NButton type="error" strong secondary size="small">Del</NButton>
+            ),
+          }}
+        </NPopconfirm>
+
+        <NButton type="info" strong secondary size="small" onClick={() => handleEdit(row)}>Edit</NButton>
+        <NButton type="tertiary" strong secondary size="small" onClick={() => toContentPage(row)}>Content</NButton>
       </NSpace>
     ),
   },

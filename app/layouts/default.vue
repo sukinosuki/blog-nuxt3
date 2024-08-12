@@ -1,32 +1,41 @@
 <template>
   <div>
     <header
-      class="py-2 px-2 bg-opacity-50 backdrop-blur-xl fixed w-full top-0 flex justify-around items-center z-999"
+      class="py-2 px-2 bg-opacity-60  backdrop-blur-xl fixed w-full top-0 flex justify-around items-center z-999"
       :class="[isLeave ? 'shadow' : '']"
     >
-      <div class="md:w-1000px flex justify-between items-center ">
-        <div class="flex">
-          <NuxtImg
-            class="w-50px h-50px rounded-xl"
-            src="https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30pib8ra1mi6g5p82lhqlnd033mv9rrg?imageView2/2/w/540/format/webp|imageMogr2/strip2"
-          />
+      <div class="w-100% lg:w-960px xl:w-1280px flex justify-between items-center ">
+        <NuxtLink
+          href="/sitemap"
+          class="md-hidden w-10 h-10 flex justify-center items-center border-rounded-md cursor-pointer border-1px border-gray/30 border-solid rounded-full"
+        >
+          <i class="block i-ri:menu-line w-5 h-5" />
+        </NuxtLink>
 
-          <!-- <div class=" ml-4">
+        <div class="flex relative">
+          <NuxtLink href="/">
+            <NuxtImg
+              class="w-12 h-12 rounded-xl shadow-2xl"
+              src="https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30pib8ra1mi6g5p82lhqlnd033mv9rrg?imageView2/2/w/540/format/webp|imageMogr2/strip2"
+            />
+          </NuxtLink>
+
+          <!-- <div class="ml-4">
             <h1 class="font-500 line-height-none text-8 m-0">
-              Miiro Blog {{ appStore.count }}
+              Article
             </h1>
             <span class="mt-2 line-height-none block text-4 ">article/hanami233</span>
           </div> -->
         </div>
 
-        <div class="flex flex-1 justify-center items-center ">
-          <div class="fixed flex ">
+        <div class="flex flex-1 justify-center items-center">
+          <div class="fixed flex max-md-hidden">
             <nav
               ref="headerRef"
               class="flex sticky"
               :style="styles"
             >
-              <div class="rounded-full px-3 shadow bg-white">
+              <div class="rounded-full px-3 shadow-2xl shadow-op-40 shadow-primary bg-white dark:bg-black">
                 <ul class="flex">
                   <li
                     v-for="(nav, index) in navs"
@@ -46,14 +55,14 @@
                       group-hover:block group-hover:opacity-100 group-hover:-translate-y-2 duration-300"
                     >
                       <div class="h-5" />
-                      <ul class="rounded-md shadow bg-white backdrop-blur-md">
+                      <ul class="rounded-md bg-white dark-bg-black backdrop-blur-xl">
                         <li
                           v-for="(subNav, subNavIndex) in nav.children"
                           :key="subNavIndex"
                         >
                           <NuxtLink
                             :href="subNav.path"
-                            class="flex justify-center items-center w-30 px-2 h-10 hover:text-sky hover:bg-gray/20 rounded-md"
+                            class="flex justify-center items-center w-30 px-2 h-10 hover:text-primary hover:bg-primary/20 rounded-md duration-100"
                           >
                             {{ subNav.name }}
                           </NuxtLink>
@@ -68,25 +77,35 @@
         </div>
 
         <div
-          class=""
+          class="flex items-center justify-center w-10 h-10 border-rounded-md cursor-pointer border-1px border-gray/30 border-solid rounded-full"
           @click="toggleColorMode"
         >
-          <div
-            class="flex items-center justify-center w-40px h-40px border-rounded-md cursor-pointer border-1 border-gray border-solid "
-          >
-            <i
-              :class="themeIconClass"
-            />
-          </div>
+          <ClientOnly>
+            <Transition name="dark-mode-icon-toggle">
+              <i
+                v-if="colorMode.preference === 'dark'"
+                class="block w-5 h-5 i-ri:moon-foggy-fill absolute"
+              />
+              <i
+                v-else-if="colorMode.preference === 'light'"
+                class="block w-5 h-5 i-ri:sun-foggy-fill absolute"
+              />
+              <i
+                v-else-if="colorMode.preference === 'system'"
+                class="block w-5 h-5 i-ri:contrast-line absolute"
+              />
+            </Transition>
+          </ClientOnly>
         </div>
       </div>
     </header>
 
-    <main class="mx-auto px-2 min-h-100vh md:w-960px mt-100px">
+    <!-- <main class="mx-auto px-3 py-30 min-h-100vh lg:w-960px"> -->
+    <main>
       <slot />
     </main>
 
-    <footer class="py-8 bg-sky-1/40 flex justify-center ">
+    <!-- <footer class="py-8 bg-sky-1/40 dark-bg-black flex justify-center ">
       <div class="md:w-1000px">
         <div class="flex items-center ">
           <span class="flex items-center text-4">Contact
@@ -103,7 +122,7 @@
         <p>@2024 Miiro Works</p>
         <p>Powered by Cloudflare</p>
       </div>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
@@ -120,27 +139,8 @@ const { styles, isEnter, isLeave } = useFixedHeader(headerRef)
 const navs = appConfig.navs
 
 const colorMode = useColorMode()
-const themeIconClass = ref('i-ri:sun-foggy-fill')
-
-watch(colorMode, () => {
-  console.log('colorMode 变化 ', colorMode.value)
-  console.log('colorMode preference 变化 ', colorMode.preference)
-  if (colorMode.preference === 'dark') {
-    themeIconClass.value = 'i-ri:sun-foggy-fill'
-  }
-  if (colorMode.preference === 'light') {
-    themeIconClass.value = 'i-ri:moon-foggy-fill'
-  }
-  if (colorMode.preference === 'system') {
-    themeIconClass.value = 'i-ri:contrast-line'
-  }
-}, {
-  immediate: true,
-})
 
 const toggleColorMode = () => {
-  console.log('toggleColorMode preference ', colorMode.preference)
-  console.log('toggleColorMode value ', colorMode.value)
   if (colorMode.preference === 'dark') {
     colorMode.preference = 'light'
     return
@@ -153,3 +153,20 @@ const toggleColorMode = () => {
   colorMode.preference = 'dark'
 }
 </script>
+
+<style scoped>
+.dark-mode-icon-toggle-enter-active,
+.dark-mode-icon-toggle-leave-active {
+  transition: all 0.25s ease-out;
+}
+
+.dark-mode-icon-toggle-enter-from {
+  opacity: 0;
+  transform: translateX(10px) scale(0.8);
+}
+
+.dark-mode-icon-toggle-leave-to {
+  opacity: 0;
+  transform: translateX(-10px) scale(0.8);
+}
+</style>

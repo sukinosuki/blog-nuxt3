@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NCard title="Articles">
+    <NCard title="Category">
       <template #header-extra>
         <NSpace>
           <NButton @click="fetchData">
@@ -12,6 +12,8 @@
 
           <NButton
             type="primary"
+            strong
+            secondary
             @click="() => handleAdd()"
           >
             New
@@ -43,10 +45,9 @@
 <script setup lang="tsx">
 import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns } from 'naive-ui'
-import admin_categoryApi from '~/admin-api/categoryApi'
+import admin_categoryApi from '~/api/admin-api/categoryApi'
 import { FormModelAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { catchUseFetch } from '~/util/catchUseFetch'
 import { toCatch } from '~/util/toCatch'
 
 type PageData<T> = {
@@ -73,7 +74,7 @@ const handleEdit = (row: API_Category.Model) => {
 
 //
 const handleDelete = async (row: API_Category.Model) => {
-  const [err] = await catchUseFetch(admin_categoryApi.delete(row.id))
+  const [err] = await toCatch(admin_categoryApi.delete(row.id))
   if (err) return
 
   fetchData()
@@ -135,12 +136,12 @@ const columns: DataTableColumns<API_Category.Model> = [
           {{
             default: () => 'Delete this row?',
             trigger: () => (
-              <NButton type="error" size="small">Del</NButton>
+              <NButton strong secondary type="error" size="small">Del</NButton>
             ),
           }}
 
         </NPopconfirm>
-        <NButton type="info" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
+        <NButton strong secondary type="info" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
       </NSpace>
     ),
   },

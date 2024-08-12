@@ -59,7 +59,7 @@
 
 <script setup lang="tsx">
 import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, useMessage, type FormInst, type FormRules } from 'naive-ui'
-import admin_tagApi from '~/admin-api/tagApi'
+import admin_tagApi from '~/api/admin-api/tagApi'
 import { FormModelAction } from '~/type/enum/formModalAction'
 import { toCatch } from '~/util/toCatch'
 

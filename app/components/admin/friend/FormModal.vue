@@ -3,16 +3,13 @@ c<template>
     <NModal
       v-model:show="visible"
       preset="card"
-      class="w-200"
+      class="w-140"
       title="Friend"
     >
       <NForm
         ref="formRef"
         :model="formModel"
         :rules="formRules"
-        label-align="left"
-        label-width="100"
-        label-placement="left"
       >
         <NFormItem
           label="Blog Name"
@@ -58,6 +55,14 @@ c<template>
           />
         </NFormItem>
 
+        <div class="flex justify-center">
+          <img
+            class="w-20 h-20 rounded-md"
+            :src="formModel.avatar"
+            alt=""
+          >
+        </div>
+
         <NFormItem
           label="Email"
           path="email"
@@ -93,24 +98,24 @@ c<template>
       </NForm>
 
       <template #footer>
-        <div class="flex justify-end">
-          <NSpace>
-            <NButton
-              class="px-10"
-              @click="visible = false"
-            >
-              Cancel
-            </NButton>
+        <div class="flex justify-between">
+          <NButton
+            class="px-10"
+            secondary
+            strong
+            @click="visible = false"
+          >
+            Cancel
+          </NButton>
 
-            <NButton
-              class="px-10"
-              type="primary"
-              :loading="confirmLoading"
-              @click="handleSubmit"
-            >
-              Ok
-            </NButton>
-          </NSpace>
+          <NButton
+            class="px-10 bg-primary text-white"
+            :loading="confirmLoading"
+            secondary
+            @click="handleSubmit"
+          >
+            Ok
+          </NButton>
         </div>
       </template>
     </NModal>
@@ -118,12 +123,11 @@ c<template>
 </template>
 
 <script setup lang="ts">
-import { NButton, NForm, NFormItem, NInput, NModal, NSelect, NSpace, useMessage, type FormRules } from 'naive-ui'
-import { sleep } from '~/util'
-import admin_friendApi from '~/admin-api/friendApi'
+import { NButton, NForm, NFormItem, NInput, NModal, NSelect, useMessage, type FormRules } from 'naive-ui'
+import admin_friendApi from '~/api/admin-api/friendApi'
 import { toCatch } from '~/util/toCatch'
 import { useForm } from '~/hook/useForm'
-import { FriendStatus, friendStatusOptions } from '~~/api/enum/FriendStatus'
+import { FriendStatus, friendStatusOptions } from '~~/type/enum/FriendStatus'
 
 const visible = defineModel<boolean>('visible', {
   default: false,
@@ -206,12 +210,9 @@ watch(visible, () => {
 })
 
 const handleSubmit = async () => {
-  const [validateOk, validateMsg] = await form.validate()
+  const [validateOk] = await form.validate()
 
-  if (!validateOk) {
-    message.warning(validateMsg!)
-    return
-  }
+  if (!validateOk) return
 
   if (confirmLoading.value) return
 
@@ -236,9 +237,7 @@ const handleSubmit = async () => {
   if (err !== null) return
 
   message.success('ok')
-  await sleep()
 
-  // TODO
   emit('after-confirm')
 }
 </script>

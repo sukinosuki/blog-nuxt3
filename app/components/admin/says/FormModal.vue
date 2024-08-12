@@ -87,7 +87,7 @@
 
 <script setup lang="tsx">
 import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, NSwitch, useMessage, type FormRules } from 'naive-ui'
-import admin_saysApi from '~/admin-api/saysApi'
+import admin_saysApi from '~/api/admin-api/saysApi'
 import { useForm } from '~/hook/useForm'
 import { FormModelAction } from '~/type/enum/formModalAction'
 import { toCatch } from '~/util/toCatch'

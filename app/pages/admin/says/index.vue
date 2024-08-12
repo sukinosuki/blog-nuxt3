@@ -3,7 +3,11 @@
     <NCard title="Projects">
       <template #header-extra>
         <NSpace>
-          <NButton @click="() => fetchData()">
+          <NButton
+            strong
+            secondary
+            @click="() => fetchData()"
+          >
             Refresh
             <template #icon>
               <div class="i-ri:refresh-line" />
@@ -12,6 +16,8 @@
 
           <NButton
             type="primary"
+            strong
+            secondary
             @click="() => handleAdd()"
           >
             New
@@ -45,8 +51,8 @@
 <script setup lang="tsx">
 import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, NSwitch, type DataTableColumns, type PaginationProps } from 'naive-ui'
-import admin_projectApi from '~/admin-api/projectApi'
-import admin_saysApi from '~/admin-api/saysApi'
+import admin_projectApi from '~/api/admin-api/projectApi'
+import admin_saysApi from '~/api/admin-api/saysApi'
 import { PageStatus } from '~/type/enum/pageStatus'
 import { toCatch } from '~/util/toCatch'
 

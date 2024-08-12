@@ -1,9 +1,9 @@
-import useAppStore from '~/store/app.store'
+// import useAppStore from '~/store/app.store'
 
 //
 export const catchUseFetch = <T>(promise: ReturnType<typeof useFetch<T>>): Promise<[Error | null | undefined, T | null | undefined]> => {
   // TODO: 可以在这里使用book吗
-  const appStore = useAppStore()
+  // const appStore = useAppStore()
 
   //
   return promise.then((res) => {
@@ -14,9 +14,9 @@ export const catchUseFetch = <T>(promise: ReturnType<typeof useFetch<T>>): Promi
     console.log('[catchUseFetch] data ', data)
 
     if (status.value !== 'success') {
-      console.log('错误返回, error !== null, ', appStore.fetchError.value)
-      appStore.fetchError.value = error
-      appStore.count.value++
+      // console.log('错误返回, error !== null, ', appStore.fetchError.value)
+      // appStore.fetchError.value = error
+      // appStore.count.value++
 
       return [error.value, null]
     }
