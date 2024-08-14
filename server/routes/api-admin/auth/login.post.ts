@@ -1,7 +1,7 @@
 export default eventHandler(async (event) => {
   const data = await readBody<API_Auth.Login | null>(event)
 
-  const runtimeConfig = useRuntimeConfig()
+  const runtimeConfig = useRuntimeConfig(event)
 
   console.log('runtimeConfig11 ', runtimeConfig)
 
