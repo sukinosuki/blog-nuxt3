@@ -3,7 +3,7 @@
     <span
       ref="linkOuterRef"
       class="group relative flex-inline items-center underline underline-offset-2 hover:underline-op-0 duration-100 after:absolute relative
-    after:bottom-0 after:left-0 after:duration-200 after:content-[''] after:h-2px after:w-0 hover:after:w-100% after:bg-primary"
+    after:bottom-0 after:left-0 after:duration-200 after:h-2px after:w-0 hover:after:w-100% after:bg-primary"
     >
       <NuxtLink
         :href="href"
