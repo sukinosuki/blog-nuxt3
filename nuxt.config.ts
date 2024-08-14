@@ -64,14 +64,14 @@ export default defineNuxtConfig({
     //   { name: 'eafont', src: '/static/font/eafont.ttf' },
     // ],
   },
-  // mdc: {
-  //   highlight: {
-  //     theme: {
-  //       light: 'github-light',
-  //       dark: 'github-dark',
-  //     },
-  //   },
-  // },
+  mdc: {
+    highlight: {
+      theme: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    },
+  },
   hub: {
     database: true,
     kv: true,
@@ -94,12 +94,12 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind-compat.css',
   ],
   unocss: {
-    // presets: [
-    //   presetUno(),
-    //   presetIcons(),
-    //   presetAttributify(),
-    //   presetTypography(),
-    // ],
+    presets: [
+      presetUno(),
+      presetIcons(),
+      presetAttributify(),
+      presetTypography(),
+    ],
     theme: {
       colors: {
         primary: 'rgb(var(--primary))',

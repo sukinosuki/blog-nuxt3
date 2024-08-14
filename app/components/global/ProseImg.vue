@@ -1,6 +1,6 @@
 <template>
   <div class="my-2">
-    <div class="rounded-md overflow-hidden bg-gray-2 dark-bg-black min-h-50 md-min-h-80 ">
+    <div class="rounded-md overflow-hidden bg-gray-2 dark-bg-black min-h-50 md-min-h-80 relative">
       <NuxtImg
         ref="imgRef"
         class="w-100%"

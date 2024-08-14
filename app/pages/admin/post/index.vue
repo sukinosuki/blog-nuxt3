@@ -40,7 +40,7 @@
         v-model:visible="pageData.modalVisible"
         :action="pageData.modalAction"
         :row="pageData.activeRow"
-        @after-confirm="() => fetchData()"
+        @after-confirm="handleAfterConfirm"
       />
     </NCard>
   </div>
@@ -146,6 +146,11 @@ const handleToggleValue = async (row: API_Post.Model, field: keyof API_Post.Mode
 
   if (err) return
 
+  fetchData()
+}
+
+const handleAfterConfirm = () => {
+  pageData.value.modalVisible = false
   fetchData()
 }
 
