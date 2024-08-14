@@ -14,7 +14,9 @@ export default eventHandler(async (event) => {
   console.log('typeof api_auth_password ', typeof api_auth_password)
 
   if (data?.username !== String(api_auth_username) || data?.password !== String(api_auth_password)) {
-    throw createError({ status: 400, message: '账号或密码错误' })
+    // throw createError({ status: 400, message: '账号或密码错误' })
+
+    return runtimeConfig
   }
 
   await setUserSession(event, {
