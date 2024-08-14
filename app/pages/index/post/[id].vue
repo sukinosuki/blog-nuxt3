@@ -1,38 +1,38 @@
 <template>
-  <Suspense>
-    <div
-      v-motion="{
-        initial: {
-          y: 20,
-          opacity: 0,
-        },
-        enter: {
-          y: 0,
-          opacity: 1,
-        },
-      }"
-    >
+  <div
+    v-motion="{
+      initial: {
+        y: 20,
+        opacity: 0,
+      },
+      enter: {
+        y: 0,
+        opacity: 1,
+      },
+    }"
+    class="md-w-768px mx-auto"
+  >
+    <div>
+      <h1 class="text-10">
+        {{ post?.title }}
+      </h1>
+
       <div>
-        <h1 class="text-10">
-          {{ post?.title }}
-        </h1>
-
-        <div>
-          <div class="space-x-1 flex items-center text-14px">
-            <span>发布于:</span>
-            <span>
-              {{ dayjs(post?.created_at).format('YYYY 年 M 月 DD 日') }}
-            </span>
-          </div>
+        <div class="space-x-1 flex items-center text-14px">
+          <span>发布于: </span>
+          <span v-if="post?.created_at">
+            {{ dayjs(post.created_at).format('YYYY 年 M 月 DD 日') }}
+          </span>
         </div>
-        <!-- <p>{{ article?.description }}</p> -->
       </div>
+      <!-- <p>{{ article?.description }}</p> -->
+    </div>
 
-      <div
-        v-if="markdownContent"
-        class="prose text-base prose-truegray no-underline dark:prose-invert max-w-100%"
-      >
-        <!-- <MDC
+    <div
+      v-if="markdownContent"
+      class="prose text-base prose-truegray no-underline dark:prose-invert max-w-100%"
+    >
+      <!-- <MDC
           v-slot="{ data, body }"
           :value="markdownContent"
         >
@@ -48,39 +48,35 @@
           </article>
         </MDC> -->
 
-        <!-- <MDCRenderer
-          v-if="markdownContent?.body"
-          :body="markdownContent.body"
-          :data="markdownContent.data"
-        /> -->
+      <MDCRenderer
+        :body="markdownContent.body"
+        :data="markdownContent.data"
+      />
+    </div>
 
-        <MDCRenderer
-          :body="markdownContent.body"
-          :data="markdownContent.data"
-        />
-      </div>
-
-      <!-- <MDC
+    <!-- <MDC
         :value="md"
       /> -->
-    </div>
-  </Suspense>
+  </div>
 </template>
 
 <script setup lang="ts">
+import type { MDCParserResult } from '@nuxtjs/mdc'
 import dayjs from 'dayjs'
+// import mediumZoom from 'medium-zoom'
 import postApi from '~/api/app-api/postApi'
-import { sleep } from '~/util'
 
 const route = useRoute()
 const id = route.params.id as string
 
-// const parse = useMarkdownParser()
-const { data: post } = await useAsyncData(`/post/${id}`, () => postApi.getById(id))
+const { data: post, error } = await useAsyncData(`/post/${id}`, () => postApi.getById(id))
 
-const markdownContent = ref(null)
+if (error.value) {
+  error.value.fatal = true
+  throw error.value
+}
 
-console.log('article ', post.value?.content)
+const markdownContent = ref<MDCParserResult | null>(null)
 
 const md = `---
 title: Sam
@@ -129,9 +125,10 @@ async function main(mdc: string) {
 `
 
 onBeforeMount(async () => {
-  // markdownContent.value = await parse(post.value!.content)
-  // markdownContent.value = await parse(md)
-  markdownContent.value = await parseMarkdown(md)
-  console.log('markdownContent.value ', markdownContent.value)
+  markdownContent.value = await parseMarkdown(post.value!.content)
+
+  setTimeout(() => {
+    useNuxtApp().$mediumZoom?.detach('[zoomable]').attach('[zoomable]')
+  }, 1000)
 })
 </script>

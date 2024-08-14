@@ -66,5 +66,6 @@ export default eventHandler(async (event) => {
     list,
     total,
   }
+
   return data
 })

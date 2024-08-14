@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
   const drizzle = useDrizzle()
 
   const post = await drizzle.query.post.findFirst({
-    where: or(eq(tables.post.id, Number(id)), eq(tables.post.alias, id)),
+    where: or(eq(tables.post.id, Number(id)), eq(tables.post.alias, id as string)),
     with: {
       category: {
         columns: {
@@ -43,8 +43,11 @@ export default defineEventHandler(async (event) => {
 
   // undefined
   if (!post) {
-    setResponseStatus(event, 404)
-    return
+    // setResponseStatus(event, 404)
+    throw createError({
+      statusCode: 404,
+      message: 'Record not found',
+    })
   }
 
   post.tags = post?.post2tag.map(item => item.tag)

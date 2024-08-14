@@ -1,9 +1,9 @@
 <template>
-  <div class="flex justify-center my-2">
+  <div class="flex justify-center my-4 flex-col items-center">
     <a
       :href="repository?.html_url"
       target="_blank"
-      class="shadow no-underline w-100% md:w-100 flex items-center p-2 rounded-2xl md:max-w-100 hover:-translate-y-1 duration-200
+      class="shadow no-underline w-100% md:w-100 flex items-center p-3 rounded-2xl md:max-w-100 hover:-translate-y-1 duration-200
        bg-gray-1 dark-bg-black backdrop-blur-xl overflow-hidden disabled"
     >
       <div class="flex flex-col flex-1 h-80px justify-between">
@@ -38,6 +38,14 @@
         class="bg-slate-200 dark-bg-black rounded absolute top-0 left-0 w-100% h-100% z-1 "
       />
     </a>
+
+    <div class="mt-2 p-2 w-100% flex justify-center">
+      <a
+        :href="repository?.html_url"
+        target="_blank"
+        class="line-clamp-1 text-center"
+      >{{ repository?.html_url || ' ' }}</a>
+    </div>
   </div>
 </template>
 
@@ -55,7 +63,7 @@ const repository = ref<Github.Repos | null>(null)
 const fetchData = async () => {
   if (!props.repos) return
 
-  await sleep(700)
+  await sleep(7100)
 
   const [err, res] = await toCatch(githubApi.get(props.repos))
   if (err || !res) return

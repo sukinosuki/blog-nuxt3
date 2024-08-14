@@ -26,8 +26,12 @@ if (isClient) {
 </script>
 
 <style>
+:root {
+  --primary: 56 189 248;
+}
 ::selection {
-  background: rgb(var(--primary) / 0.3);
+  background: rgb(var(--primary) / 0.9);
+  color: white;
 }
 
 body {
@@ -41,6 +45,13 @@ html.dark body {
 
 html.dark {
   color-scheme: dark;
+}
+
+.medium-zoom-overlay {
+  z-index: 999;
+}
+.medium-zoom-image {
+  z-index: 1000;
 }
 
 .page-enter-active, .page-leave-active {

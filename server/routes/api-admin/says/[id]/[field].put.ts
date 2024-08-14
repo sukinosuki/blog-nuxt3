@@ -3,9 +3,6 @@ export default eventHandler(async (event) => {
   const field = getRouterParam(event, 'field')
   const data = await readBody<API_Says.UpdateField>(event)
 
-  console.log('field ', field)
-  console.log('data ', data)
-
   const drizzle = useDrizzle()
 
   const res = await drizzle.update(tables.says)

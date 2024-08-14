@@ -1,24 +1,10 @@
 export default defineEventHandler(async (event) => {
-  // const query = getQuery(event)
+  const id = Number(getRouterParam(event, 'id'))
 
-  // const db = hubDatabase()
-  // console.log('query ', query)
-
-  const id = getRouterParam(event, 'id')
-
-  // const article = await db
-  //   .prepare('SELECT * FROM article WHERE id = ?1')
-  //   .bind(id)
-  //   .first()
-
-  // if (!article) {
-  //   setResponseStatus(event, 404)
-  //   return
-  // }
   const drizzle = useDrizzle()
 
   const post = await drizzle.query.post.findFirst({
-    where: eq(tables.post.id, Number(id)),
+    where: eq(tables.post.id, id),
 
     with: {
       category: {
@@ -42,10 +28,12 @@ export default defineEventHandler(async (event) => {
     },
   })
 
-  // undefined
   if (!post) {
-    setResponseStatus(event, 404)
-    return
+    // setResponseStatus(event, 404)
+    throw createError({
+      status: 404,
+      message: 'post not found',
+    })
   }
 
   post.tags = post?.post2tag.map(item => item.tag)

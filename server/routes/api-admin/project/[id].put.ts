@@ -1,10 +1,11 @@
 export default eventHandler(async (event) => {
-  const drizzle = useDrizzle()
   const data = await readBody<API_Project.Update>(event)
-
   const id = Number(getRouterParam(event, 'id'))
 
-  const res = await drizzle.update(tables.project)
+  const drizzle = useDrizzle()
+
+  const res = await drizzle
+    .update(tables.project)
     .set({
       name: data.name,
       repository: data.repository,

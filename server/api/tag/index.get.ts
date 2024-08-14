@@ -17,7 +17,10 @@ export default eventHandler(async () => {
 
   // return data.results
 
-  const data = await useDrizzle().select().from(tables.tag).all()
+  const data = await useDrizzle()
+    .select()
+    .from(tables.tag)
+    .all()
 
   return data
 })

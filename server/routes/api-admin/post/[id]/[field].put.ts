@@ -1,24 +1,18 @@
 export default defineEventHandler(async (event) => {
   const { id, field } = getRouterParams(event)
 
-  const { value } = await readBody(event)
+  const { value } = await readBody<API_Post.UpdateField>(event)
 
-  const validField = ['content', 'enabled', 'is_sticky']
-  if (!validField.includes(field)) {
-    setResponseStatus(event, 404)
-    return
+  type ValidFieldKey = keyof Pick<API_Post.Model, 'enabled' | 'content' | 'is_sticky'>
+
+  const validField: ValidFieldKey[] = ['content', 'enabled', 'is_sticky']
+  if (!validField.includes(field as ValidFieldKey)) {
+    // setResponseStatus(event, 404)
+    throw createError({
+      status: 400,
+      message: '',
+    })
   }
-
-  // const db = hubDatabase()
-
-  // console.log('id ', id)
-  // console.log('value ', value)
-  // console.log('field ', field)
-
-  // await db
-  //   .prepare('UPDATE article SET enabled = ?2 WHERE id = ?3')
-  //   .bind(field, value, id)
-  //   .run()
 
   const drizzle = useDrizzle()
 
@@ -29,5 +23,5 @@ export default defineEventHandler(async (event) => {
     })
     .where(eq(tables.post.id, Number(id)))
 
-  return id
+  return { message: 'ok' }
 })

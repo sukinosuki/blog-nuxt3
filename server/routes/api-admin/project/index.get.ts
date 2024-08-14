@@ -7,9 +7,13 @@ export default eventHandler(async (event) => {
   page = Number(page ?? 1)
   size = Number(size ?? 10)
 
-  const [{ total }] = await drizzle.select({ total: count() }).from(tables.project)
+  const [{ total }] = await drizzle
+    .select({ total: count() })
+    .from(tables.project)
 
-  const list = await drizzle.select().from(tables.project)
+  const list = await drizzle
+    .select()
+    .from(tables.project)
     .limit(size)
     .offset((page - 1) * size)
     .orderBy(desc(tables.project.id))

@@ -5,8 +5,8 @@ export default eventHandler(async (event) => {
 
   let { page, size, category_id } = getQuery<API_Post.Get>(event)
 
-  page = Number(page ?? 1)
-  size = Number(size ?? 10)
+  page = Number(page || 1)
+  size = Number(size || 10)
   category_id = category_id ? Number(category_id) : null
 
   const countQuery = drizzle.select({ total: count() }).from(tables.post)

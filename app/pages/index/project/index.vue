@@ -30,7 +30,12 @@
 <script setup lang="ts">
 import projectApi from '~/api/app-api/projectApi'
 
-const data = await useAsyncData('/api/project', projectApi.get)
+const { data, error } = await useAsyncData<API_Project.Model[], ServerErrorRes>('/api/project', projectApi.get)
 
-const projects = data.data
+if (error.value) {
+  error.value.fatal = true
+  throw error.value
+}
+
+const projects = data
 </script>

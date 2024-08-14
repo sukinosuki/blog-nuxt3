@@ -2,7 +2,8 @@ export default eventHandler(async (event) => {
   const drizzle = useDrizzle()
   const data = await readBody<API_Project.Add>(event)
 
-  const res = await drizzle.insert(tables.project)
+  const res = await drizzle
+    .insert(tables.project)
     .values({
       name: data.name,
       repository: data.repository,

@@ -14,6 +14,7 @@ const message = useMessage()
 watch(() => appStore.fetchError, (newValue) => {
   console.log('newValue ', newValue)
 
+  // TODO:
   message.error(newValue?.data.message || '服务器异常')
 })
 </script>

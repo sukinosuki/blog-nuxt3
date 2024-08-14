@@ -9,6 +9,14 @@ export default defineNuxtConfig({
   runtimeConfig: {
     api_auth_username: '',
     api_auth_password: '',
+
+    public: {
+      env: 'preview',
+      sentry: {
+        dsn: '',
+      },
+      sentry_dsn: '',
+    },
   },
   // Nuxt Modules
   // https://nuxt.com/modules
@@ -20,7 +28,7 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     '@nuxt/image',
     'nuxt-auth-utils',
-    // 'nuxtjs-naive-ui',
+    'nuxtjs-naive-ui',
     '@nuxt/fonts',
     '@vueuse/motion/nuxt',
     '@vueuse/nuxt',
@@ -55,14 +63,14 @@ export default defineNuxtConfig({
     //   { name: 'eafont', src: '/static/font/eafont.ttf' },
     // ],
   },
-  mdc: {
-    highlight: {
-      theme: {
-        light: 'github-light',
-        dark: 'github-dark',
-      },
-    },
-  },
+  // mdc: {
+  //   highlight: {
+  //     theme: {
+  //       light: 'github-light',
+  //       dark: 'github-dark',
+  //     },
+  //   },
+  // },
   hub: {
     database: true,
     kv: true,
@@ -81,17 +89,16 @@ export default defineNuxtConfig({
   },
   // https://nuxt.com/docs/getting-started/styling#the-css-property
   css: [
-    // 'medium-zoom/dist/style.css',
+    'medium-zoom/dist/style.css',
     '@unocss/reset/tailwind-compat.css',
   ],
   unocss: {
-    presets: [
-      presetUno(),
-      presetIcons(),
-      presetAttributify(),
-      // presetScrollbar(),
-      presetTypography(),
-    ],
+    // presets: [
+    //   presetUno(),
+    //   presetIcons(),
+    //   presetAttributify(),
+    //   presetTypography(),
+    // ],
     theme: {
       colors: {
         primary: 'rgb(var(--primary))',

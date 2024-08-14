@@ -18,19 +18,9 @@
 </template>
 
 <script setup lang="ts">
-import { NConfigProvider, NMessageProvider, NModalProvider, darkTheme, useMessage, type GlobalThemeOverrides } from 'naive-ui'
-import useAppStore from '~/store/app.store'
+import { NConfigProvider, NMessageProvider, NModalProvider, darkTheme, type GlobalThemeOverrides } from 'naive-ui'
 
 const colorMode = useColorMode()
-const appStore = useAppStore()
-
-// const message = useMessage()
-// watch(appStore.fetchError, (newValue) => {
-//   console.log('newValue ', newValue)
-
-//   message.error(newValue)
-// })
-
 const theme = computed(() => {
   if (colorMode.value === 'dark') {
     return darkTheme
@@ -38,6 +28,7 @@ const theme = computed(() => {
 
   return null
 })
+
 const themeOverrides: GlobalThemeOverrides = {
   common: {
     primaryColor: '#8b5cf6', // dark:#a78bfa

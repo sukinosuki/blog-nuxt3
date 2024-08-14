@@ -26,8 +26,6 @@ declare namespace API_Post {
     }
 
     type Get = {
-      page: number
-      size: number
       category_id?: number | null
-    }
+    } & Api_Query
 }

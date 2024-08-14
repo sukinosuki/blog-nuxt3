@@ -100,29 +100,11 @@
       </div>
     </header>
 
-    <!-- <main class="mx-auto px-3 py-30 min-h-100vh lg:w-960px"> -->
     <main>
       <slot />
     </main>
 
-    <!-- <footer class="py-8 bg-sky-1/40 dark-bg-black flex justify-center ">
-      <div class="md:w-1000px">
-        <div class="flex items-center ">
-          <span class="flex items-center text-4">Contact
-            <i class="i-ri:arrow-right-s-line w-5 h-5" />
-          </span>
-          <ul class="flex">
-            <li>
-              <a href="">
-                Github
-              </a>
-            </li>
-          </ul>
-        </div>
-        <p>@2024 Miiro Works</p>
-        <p>Powered by Cloudflare</p>
-      </div>
-    </footer> -->
+    <AppFooter />
   </div>
 </template>
 
@@ -131,7 +113,7 @@ import { useFixedHeader } from 'vue-use-fixed-header'
 
 const { default: appConfig } = await import('../../app_config.json')
 
-console.log('appConfig ', appConfig)
+// console.log('appConfig ', appConfig)
 
 const headerRef = ref(null)
 const { styles, isEnter, isLeave } = useFixedHeader(headerRef)

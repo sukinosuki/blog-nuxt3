@@ -1,6 +1,4 @@
 const useAppStore = defineStore('app', () => {
-  console.log('app store setup!')
-
   const fetchError = ref<FetchError | null>(null)
 
   const setFetchError = (err: FetchError) => {
