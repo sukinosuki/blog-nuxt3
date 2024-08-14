@@ -2,25 +2,19 @@
 export default eventHandler(async (event) => {
   // console.log('admin auth middleware!!!')
 
-  // const runtimeConfig = useRuntimeConfig()
+  if (event.path.startsWith('/api-admin')) {
+    // would cause the Empty password error
+    const userSession = await getUserSession(event).catch((err) => {
+      console.log('get user session err ', err)
+    })
 
-  // console.log('admin auth, runtimeConfig11 ', runtimeConfig)
-
-  // if (event.path.startsWith('/api-admin')) {
-  //   // would cause the Empty password error
-  //   const userSession = await getUserSession(event).catch((err) => {
-  //     console.log('get user session err ', err)
-  //   })
-
-  //   console.log('userSession ', userSession)
-
-  //   if (!userSession?.user) {
-  //     if (!['/api-admin/auth/login', '/api-admin/auth/login/'].includes(event.path)) {
-  //       throw createError({
-  //         status: 403,
-  //         message: 'Unauthorized',
-  //       })
-  //     }
-  //   }
-  // }
+    if (!userSession?.user) {
+      if (!['/api-admin/auth/login', '/api-admin/auth/login/'].includes(event.path)) {
+        throw createError({
+          status: 403,
+          message: 'Unauthorized',
+        })
+      }
+    }
+  }
 })
