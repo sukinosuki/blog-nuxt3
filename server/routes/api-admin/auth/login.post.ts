@@ -1,7 +1,11 @@
 export default eventHandler(async (event) => {
   const data = await readBody<API_Auth.Login | null>(event)
 
-  const { api_auth_username, api_auth_password } = useRuntimeConfig()
+  const runtimeConfig = useRuntimeConfig()
+
+  console.log('runtimeConfig11 ', runtimeConfig)
+
+  const { api_auth_username, api_auth_password } = runtimeConfig
 
   console.log('data ', data)
   console.log('api_auth_username ', api_auth_username)
