@@ -2,8 +2,16 @@
 export default eventHandler(async (event) => {
   // console.log('admin auth middleware!!!')
 
+  const runtimeConfig = useRuntimeConfig()
+
+  console.log('admin auth, runtimeConfig11 ', runtimeConfig)
+
   if (event.path.startsWith('/api-admin')) {
-    const userSession = await getUserSession(event)
+    const userSession = await getUserSession(event).catch((err) => {
+      console.log('get user session err ', err)
+    })
+
+    console.log('userSession ', userSession)
 
     if (!userSession.user) {
       if (!['/api-admin/auth/login', '/api-admin/auth/login/'].includes(event.path)) {
