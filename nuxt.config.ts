@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     api_auth_password: '',
 
     public: {
+      test: '1',
       env: 'preview',
       sentry: {
         dsn: '',

@@ -7,7 +7,10 @@
 <script setup lang="ts">
 import { isClient } from '@vueuse/core'
 
+const runtimeConfig = useRuntimeConfig()
 if (isClient) {
+  console.log('runtimeConfig ', runtimeConfig)
+
   const r = document.querySelector<HTMLElement>(':root')!
 
   const primaryColors = [
