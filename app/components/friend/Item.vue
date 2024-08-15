@@ -7,20 +7,14 @@
     <div
       class="w-20 h-20 rounded-lg overflow-hidden relative bg-sky-1/40"
     >
-      <!-- v-motion="{
-          initial: {
-            opacity: 0,
-          },
-          enter: {
-            opacity: 1,
-          },
-        }" -->
+
       <NuxtImg
         :src="friend.avatar"
-        class="w-100% h-100% object-cover duration-200 !group-hover:scale-120 relative z-2"
+        class="w-100% h-100% object-cover duration-300 relative z-2 opacity-0"
         loading="lazy"
-        :class="[isLoadedError ? 'invisible' : '']"
+        :class="{ 'opacity-100': isLoaded }"
         @error="handleImgError"
+        @load="handleLoad"
       />
 
       <span
@@ -50,7 +44,11 @@
 defineProps<{ friend: API_Friend.Model }>()
 
 const isLoadedError = ref(false)
+const isLoaded = ref(false)
 
+const handleLoad = () => {
+  isLoaded.value = true
+}
 const handleImgError = () => {
   isLoadedError.value = true
 }

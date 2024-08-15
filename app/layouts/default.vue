@@ -53,7 +53,7 @@
                       <ul class="rounded-md bg-white dark-bg-black backdrop-blur-xl">
                         <ListHoverEffect
                           :list="nav.children || []"
-                          rounded="md"
+                          effect-class="rounded-md"
                         >
                           <template #default="slopProps">
                             <NuxtLink
@@ -121,17 +121,73 @@ const navs = appConfig.navs
 
 const colorMode = useColorMode()
 
-const toggleColorMode = () => {
-  if (colorMode.preference === 'dark') {
-    colorMode.preference = 'light'
-    return
-  }
-  if (colorMode.preference === 'light') {
-    colorMode.preference = 'system'
+/**
+ * Credit to [@hooray](https://github.com/hooray)
+ * @see https://github.com/vuejs/vitepress/pull/2347
+ */
+const toggleColorMode = async (event: MouseEvent) => {
+  const prevValue = colorMode.value
+  const isAppearanceTransition = document.startViewTransition
+    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+  if (!isAppearanceTransition) {
+    if (colorMode.preference === 'dark') {
+      colorMode.preference = 'light'
+    }
+    else if (colorMode.preference === 'light') {
+      colorMode.preference = 'system'
+    }
+    else {
+      colorMode.preference = 'dark'
+    }
     return
   }
 
-  colorMode.preference = 'dark'
+  const x = event.clientX
+  const y = event.clientY
+  const endRadius = Math.hypot(
+    Math.max(x, innerWidth - x),
+    Math.max(y, innerHeight - y),
+  )
+
+  // @ts-expect-error: Transition API
+  const transition = document.startViewTransition(async () => {
+    if (colorMode.preference === 'dark') {
+      colorMode.preference = 'light'
+    }
+    else if (colorMode.preference === 'light') {
+      colorMode.preference = 'system'
+    }
+    else {
+      colorMode.preference = 'dark'
+    }
+
+    await nextTick()
+  })
+
+  transition.ready
+    .then(() => {
+      if (colorMode.value === prevValue) return
+
+      const clipPath = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
+      ]
+      document.documentElement.animate(
+        {
+          clipPath: colorMode.value === 'dark'
+            ? [...clipPath].reverse()
+            : clipPath,
+        },
+        {
+          duration: 400,
+          easing: 'ease-out',
+          pseudoElement: colorMode.value === 'dark'
+            ? '::view-transition-old(root)'
+            : '::view-transition-new(root)',
+        },
+      )
+    })
 }
 </script>
 

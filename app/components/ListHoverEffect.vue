@@ -15,7 +15,7 @@
 
     <div
       class="absolute bg-primary opacity-20 duration-200 pointer-events-none transform-origin-b"
-      :class="[rounded? `rounded-${rounded}` : 'rounded']"
+      :class="effectClass"
       :style="{
         left: left + 'px',
         top: top + 'px',
@@ -29,7 +29,7 @@
 </template>
 
 <script setup lang="ts" generic="T extends any">
-defineProps<{ list: T[], rounded?: 'md' | 'xl' | '2xl' }>()
+defineProps<{ list: T[], effectClass?: string }>()
 
 const domRef = ref<HTMLElement[] | null>(null)
 

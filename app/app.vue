@@ -29,6 +29,25 @@ if (isClient) {
 </script>
 
 <style>
+::view-transition-old(root), ::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-old(root) {
+  z-index: 999;
+}
+
+::view-transition-new(root) {
+  z-index: 1;
+}
+.light::view-transition-old(root){
+  z-index: 1;
+}
+.light::view-transition-new(root){
+  z-index: 999;
+}
+
 :root {
   --primary: 56 189 248;
 }
