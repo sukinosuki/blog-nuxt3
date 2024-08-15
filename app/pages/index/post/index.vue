@@ -1,29 +1,39 @@
 <template>
-  <div>
+  <div class="md:px-20">
     <h2 class="text-10 font-bold">
       # Post
     </h2>
 
-    <ul class="mt-20">
-      <li
+    <ul class="mt-20 relative">
+      <PostItem
         v-for="(post, index) in posts"
         :key="post.id"
         v-motion="{
           initial: {
-            y: 20,
             opacity: 0,
+            y: 20,
           },
-          enter: {
-            y: 0,
+          visibleOnce: {
             opacity: 1,
+            y: 0,
           },
         }"
-        class="mb-8 group"
-        :delay="index * 40"
-        :duration="200"
-      >
-        <PostItem :post="post" />
-      </li>
+        :post="post"
+        :delay="(index % LIMIT) * 30"
+        @mouseoverleave="handlePostItemMouseoverleave"
+      />
+
+      <div
+        class="absolute bg-primary opacity-20 rounded-2xl duration-200 pointer-events-none transform-origin-b"
+        :style="{
+          left: left+'px',
+          top: top +'px',
+          width: width + 'px',
+          height: height +'px',
+          opacity: hovered ? 0.1 : 0,
+          transform: hovered ? 'scale(1)' : 'scale(1.2)',
+        }"
+      />
     </ul>
 
     <div class="py-10 flex justify-center items-center">
@@ -70,25 +80,41 @@ import postApi from '~/api/app-api/postApi'
 import { toCatch } from '~/util/toCatch'
 
 const LIMIT = 10
-const page = ref(1)
-const params: API_Post.Get = {
-  page: page.value,
-  size: LIMIT,
+const route = useRoute()
+const hovered = ref(false)
+const left = ref(0)
+const top = ref(0)
+const width = ref(0)
+const height = ref(0)
+const handlePostItemMouseoverleave = (data) => {
+  left.value = data.left
+  top.value = data.top
+  width.value = data.width
+  height.value = data.height
+  hovered.value = data.hovered
 }
+
+const page = ref(Number(route.query.page || 1))
+
 const loadMoreLoading = ref(false)
 const hasMore = ref(false)
-const { data, error } = await useAsyncData('/api/post', () => postApi.get(params))
+const { data, error } = await useAsyncData('/api/post', () => postApi.get({
+  page: page.value,
+  size: LIMIT }),
+)
 
 if (error.value) {
   error.value.fatal = true
   throw error.value
 }
+
 const posts = data || []
 
 if (posts.value?.length === LIMIT) {
   hasMore.value = true
 }
 
+//
 const loadMore = async () => {
   if (loadMoreLoading.value) return
   loadMoreLoading.value = true

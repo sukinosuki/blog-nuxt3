@@ -1,31 +1,38 @@
 <template>
-  <span>
-    <span
-      ref="attachDomRef"
-      @mouseover="handleAttachDomMouseover"
-      @mouseleave="handleAttachDomMouseleave"
-    >
-      <slot />
-    </span>
+  <span
+    ref="attachDomRef"
+    @mouseover="handleAttachDomMouseover"
+    @mouseleave="handleAttachDomMouseleave"
+  >
+    <slot />
+  </span>
 
-    <Teleport to="body">
-      <Transition>
+  <Teleport to="body">
+    <Transition>
+      <div
+        v-if="visible"
+        ref="popoverRef"
+        :style="{
+          left: (attachDomRect?.width || 0) / 2 + (attachDomRect?.left || 0) + 'px',
+          top: 30 + (attachDomRect?.height || 0) + (attachDomRect?.top || 0) + 'px',
+        }"
+        class="fixed -translate-50% z-1"
+        @mouseover="handlePopoverDomMouseover"
+        @mouseleave="handlePopoverDomeMouseleave"
+      >
+        <!-- <slot name="popover" /> -->
         <div
-          v-if="visible"
-          ref="popoverRef"
-          :style="{
-            left: (attachDomRect?.width || 0) / 2 + (attachDomRect?.left || 0) + 'px',
-            top: 30 + (attachDomRect?.height || 0) + (attachDomRect?.top || 0) + 'px',
-          }"
-          class="fixed -translate-50% z-1"
-          @mouseover="handlePopoverDomMouseover"
-          @mouseleave="handlePopoverDomeMouseleave"
+          class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl"
         >
           <slot name="popover" />
+          <!-- <span
+              v-if="hasPopoverSlot"
+              class="text-primary"
+            >查看原图</span> -->
         </div>
-      </Transition>
-    </Teleport>
-  </span>
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
@@ -34,6 +41,9 @@ const isPopoverDomHovered = ref(false)
 const popoverRef = ref<HTMLSpanElement | null>(null)
 const attachDomRef = ref<HTMLSpanElement | null>(null)
 const attachDomRect = ref<DOMRect | null>(null)
+
+const slots = useSlots()
+const hasPopoverSlot = !!slots['popover']
 
 const leaveFlag = ref(false)
 const visible = computed(() => {

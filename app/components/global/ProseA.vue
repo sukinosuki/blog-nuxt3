@@ -16,15 +16,15 @@
     </span>
 
     <template #popover>
-      <div
+      <!-- <div
         class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl"
-      >
-        <NuxtLink
-          :href="href"
-          :target="target"
-          class="text-primary"
-        >{{ href }}</NuxtLink>
-      </div>
+      > -->
+      <NuxtLink
+        :href="href"
+        :target="target"
+        class="text-primary"
+      >{{ href }}</NuxtLink>
+      <!-- </div> -->
     </template>
   </Popover>
 </template>

@@ -64,14 +64,14 @@ export default defineNuxtConfig({
     //   { name: 'eafont', src: '/static/font/eafont.ttf' },
     // ],
   },
-  mdc: {
-    highlight: {
-      theme: {
-        light: 'github-light',
-        dark: 'github-dark',
-      },
-    },
-  },
+  // mdc: {
+  //   highlight: {
+  //     theme: {
+  //       light: 'github-light',
+  //       dark: 'github-dark',
+  //     },
+  //   },
+  // },
   hub: {
     database: true,
     kv: true,

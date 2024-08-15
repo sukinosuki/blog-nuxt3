@@ -18,7 +18,7 @@
             }"
             class="inline-block"
             :class="[letter === ' ' ? 'mx-1' : '']"
-            :delay="index * 20"
+            :delay="index * 30"
             :duration="100"
           >
             {{ letter }}
@@ -34,13 +34,13 @@
                     y: 20,
                     opacity: 0,
                   },
+                  visibleOnce: {
+                    y: 0,
+                    opacity: 1,
+                  },
                 }"
                 class="inline-block"
-                :visible="{
-                  opacity: 1,
-                  y: 0,
-                }"
-                :delay=" 400"
+                :delay="400 + index * 30"
                 :duration="200"
               >{{ letter }}</span>
             </span>
@@ -56,15 +56,15 @@
                 y: 20,
                 opacity: 0,
               },
+              visibleOnce: {
+                y: 0,
+                opacity: 1,
+              },
             }"
             class="inline-block"
             :class="[letter === ' ' ? 'mx-1' :'']"
-            :visible="{
-              opacity: 1,
-              y: 0,
-            }"
-            :delay="index * 20 + 1000"
-            :duration="300"
+            :delay="index * 30 + 1000"
+            :duration="200"
           >
             {{ letter }}
           </span>
@@ -79,70 +79,64 @@
                 y: 20,
                 opacity: 0,
               },
+              visibleOnce: {
+                y: 0,
+                opacity: 1,
+              },
             }"
             class="inline-block text-14px"
-            :class="[letter === ' ' ? 'mx-1' :'']"
-            :visible="{
-              opacity: 1,
-              y: 0,
-            }"
-            :delay="(10 * (index + 1)) + 2000"
-            :duration="100"
+            :class="[letter === ' ' ? 'mx-1' : '']"
+            :delay="(30 * (index + 1)) + 2000"
+            :duration="200"
           >
             {{ letter }}
           </span>
         </p>
 
-        <!-- <p class="text-4 mt-4">
-          <span
-            v-for="(letter, index) in ('A NodeJS Full Stack').split('')"
-            :key="index"
-            v-motion="{
-              initial: {
-                y: 10,
-                opacity: 0,
-              },
-            }"
-            :visible="{
-              opacity: 1,
-              y: 0,
-            }"
-            class="inline-block"
-            :class="[letter === ' ' ? 'mx-1' : '']"
-            :delay="10 * index + 1200"
-            :duration="200"
-          >{{ letter }}</span>
-        </p> -->
-
         <ul class="mt-10">
           <li
             v-for="(link, index) in socialLinks"
             :key="link.name"
-            class="flex-inline mr-2"
-          >
-            <Motion
-              :initial="{
+            v-motion="{
+              initial: {
                 opacity: 0,
                 y: 20,
-              }"
-              :visible="{
+              },
+              visibleOnce: {
                 opacity: 1,
                 y: 0,
-              }"
-              :delay="100 * index + 1600"
-            >
-              <a
-                target="_blank"
-                :href="link.path"
-                class="w-10 h-10 flex items-center justify-center rounded-full text-white shadow-2xl "
-                :class="link.color"
-              >
-                <div
-                  class="w-6 h-6"
-                  :class="link.icon"
-                />
-              </a>
-            </Motion>
+              },
+            }"
+            :duration="200"
+            class="flex-inline mr-2"
+            :delay="index * 100 + 3000"
+          >
+            <Popover>
+              <div>
+                <a
+                  target="_blank"
+                  :href="link.path"
+                  class="w-10 h-10 flex items-center justify-center rounded-full text-white shadow-2xl "
+
+                  :class="link.color"
+                >
+                  <div
+                    class="w-6 h-6"
+                    :class="link.icon"
+                  />
+                </a>
+              </div>
+
+              <template #popover>
+                <a
+                  :href="link.path"
+                  target="_blank"
+                  class="text-primary"
+                >
+                  {{ link.name }}
+                </a>
+              </template>
+            </Popover>
           </li>
         </ul>
       </div>
@@ -214,10 +208,10 @@
             class="flex items-center hover:text-primary duration-200 hover:-translate-y-2"
           >
             <i
-              class="w-6 h-6 opacity-80 max-md-hidden"
+              class="w-5 h-5 opacity-80 max-md-hidden"
               :class="blogLink.icon"
             />
-            <span class="ml-3 text-4 opacity-80 font-600 max-md-ml-0">{{ blogLink.name }}</span>
+            <span class="ml-3 text-4 opacity-80 max-md-ml-0">{{ blogLink.name }}</span>
           </NuxtLink>
 
           <span

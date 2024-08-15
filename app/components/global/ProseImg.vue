@@ -4,6 +4,7 @@
       <NuxtImg
         ref="imgRef"
         class="w-100%"
+        :class="{ invisible: isLoadError }"
         :src="src"
         :alt="alt"
         loading="lazy"
@@ -35,15 +36,15 @@
         >{{ alt }}</a>
 
         <template #popover>
-          <div
+          <!-- <div
             class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl"
-          >
-            <a
-              :href="src"
-              target="_blank"
-              class="text-primary"
-            >查看原图</a>
-          </div>
+          > -->
+          <a
+            :href="src"
+            target="_blank"
+            class="text-primary"
+          >查看原图</a>
+          <!-- </div> -->
         </template>
       </Popover>
     </div>

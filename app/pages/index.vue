@@ -1,6 +1,10 @@
 <template>
-  <div class="mx-auto px-3 py-30 min-h-100vh lg:w-960px">
-    <NuxtPage />
+  <div>
+    <div class="mx-auto px-3 py-30 min-h-100vh lg:w-960px">
+      <NuxtPage />
+    </div>
+
+    <AppFooter />
   </div>
 </template>
 

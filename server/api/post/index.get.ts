@@ -27,7 +27,10 @@ export default eventHandler(async (event) => {
       alias: true,
       description: true,
     },
-    where: category_id ? eq(tables.post.id, category_id) : undefined,
+    where: and(
+      category_id ? eq(tables.post.id, category_id) : undefined,
+      eq(tables.post.enabled, true),
+    ),
     limit: size,
     offset: (page - 1) * size, // TODO: 传递string时不生效
     orderBy: [desc(tables.post.id)],
