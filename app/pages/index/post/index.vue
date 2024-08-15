@@ -4,43 +4,34 @@
       # Post
     </h2>
 
-    <ul class="mt-20 relative">
-      <PostItem
-        v-for="(post, index) in posts"
-        :key="post.id"
-        v-motion="{
-          initial: {
-            opacity: 0,
-            y: 20,
-          },
-          visibleOnce: {
-            opacity: 1,
-            y: 0,
-            transition: {
-              duration: 200,
-              delay: (index % LIMIT) * 70,
-              type: 'spring',
-              stiffness: 250,
-              damping: 15,
+    <ListHoverEffect
+      :list="posts || []"
+      class="mt-20"
+    >
+      <template #default="slotProps">
+        <PostItem
+          :key="slotProps.item.id"
+          v-motion="{
+            initial: {
+              opacity: 0,
+              y: 20,
             },
-          },
-        }"
-        :post="post"
-        @mouseoverleave="handlePostItemMouseoverleave"
-      />
-
-      <div
-        class="absolute bg-primary opacity-20 rounded-2xl duration-200 pointer-events-none transform-origin-b"
-        :style="{
-          left: left+'px',
-          top: top +'px',
-          width: width + 'px',
-          height: height +'px',
-          opacity: hovered ? 0.1 : 0,
-          transform: hovered ? 'scale(1)' : 'scale(1.2)',
-        }"
-      />
-    </ul>
+            visibleOnce: {
+              opacity: 1,
+              y: 0,
+              transition: {
+                duration: 200,
+                delay: (slotProps.index % LIMIT) * 70,
+                type: 'spring',
+                stiffness: 250,
+                damping: 15,
+              },
+            },
+          }"
+          :post="slotProps.item"
+        />
+      </template>
+    </ListHoverEffect>
 
     <div class="py-10 flex justify-center items-center">
       <button
@@ -87,18 +78,6 @@ import { toCatch } from '~/util/toCatch'
 
 const LIMIT = 10
 const route = useRoute()
-const hovered = ref(false)
-const left = ref(0)
-const top = ref(0)
-const width = ref(0)
-const height = ref(0)
-const handlePostItemMouseoverleave = (data) => {
-  left.value = data.left
-  top.value = data.top
-  width.value = data.width
-  height.value = data.height
-  hovered.value = data.hovered
-}
 
 const page = ref(Number(route.query.page || 1))
 
