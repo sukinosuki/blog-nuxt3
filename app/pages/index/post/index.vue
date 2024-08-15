@@ -7,6 +7,7 @@
     <ListHoverEffect
       :list="posts || []"
       class="mt-20"
+      rounded="2xl"
     >
       <template #default="slotProps">
         <PostItem

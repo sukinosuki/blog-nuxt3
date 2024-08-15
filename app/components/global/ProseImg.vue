@@ -1,6 +1,8 @@
 <template>
   <div class="my-2">
-    <div class="rounded-md overflow-hidden bg-gray-2 dark-bg-black min-h-50 md-min-h-80 relative">
+    <div
+      class="rounded-md overflow-hidden bg-gray-2 dark-bg-black min-h-50 md-min-h-80 relative"
+    >
       <NuxtImg
         ref="imgRef"
         class="w-100%"
@@ -36,15 +38,15 @@
         >{{ alt }}</a>
 
         <template #popover>
-          <!-- <div
+          <div
             class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl"
-          > -->
-          <a
-            :href="src"
-            target="_blank"
-            class="text-primary"
-          >查看原图</a>
-          <!-- </div> -->
+          >
+            <a
+              :href="src"
+              target="_blank"
+              class="text-primary"
+            >查看原图</a>
+          </div>
         </template>
       </Popover>
     </div>

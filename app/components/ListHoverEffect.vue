@@ -14,7 +14,8 @@
     </li>
 
     <div
-      class="absolute bg-primary opacity-20 rounded-2xl duration-200 pointer-events-none transform-origin-b"
+      class="absolute bg-primary opacity-20 duration-200 pointer-events-none transform-origin-b"
+      :class="[rounded? `rounded-${rounded}` : 'rounded']"
       :style="{
         left: left + 'px',
         top: top + 'px',
@@ -27,8 +28,8 @@
   </ul>
 </template>
 
-<script setup lang="ts" generic="T extends {id?: number}">
-defineProps<{ list: T[] }>()
+<script setup lang="ts" generic="T extends any">
+defineProps<{ list: T[], rounded?: 'md' | 'xl' | '2xl' }>()
 
 const domRef = ref<HTMLElement[] | null>(null)
 

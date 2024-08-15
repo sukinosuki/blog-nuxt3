@@ -35,45 +35,42 @@
               class="flex sticky"
               :style="styles"
             >
-              <div class="rounded-full px-3 shadow-2xl shadow-op-40 shadow-primary bg-white dark:bg-black">
-                <ul class="flex">
-                  <li
-                    v-for="(nav, index) in navs"
-                    :key="index"
-                    class="relative group"
-                  >
+              <ul class="flex rounded-full px-3 shadow-2xl shadow-op-40 shadow-primary bg-white dark:bg-black">
+                <li
+                  v-for="(nav, index) in navs"
+                  :key="index"
+                  class="relative"
+                >
+                  <Popover>
                     <NuxtLink
                       :href="nav.path"
-                      class="flex h-10 items-center px-2 mx-2 "
+                      class="flex h-10 items-center px-4"
                     >
                       {{ nav.name }}
                     </NuxtLink>
-                    <div
-                      v-if="nav.children"
-                      class="absolute px-2 top-10 z-1 left-50% -translate-x-50% group-hover:opacity-100 opacity-0
-                      pointer-events-none group-hover:pointer-events-auto
-                      group-hover:block group-hover:opacity-100 group-hover:-translate-y-2 duration-300"
-                    >
-                      <div class="h-5" />
+
+                    <template #popover>
                       <ul class="rounded-md bg-white dark-bg-black backdrop-blur-xl">
-                        <li
-                          v-for="(subNav, subNavIndex) in nav.children"
-                          :key="subNavIndex"
+                        <ListHoverEffect
+                          :list="nav.children || []"
+                          rounded="md"
                         >
-                          <NuxtLink
-                            :href="subNav.path"
-                            class="flex justify-center items-center w-30 px-2 h-10 hover:text-primary hover:bg-primary/20 rounded-md duration-100"
-                          >
-                            <span>
-                              {{ subNav.name }}
-                            </span>
-                          </NuxtLink>
-                        </li>
+                          <template #default="slopProps">
+                            <NuxtLink
+                              :href="slopProps.item.path"
+                              class="flex justify-center items-center group w-30 px-2 h-10 hover:text-primary rounded-md duration-100"
+                            >
+                              <span class="group-hover:translate-x-1 duration-200">
+                                {{ slopProps.item.name }}
+                              </span>
+                            </NuxtLink>
+                          </template>
+                        </ListHoverEffect>
                       </ul>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+                    </template>
+                  </Popover>
+                </li>
+              </ul>
             </nav>
           </div>
         </div>

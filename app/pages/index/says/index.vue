@@ -83,7 +83,7 @@
 <script setup lang="ts">
 import saysApi from '~/api/app-api/saysApi'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/util/toCatch'
+// import { toCatch } from '~/utils/toCatch'
 
 const loadMoreLoadingRef = ref(null)
 const isLoadMoreLoadingVisible = useElementVisibility(loadMoreLoadingRef)
