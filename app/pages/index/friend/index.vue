@@ -1,7 +1,6 @@
 <template>
   <div>
     <ul
-      :style="{ '--total': friends.length }"
       class="grid grid-cols-3 max-md-grid-cols-1 max-lg-grid-cols-2"
     >
       <li
@@ -17,14 +16,16 @@
             y: 0,
           },
         }"
-        :delay="(index % 20) * 70 "
-        :style="{ '--i': index }"
+        :delay="(index % 20) * 70"
       >
         <FriendItem :friend="friend" />
       </li>
     </ul>
 
-    <div class="mt-10">
+    <div
+      v-if="outOfContracts"
+      class="mt-10"
+    >
       <h5 class="font-bold">
         以下站点无法访问, 已失联
       </h5>

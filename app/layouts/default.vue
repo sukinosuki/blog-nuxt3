@@ -64,7 +64,9 @@
                             :href="subNav.path"
                             class="flex justify-center items-center w-30 px-2 h-10 hover:text-primary hover:bg-primary/20 rounded-md duration-100"
                           >
-                            {{ subNav.name }}
+                            <span>
+                              {{ subNav.name }}
+                            </span>
                           </NuxtLink>
                         </li>
                       </ul>

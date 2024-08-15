@@ -97,7 +97,7 @@ export default defineNuxtConfig({
     presets: [
       presetUno(),
       presetIcons(),
-      presetAttributify(),
+      // presetAttributify(),
       presetTypography(),
     ],
     theme: {

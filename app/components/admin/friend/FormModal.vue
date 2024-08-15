@@ -56,11 +56,14 @@ c<template>
         </NFormItem>
 
         <div class="flex justify-center">
-          <img
-            class="w-20 h-20 rounded-md"
-            :src="formModel.avatar"
-            alt=""
-          >
+          <div class="h-20">
+            <img
+              v-if="formModel.avatar"
+              class="w-20 h-20 rounded-md"
+              :src="formModel.avatar"
+              alt=""
+            >
+          </div>
         </div>
 
         <NFormItem

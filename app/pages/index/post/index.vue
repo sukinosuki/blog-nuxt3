@@ -16,10 +16,16 @@
           visibleOnce: {
             opacity: 1,
             y: 0,
+            transition: {
+              duration: 200,
+              delay: (index % LIMIT) * 70,
+              type: 'spring',
+              stiffness: 250,
+              damping: 15,
+            },
           },
         }"
         :post="post"
-        :delay="(index % LIMIT) * 30"
         @mouseoverleave="handlePostItemMouseoverleave"
       />
 

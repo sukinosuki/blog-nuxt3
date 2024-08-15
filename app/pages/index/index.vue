@@ -16,10 +16,9 @@
                 opacity: 1,
               },
             }"
+            :delay="index * 30"
             class="inline-block"
             :class="[letter === ' ' ? 'mx-1' : '']"
-            :delay="index * 30"
-            :duration="100"
           >
             {{ letter }}
           </span>
@@ -27,8 +26,8 @@
           <div class="ml-1">
             <span class="font-bold text-sky">
               <span
-                v-for="(letter, index) in 'hanami'"
-                :key="index"
+                v-for="(letter, index) in ' hanami'"
+                :key="index + letter"
                 v-motion="{
                   initial: {
                     y: 20,
@@ -39,9 +38,8 @@
                     opacity: 1,
                   },
                 }"
+                :delay="400 + (index * 30)"
                 class="inline-block"
-                :delay="400 + index * 30"
-                :duration="200"
               >{{ letter }}</span>
             </span>
           </div>
@@ -49,7 +47,7 @@
 
         <p class="text-6 mt-4">
           <span
-            v-for="(letter, index) in 'A NodeJS Full Stack'"
+            v-for="(letter, index) in ' A NodeJS Full Stack'"
             :key="index"
             v-motion="{
               initial: {
@@ -63,8 +61,7 @@
             }"
             class="inline-block"
             :class="[letter === ' ' ? 'mx-1' :'']"
-            :delay="index * 30 + 1000"
-            :duration="200"
+            :delay="(index * 30) + 1000"
           >
             {{ letter }}
           </span>
@@ -76,7 +73,7 @@
             :key="index"
             v-motion="{
               initial: {
-                y: 20,
+                y: 10,
                 opacity: 0,
               },
               visibleOnce: {
@@ -86,7 +83,7 @@
             }"
             class="inline-block text-14px"
             :class="[letter === ' ' ? 'mx-1' : '']"
-            :delay="(30 * (index + 1)) + 2000"
+            :delay="(20 * index) + 2000"
             :duration="200"
           >
             {{ letter }}

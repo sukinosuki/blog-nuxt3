@@ -19,11 +19,16 @@
             enter: {
               y: 0,
               opacity: 1,
+              transition: {
+                duration: 200,
+                delay: index * 70,
+                type: 'spring',
+                stiffness: 250,
+                damping: 15,
+              },
             },
           }"
-          :duration="200"
-          :delay="index * 10"
-          class="mb-4"
+          class="mb-4 hover:scale-90 duration-100"
         >
           <SaysItem
             :say="say"
@@ -43,10 +48,16 @@
             enter: {
               y: 0,
               opacity: 1,
+              transition: {
+                duration: 200,
+                delay: index * 70 + 40,
+                type: 'spring',
+                stiffness: 250,
+                damping: 15,
+                // mass: 0.5,
+              },
             },
           }"
-          :duration="200"
-          :delay="index * 10"
           class="mb-4"
         >
           <SaysItem
