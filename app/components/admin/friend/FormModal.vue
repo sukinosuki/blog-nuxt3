@@ -57,12 +57,11 @@ c<template>
 
         <div class="flex justify-center">
           <div class="h-20">
-            <img
-              v-if="formModel.avatar"
-              class="w-20 h-20 rounded-md"
+            <AppImage
+              class="w-20 h-20 rounded-lg"
               :src="formModel.avatar"
               alt=""
-            >
+            />
           </div>
         </div>
 
@@ -103,21 +102,17 @@ c<template>
       <template #footer>
         <div class="flex justify-between">
           <NButton
-            class="px-10"
-            secondary
-            strong
             @click="visible = false"
           >
             Cancel
           </NButton>
 
           <NButton
-            class="px-10 bg-primary text-white"
             :loading="confirmLoading"
-            secondary
+            type="primary"
             @click="handleSubmit"
           >
-            Ok
+            Submit
           </NButton>
         </div>
       </template>
@@ -128,9 +123,10 @@ c<template>
 <script setup lang="ts">
 import { NButton, NForm, NFormItem, NInput, NModal, NSelect, useMessage, type FormRules } from 'naive-ui'
 import admin_friendApi from '~/api/admin-api/friendApi'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 import { useForm } from '~/hook/useForm'
 import { FriendStatus, friendStatusOptions } from '~~/type/enum/FriendStatus'
+import type { FormModalAction } from '~/type/enum/formModalAction'
 
 const visible = defineModel<boolean>('visible', {
   default: false,
@@ -139,6 +135,7 @@ const visible = defineModel<boolean>('visible', {
 
 const props = defineProps<{
   row: API_Friend.Model | null
+  action: FormModalAction | string | null
 }>()
 
 const message = useMessage()

@@ -4,8 +4,6 @@
       <template #header-extra>
         <NSpace>
           <NButton
-            strong
-            secondary
             @click="() => fetchData()"
           >
             Refresh
@@ -16,8 +14,6 @@
 
           <NButton
             type="primary"
-            strong
-            secondary
             @click="() => handleAdd()"
           >
             New
@@ -54,7 +50,7 @@ import { NButton, NCard, NDataTable, NPopconfirm, NSpace, NSwitch, type DataTabl
 import admin_projectApi from '~/api/admin-api/projectApi'
 import admin_saysApi from '~/api/admin-api/saysApi'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 
 type PageData<T> = {
   pageStatus: PageStatus
@@ -183,16 +179,16 @@ const columns: DataTableColumns<API_Says.Model> = [
     width: 200,
     render: row => (
       <NSpace>
+        <NButton type="primary" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>
           {{
-            default: () => 'Delete this row?',
+            default: () => 'Delete this record?',
             trigger: () => (
               <NButton type="error" size="small">Del</NButton>
             ),
           }}
 
         </NPopconfirm>
-        <NButton type="info" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
       </NSpace>
     ),
   },

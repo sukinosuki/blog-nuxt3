@@ -130,7 +130,7 @@ onBeforeMount(async () => {
   // markdownContent.value = await markdownParser(post.value!.content)
 
   setTimeout(() => {
-    useNuxtApp().$mediumZoom?.detach('[zoomable]').attach('[zoomable]')
+    useNuxtApp().$mediumZoom?.detach(['zoomable']).attach(['zoomable'])
   }, 1000)
 })
 </script>

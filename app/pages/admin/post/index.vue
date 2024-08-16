@@ -12,8 +12,6 @@
 
           <NButton
             type="primary"
-            strong
-            secondary
             @click="() => handleAdd()"
           >
             New
@@ -35,14 +33,14 @@
         :row-key="rowKey"
         @update:page="handlePageChange"
       />
-
-      <AdminPostFormModal
-        v-model:visible="pageData.modalVisible"
-        :action="pageData.modalAction"
-        :row="pageData.activeRow"
-        @after-confirm="handleAfterConfirm"
-      />
     </NCard>
+
+    <AdminPostFormModal
+      v-model:visible="pageData.modalVisible"
+      :action="pageData.modalAction"
+      :row="pageData.activeRow"
+      @after-confirm="handleAfterConfirm"
+    />
   </div>
 </template>
 
@@ -50,9 +48,8 @@
 import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, NSwitch, NTag, type DataTableColumns, type PaginationProps } from 'naive-ui'
 import admin_postApi from '~/api/admin-api/postApi'
-import { FormModelAction } from '~/type/enum/formModalAction'
+import { FormModalAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/util/toCatch'
 
 const router = useRouter()
 
@@ -62,7 +59,7 @@ type PageData<T> = {
   activeRow: API_Post.Model | null
   action: 'delete' | 'update:enabled' | 'add' | 'edit' | null
   modalVisible: boolean
-  modalAction: FormModelAction
+  modalAction: FormModalAction
 }
 
 const pageData = ref<PageData<API_Post.Model[]>>({
@@ -71,7 +68,7 @@ const pageData = ref<PageData<API_Post.Model[]>>({
   activeRow: null,
   action: null,
   modalVisible: false,
-  modalAction: FormModelAction.ADD,
+  modalAction: FormModalAction.ADD,
 })
 
 const rowKey = (row: API_Post.Model) => row.id
@@ -84,19 +81,18 @@ const handleDelete = async (row: API_Post.Model) => {
 }
 
 const handleAdd = async () => {
-  console.log('pageData.value.modalVisible', pageData.value.modalVisible)
-
-  pageData.value.modalAction = FormModelAction.ADD
+  pageData.value.modalAction = FormModalAction.ADD
   pageData.value.modalVisible = true
 }
 
 const handleEdit = async (row: API_Post.Model) => {
-  pageData.value.modalAction = FormModelAction.EDIT
+  pageData.value.modalAction = FormModalAction.EDIT
   pageData.value.activeRow = row
   pageData.value.modalVisible = true
 }
 
 const toContentPage = async (row: API_Post.Model) => {
+// TODO
   router.push(`/admin/post/${row.id}/content`)
 }
 
@@ -221,20 +217,20 @@ const columns: DataTableColumns<API_Post.Model> = [
   {
     title: 'Operation',
     key: 'id',
+    width: 220,
     render: row => (
       <NSpace>
 
+        <NButton type="primary" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
+        <NButton size="small" onClick={() => toContentPage(row)}>Content</NButton>
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>
           {{
             default: () => 'Delete this record?',
             trigger: () => (
-              <NButton type="error" strong secondary size="small">Del</NButton>
+              <NButton type="error" size="small">Del</NButton>
             ),
           }}
         </NPopconfirm>
-
-        <NButton type="info" strong secondary size="small" onClick={() => handleEdit(row)}>Edit</NButton>
-        <NButton type="tertiary" strong secondary size="small" onClick={() => toContentPage(row)}>Content</NButton>
       </NSpace>
     ),
   },

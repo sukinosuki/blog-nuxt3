@@ -47,15 +47,15 @@
 import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns, type PaginationProps } from 'naive-ui'
 import admin_projectApi from '~/api/admin-api/projectApi'
-import { FormModelAction } from '~/type/enum/formModalAction'
+import { FormModalAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 
 type PageData<T> = {
   pageStatus: PageStatus
   data: T
   activeRow: API_Project.Model | null
-  action: FormModelAction | null
+  action: FormModalAction | null
   modalVisible: boolean
 }
 
@@ -75,7 +75,7 @@ const pagination = reactive<PaginationProps>({
 const handleEdit = (row: API_Project.Model) => {
   pageData.value.modalVisible = true
   pageData.value.activeRow = row
-  pageData.value.action = FormModelAction.EDIT
+  pageData.value.action = FormModalAction.EDIT
 }
 
 //
@@ -91,7 +91,7 @@ const handleAdd = async () => {
   pageData.value.modalVisible = true
   pageData.value.activeRow = null
 
-  pageData.value.action = FormModelAction.ADD
+  pageData.value.action = FormModalAction.ADD
 }
 
 const handleFormModalAfterConfirm = () => {
@@ -185,16 +185,16 @@ const columns: DataTableColumns<API_Project.Model> = [
     width: 200,
     render: row => (
       <NSpace>
+        <NButton type="primary" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>
           {{
-            default: () => 'Delete this row?',
+            default: () => 'Delete this record?',
             trigger: () => (
               <NButton type="error" size="small">Del</NButton>
             ),
           }}
 
         </NPopconfirm>
-        <NButton type="info" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
       </NSpace>
     ),
   },

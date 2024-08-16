@@ -1,5 +1,5 @@
 export default eventHandler(async (event) => {
-  const { title, category_id, description, tag_ids, is_sticky, enabled, alias } = await readBody<API_Post.Add>(event)
+  const { title, category_id, description, tag_ids, is_sticky, enabled, alias, cover } = await readBody<API_Post.Add>(event)
 
   const drizzle = useDrizzle()
 
@@ -12,7 +12,7 @@ export default eventHandler(async (event) => {
       description,
       enabled,
       is_sticky,
-      cover: '',
+      cover: cover || '',
       alias,
       created_at: new Date(),
       updated_at: new Date(),

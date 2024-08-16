@@ -123,10 +123,10 @@ c<template>
 <script setup lang="ts">
 import { NButton, NForm, NFormItem, NInput, NModal, NSelect, NSwitch, useMessage, type FormInst, type FormRules } from 'naive-ui'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { sleep } from '~/util'
+import { sleep } from '~/utils'
 import admin_postApi from '~/api/admin-api/postApi'
 import admin_categoryApi from '~/api/admin-api/categoryApi'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 import admin_tagApi from '~/api/admin-api/tagApi'
 
 const visible = defineModel<boolean>('visible', {

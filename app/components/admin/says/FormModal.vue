@@ -3,12 +3,11 @@
     <NModal
       v-model:show="visible"
       preset="card"
-      class="w-200"
-      title="Project"
+      class="w-140 max-md-w-90%"
+      title="Says"
     >
       <NForm
         ref="formRef"
-        label-placement="left"
         label-width="80"
         :model="formModel"
         :rules="formRules"
@@ -41,7 +40,7 @@
         >
           <NInput
             v-model:value="formModel.source"
-            maxlength="100"
+            maxlength="50"
             show-count
           />
         </NFormItem>
@@ -52,7 +51,7 @@
         >
           <NInput
             v-model:value="formModel.author"
-            maxlength="100"
+            maxlength="50"
             show-count
           />
         </NFormItem>
@@ -66,19 +65,17 @@
       </NForm>
 
       <template #footer>
-        <div class="flex justify-end">
-          <NSpace>
-            <NButton @click="visible = false">
-              Cancel
-            </NButton>
-            <NButton
-              type="primary"
-              :loading="confirmLoading"
-              @click="handleConfirm"
-            >
-              Ok
-            </NButton>
-          </NSpace>
+        <div class="flex justify-between">
+          <NButton @click="visible = false">
+            Cancel
+          </NButton>
+          <NButton
+            type="primary"
+            :loading="confirmLoading"
+            @click="handleConfirm"
+          >
+            Submit
+          </NButton>
         </div>
       </template>
     </NModal>
@@ -86,11 +83,10 @@
 </template>
 
 <script setup lang="tsx">
-import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, NSwitch, useMessage, type FormRules } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSwitch, useMessage, type FormRules } from 'naive-ui'
 import admin_saysApi from '~/api/admin-api/saysApi'
 import { useForm } from '~/hook/useForm'
-import { FormModelAction } from '~/type/enum/formModalAction'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 
 const message = useMessage()
 

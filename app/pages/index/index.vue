@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="flex flex-row max-md:justify-center max-md:items-center max-md:flex-col py-10 md:min-h-70vh justify-between mx-auto">
-      <div class="flex flex-col justify-center max-md:pt-40 ">
-        <h2 class="text-10 font-normal flex">
+      <div class="flex flex-col justify-center">
+        <h2 class="text-10 font-normal flex max-md-justify-center">
           <span
             v-for="(letter, index) in 'Hi, I\'m'"
             :key="index"
@@ -45,7 +45,7 @@
           </div>
         </h2>
 
-        <p class="text-6 mt-4">
+        <p class="text-6 mt-4 flex max-md-justify-center">
           <span
             v-for="(letter, index) in ' A NodeJS Full Stack'"
             :key="index"
@@ -67,7 +67,7 @@
           </span>
         </p>
 
-        <p class="text-6 mt-4">
+        <p class="text-6 mt-4 flex max-md-justify-center">
           <span
             v-for="(letter, index) in 'An independent developer coding with love.'"
             :key="index"
@@ -90,7 +90,7 @@
           </span>
         </p>
 
-        <ul class="mt-10">
+        <ul class="mt-10 flex max-md-justify-center">
           <li
             v-for="(link, index) in socialLinks"
             :key="link.name"
@@ -125,13 +125,15 @@
               </div>
 
               <template #popover>
-                <a
-                  :href="link.path"
-                  target="_blank"
-                  class="text-primary"
-                >
-                  {{ link.name }}
-                </a>
+                <div class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl">
+                  <a
+                    :href="link.path"
+                    target="_blank"
+                    class="text-primary"
+                  >
+                    {{ link.name }}
+                  </a>
+                </div>
               </template>
             </Popover>
           </li>
@@ -140,6 +142,17 @@
 
       <div class="flex items-center max-md:pt-20">
         <NuxtImg
+          v-motion="{
+            initial: {
+              opacity: 0,
+            },
+            enter: {
+              opacity: 1,
+              transition: {
+                delay: 4000,
+              },
+            },
+          }"
           class="w-50 h-50 rounded-full"
           src="https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30pib8ra1mi6g5p82lhqlnd033mv9rrg?imageView2/2/w/540/format/webp|imageMogr2/strip2"
         />

@@ -1,4 +1,4 @@
-export enum FormModelAction {
+export enum FormModalAction {
 
   ADD = 'ADD',
   EDIT = 'EDIT',

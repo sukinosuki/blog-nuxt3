@@ -1,7 +1,15 @@
 export default defineEventHandler(async (event) => {
-  const { title, description, category_id, tag_ids, alias } = await readBody<API_Post.Update>(event)
+  const { title, description, category_id, tag_ids, alias, cover } = await readBody<API_Post.Update>(event)
 
   const id = Number(getRouterParam(event, 'id'))
+
+  if (isNaN(id)) {
+    throw createError({
+      status: 404,
+      message: 'post not found',
+    })
+  }
+  console.log('id ', id)
 
   const drizzle = useDrizzle()
 
@@ -12,6 +20,7 @@ export default defineEventHandler(async (event) => {
       alias,
       description,
       category_id,
+      cover,
       updated_at: new Date(),
     })
     .where(eq(tables.post.id, id))

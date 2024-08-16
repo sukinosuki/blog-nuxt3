@@ -3,7 +3,7 @@
     <li
       v-for="(item, index) in list"
       :key="item.id || index"
-      ref="domRef"
+      ref="itemRef"
       @mouseenter="() => handleMouseover(index)"
       @mouseleave="() => handleMouseleave(index)"
     >
@@ -14,8 +14,8 @@
     </li>
 
     <div
-      class="absolute bg-primary opacity-20 duration-200 pointer-events-none transform-origin-b"
       :class="effectClass"
+      class="absolute bg-primary opacity-20 duration-200 pointer-events-none transform-origin-b"
       :style="{
         left: left + 'px',
         top: top + 'px',
@@ -31,7 +31,7 @@
 <script setup lang="ts" generic="T extends any">
 defineProps<{ list: T[], effectClass?: string }>()
 
-const domRef = ref<HTMLElement[] | null>(null)
+const itemRef = ref<HTMLElement[] | null>(null)
 
 const hovered = ref(false)
 const left = ref(0)
@@ -45,7 +45,7 @@ const handleMouseover = (index: number) => {
     offsetLeft, // 相对于低级的left
     clientWidth, // dom宽度
     clientHeight, // dom高度
-  } = domRef.value![index]!
+  } = itemRef.value![index]!
 
   hovered.value = true
   left.value = offsetLeft
@@ -55,7 +55,7 @@ const handleMouseover = (index: number) => {
 }
 
 const handleMouseleave = (index: number) => {
-  const { offsetTop, offsetLeft } = domRef.value![index]!
+  const { offsetTop, offsetLeft } = itemRef.value![index]!
   left.value = offsetLeft
   top.value = offsetTop
   hovered.value = false

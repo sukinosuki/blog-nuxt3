@@ -94,14 +94,14 @@ html.dark {
   filter: blur(1rem);
 } */
 
-.layout-enter-active,
+/* .layout-enter-active,
 .layout-leave-active {
   transition: all 0.4s;
 }
 .layout-enter-from,
 .layout-leave-to {
   filter: grayscale(1);
-}
+} */
 
 .slide-in-move {
   transition: opacity 9.5s linear, transform 9.5s ease-in-out;
@@ -118,11 +118,16 @@ html.dark {
   transition-delay: calc( 0.1s * var(--i) );
 }
 
-.slide-in-enter,
+/* .slide-in-enter,
 .slide-in-leave-to {
   opacity: 0;
 }
 
 .slide-in-enter { transform: translateX(-1em); }
-.slide-in-leave-to { transform: translateX(1em); }
+.slide-in-leave-to { transform: translateX(1em); } */
+
+/* naive ui reset */
+html.dark .n-button {
+  color: white !important;
+}
 </style>

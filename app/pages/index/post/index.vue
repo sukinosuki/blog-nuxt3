@@ -17,12 +17,12 @@
               opacity: 0,
               y: 20,
             },
-            visibleOnce: {
+            enter: {
               opacity: 1,
               y: 0,
               transition: {
                 duration: 200,
-                delay: (slotProps.index % LIMIT) * 70,
+                delay: ((slotProps.index) % LIMIT) * 70,
                 type: 'spring',
                 stiffness: 250,
                 damping: 15,
@@ -75,7 +75,7 @@
 
 <script setup lang="tsx">
 import postApi from '~/api/app-api/postApi'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 
 const LIMIT = 10
 const route = useRoute()
@@ -94,9 +94,9 @@ if (error.value) {
   throw error.value
 }
 
-const posts = data || []
+const posts = reactive(data.value || [])
 
-if (posts.value?.length === LIMIT) {
+if (posts?.length === LIMIT) {
   hasMore.value = true
 }
 
@@ -113,7 +113,7 @@ const loadMore = async () => {
   loadMoreLoading.value = false
   if (err) return
 
-  posts.value?.push(...res!)
+  posts?.push(...res!)
   hasMore.value = res!.length === LIMIT
   page.value++
 }

@@ -51,8 +51,8 @@
 
 <script setup lang="ts">
 import githubApi from '~/api/app-api/githubApi'
-import { sleep } from '~/util'
-import { toCatch } from '~/util/toCatch'
+import { sleep } from '~/utils'
+import { toCatch } from '~/utils/toCatch'
 
 const props = defineProps<{
   repos: string

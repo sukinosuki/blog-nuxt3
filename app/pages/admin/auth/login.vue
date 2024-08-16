@@ -44,7 +44,7 @@
 import { NButton, NForm, NFormItem, NInput, type FormRules } from 'naive-ui'
 import admin_authApi from '~/api/admin-api/authApi'
 import { useForm } from '~/hook/useForm'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 
 definePageMeta({
   layout: 'default',

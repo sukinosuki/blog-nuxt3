@@ -6,14 +6,8 @@ declare namespace API_Post {
     } & typeof tables.post.$inferSelect
 
     type Add = {
-      title: string
-      category_id: number
-      description: string
       tag_ids: number[]
-      enabled: boolean
-      is_sticky: boolean
-      alias: string | null
-    }
+    } & Pick<Model, 'title' | 'category_id' | 'description' | 'enabled' | 'is_sticky' | 'alias' | 'cover'>
 
     type Update = {
       id: number

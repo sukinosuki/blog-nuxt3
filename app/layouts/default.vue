@@ -60,7 +60,7 @@
                               :href="slopProps.item.path"
                               class="flex justify-center items-center group w-30 px-2 h-10 hover:text-primary rounded-md duration-100"
                             >
-                              <span class="group-hover:translate-x-1 duration-200">
+                              <span class="group-hover:translate-x-1 duration-200 line-clamp-1">
                                 {{ slopProps.item.name }}
                               </span>
                             </NuxtLink>

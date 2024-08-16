@@ -23,8 +23,8 @@ import Vditor from 'vditor'
 import 'vditor/dist/index.css'
 import { NButton, NCard, useMessage } from 'naive-ui'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { sleep } from '~/util'
-import { toCatch } from '~/util/toCatch'
+import { sleep } from '~/utils'
+import { toCatch } from '~/utils/toCatch'
 import admin_postApi from '~/api/admin-api/postApi'
 
 const message = useMessage()

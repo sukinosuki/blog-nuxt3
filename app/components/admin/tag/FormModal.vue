@@ -3,13 +3,11 @@
     <NModal
       v-model:show="visible"
       preset="card"
-      class="w-200"
+      class="w-140 max-md-w-90%"
       title="Tag"
-      @after-leave="handleAfterClose"
     >
       <NForm
         ref="formRef"
-        label-placement="left"
         label-width="80"
         :model="formModel"
         :rules="formRules"
@@ -38,19 +36,17 @@
       </NForm>
 
       <template #footer>
-        <div class="flex justify-end">
-          <NSpace>
-            <NButton @click="handleCloseModal">
-              Cancel
-            </NButton>
-            <NButton
-              type="primary"
-              :loading="confirmLoading"
-              @click="handleConfirm"
-            >
-              Ok
-            </NButton>
-          </NSpace>
+        <div class="flex justify-between">
+          <NButton @click="visible = false">
+            Cancel
+          </NButton>
+          <NButton
+            type="primary"
+            :loading="confirmLoading"
+            @click="handleConfirm"
+          >
+            Submit
+          </NButton>
         </div>
       </template>
     </NModal>
@@ -58,25 +54,20 @@
 </template>
 
 <script setup lang="tsx">
-import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, useMessage, type FormInst, type FormRules } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, type FormRules } from 'naive-ui'
 import admin_tagApi from '~/api/admin-api/tagApi'
-import { FormModelAction } from '~/type/enum/formModalAction'
-import { toCatch } from '~/util/toCatch'
-
-const message = useMessage()
+import { useForm } from '~/hook/useForm'
+import { FormModalAction } from '~/type/enum/formModalAction'
 
 type CategoryForm = {
   id: number | null
 } & Pick<API_Tag.Model, 'name'>
 
-const formRef = ref<FormInst>()
-
 const emit = defineEmits<{
-  (e: 'close'): void
   (e: 'after-confirm'): void
 }>()
 
-const defaultFormValue: CategoryForm = {
+const initialFormModel: CategoryForm = {
   id: null,
   name: '',
 }
@@ -86,7 +77,10 @@ const visible = defineModel<boolean>('visible', {
   required: true,
 })
 
-const props = defineProps<{ row?: API_Tag.Model | null, action: FormModelAction }>()
+const props = defineProps<{
+  row?: API_Tag.Model | null
+  action: FormModalAction
+}>()
 
 const formRules: FormRules = {
   name: {
@@ -95,38 +89,30 @@ const formRules: FormRules = {
   },
 }
 
-const formModel = ref<CategoryForm>({ ...defaultFormValue })
+const form = useForm(initialFormModel)
+// const formModel = ref<CategoryForm>({ ...initialFormModel })
+const formModel = form.data
+const formRef = form.ref
+
 const confirmLoading = ref(false)
 
 watch(visible, () => {
-  if (!visible.value) return
+  if (!visible.value) {
+    form.reset()
+    return
+  }
 
-  if (props.action === FormModelAction.EDIT) {
+  if (props.action === FormModalAction.EDIT) {
     formModel.value.id = props.row!.id
     formModel.value.name = props.row!.name
   }
 })
 
-// modal close event
-const handleAfterClose = () => {
-  Object.entries(defaultFormValue).forEach(([k, v]) => {
-    formModel.value[k] = v
-  })
-}
-
-// close modal
-const handleCloseModal = () => {
-  visible.value = false
-  // emit('close')
-}
-
 // confirm
 const handleConfirm = async () => {
-  const validate = await formRef.value?.validate().catch((err) => {
-    message.warning(err[0][0].message)
-  })
+  const [validateOk] = await form.validate()
 
-  if (!validate) return
+  if (!validateOk) return
 
   confirmLoading.value = true
   const { id, name } = formModel.value
@@ -134,7 +120,7 @@ const handleConfirm = async () => {
     id: id ?? 0,
     name,
   }
-  const fn = props.action === FormModelAction.ADD ? admin_tagApi.add : admin_tagApi.update
+  const fn = props.action === FormModalAction.ADD ? admin_tagApi.add : admin_tagApi.update
 
   const [err] = await toCatch(fn(data))
   confirmLoading.value = false

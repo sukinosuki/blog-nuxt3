@@ -12,9 +12,7 @@
 
           <NButton
             type="primary"
-            strong
-            secondary
-            @click="() => handleAdd()"
+            @click="handleAdd"
           >
             New
             <template #icon>
@@ -35,7 +33,7 @@
 
     <AdminCategoryFormModal
       v-model:visible="pageData.modalVisible"
-      :action="pageData.action!"
+      :action="pageData.action"
       :row="pageData.activeRow"
       @after-confirm="handleFormModalAfterConfirm"
     />
@@ -43,18 +41,17 @@
 </template>
 
 <script setup lang="tsx">
-import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns } from 'naive-ui'
 import admin_categoryApi from '~/api/admin-api/categoryApi'
-import { FormModelAction } from '~/type/enum/formModalAction'
+import { FormModalAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 
 type PageData<T> = {
   pageStatus: PageStatus
   data: T
   activeRow: API_Category.Model | null
-  action: FormModelAction | null
+  action: FormModalAction
   modalVisible: boolean
 }
 
@@ -62,14 +59,14 @@ const pageData = ref<PageData<API_Category.Model[]>>({
   data: [],
   pageStatus: PageStatus.LOADING,
   activeRow: null,
-  action: null,
+  action: FormModalAction.ADD,
   modalVisible: false,
 })
 
 const handleEdit = (row: API_Category.Model) => {
   pageData.value.modalVisible = true
   pageData.value.activeRow = row
-  pageData.value.action = FormModelAction.EDIT
+  pageData.value.action = FormModalAction.EDIT
 }
 
 //
@@ -85,7 +82,7 @@ const handleAdd = async () => {
   pageData.value.modalVisible = true
   pageData.value.activeRow = null
 
-  pageData.value.action = FormModelAction.ADD
+  pageData.value.action = FormModalAction.ADD
 }
 
 const handleFormModalAfterConfirm = () => {
@@ -113,6 +110,7 @@ const columns: DataTableColumns<API_Category.Model> = [
   {
     title: 'id',
     key: 'id',
+    width: 100,
   },
   {
     title: 'Name',
@@ -125,23 +123,27 @@ const columns: DataTableColumns<API_Category.Model> = [
   {
     title: 'Created At',
     key: 'created_at',
-    render: row => dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
+    width: 200,
+    // render: row => dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
+    render: row => dateUtil.format(row.created_at),
   },
   {
     title: 'Operation',
     key: 'id',
+    width: 130,
     render: row => (
       <NSpace>
+        <NButton type="primary" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
+
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>
           {{
             default: () => 'Delete this row?',
             trigger: () => (
-              <NButton strong secondary type="error" size="small">Del</NButton>
+              <NButton type="error" size="small">Del</NButton>
             ),
           }}
 
         </NPopconfirm>
-        <NButton strong secondary type="info" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
       </NSpace>
     ),
   },

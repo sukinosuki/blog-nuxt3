@@ -3,13 +3,12 @@
     <NModal
       v-model:show="visible"
       preset="card"
-      class="w-200"
+      class="w-140 max-md-90%"
       title="Project"
     >
       <NForm
         ref="formRef"
-        label-placement="left"
-        label-width="80"
+        label-width="100"
         :model="formModel"
         :rules="formRules"
       >
@@ -82,19 +81,17 @@
       </NForm>
 
       <template #footer>
-        <div class="flex justify-end">
-          <NSpace>
-            <NButton @click="visible = false">
-              Cancel
-            </NButton>
-            <NButton
-              type="primary"
-              :loading="confirmLoading"
-              @click="handleConfirm"
-            >
-              Ok
-            </NButton>
-          </NSpace>
+        <div class="flex justify-between">
+          <NButton @click="visible = false">
+            Cancel
+          </NButton>
+          <NButton
+            type="primary"
+            :loading="confirmLoading"
+            @click="handleConfirm"
+          >
+            Submit
+          </NButton>
         </div>
       </template>
     </NModal>
@@ -105,8 +102,8 @@
 import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, useMessage, type FormRules } from 'naive-ui'
 import admin_projectApi from '~/api/admin-api/projectApi'
 import { useForm } from '~/hook/useForm'
-import { FormModelAction } from '~/type/enum/formModalAction'
-import { toCatch } from '~/util/toCatch'
+import { FormModalAction } from '~/type/enum/formModalAction'
+import { toCatch } from '~/utils/toCatch'
 
 const message = useMessage()
 
@@ -123,7 +120,7 @@ const visible = defineModel<boolean>('visible', {
   required: true,
 })
 
-const props = defineProps<{ row?: API_Project.Model | null, action: FormModelAction }>()
+const props = defineProps<{ row?: API_Project.Model | null, action: FormModalAction }>()
 
 const formRules: FormRules = {
   name: {
@@ -160,7 +157,7 @@ watch(visible, () => {
     return
   }
 
-  if (props.action === FormModelAction.EDIT) {
+  if (props.action === FormModalAction.EDIT) {
     formModel.value.id = props.row!.id
     formModel.value.name = props.row!.name
     formModel.value.cover = props.row!.cover
@@ -191,7 +188,7 @@ const handleConfirm = async () => {
     repository,
     preview,
   }
-  const fn = props.action === FormModelAction.ADD ? admin_projectApi.add : admin_projectApi.update
+  const fn = props.action === FormModalAction.ADD ? admin_projectApi.add : admin_projectApi.update
 
   const [err] = await toCatch(fn(data))
   confirmLoading.value = false

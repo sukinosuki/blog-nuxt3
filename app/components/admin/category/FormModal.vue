@@ -3,7 +3,7 @@
     <NModal
       v-model:show="visible"
       preset="card"
-      class="w-200"
+      class="w-140 max-md-90%"
       title="Category"
     >
       <NForm
@@ -52,20 +52,17 @@
       </NForm>
 
       <template #footer>
-        <div class="flex justify-end">
-          <NSpace>
-            <NButton @click="handleCloseModal">
-              Cancel
-            </NButton>
-            <NButton
-              type="primary"
-              class="!text-white"
-              :loading="confirmLoading"
-              @click="handleConfirm"
-            >
-              Ok
-            </NButton>
-          </NSpace>
+        <div class="flex justify-between">
+          <NButton @click="handleCloseModal">
+            Cancel
+          </NButton>
+          <NButton
+            type="primary"
+            :loading="confirmLoading"
+            @click="handleConfirm"
+          >
+            Submit
+          </NButton>
         </div>
       </template>
     </NModal>
@@ -73,11 +70,11 @@
 </template>
 
 <script setup lang="tsx">
-import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, type FormRules } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, type FormRules } from 'naive-ui'
 import admin_categoryApi from '~/api/admin-api/categoryApi'
 import { useForm } from '~/hook/useForm'
-import { FormModelAction } from '~/type/enum/formModalAction'
-import { toCatch } from '~/util/toCatch'
+import { FormModalAction } from '~/type/enum/formModalAction'
+import { toCatch } from '~/utils/toCatch'
 
 type CategoryForm = {
   id: number | null
@@ -88,7 +85,7 @@ const emit = defineEmits<{
   (e: 'after-confirm'): void
 }>()
 
-const props = defineProps<{ row?: API_Category.Model | null, action: FormModelAction }>()
+const props = defineProps<{ row?: API_Category.Model | null, action: FormModalAction }>()
 
 const formRules: FormRules = {
   name: {
@@ -118,7 +115,7 @@ watch(visible, () => {
     return
   }
 
-  if (props.action === FormModelAction.EDIT) {
+  if (props.action === FormModalAction.EDIT) {
     formModel.value.id = props.row!.id
     formModel.value.name = props.row!.name
     formModel.value.alias = props.row!.alias
@@ -144,7 +141,7 @@ const handleConfirm = async () => {
     name,
     alias: alias?.trim() || null,
   }
-  const fn = props.action === FormModelAction.ADD ? admin_categoryApi.add : admin_categoryApi.update
+  const fn = props.action === FormModalAction.ADD ? admin_categoryApi.add : admin_categoryApi.update
 
   const [err] = await toCatch(fn(data))
   confirmLoading.value = false

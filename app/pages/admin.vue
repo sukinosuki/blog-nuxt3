@@ -8,7 +8,7 @@
         <NMessageProvider>
           <NuxtLayout name="admin-layout">
             <AdminWrapper>
-              <NuxtPage />
+              <NuxtPage class="admin-page selection:bg-admin-primary" />
             </AdminWrapper>
           </NuxtLayout>
         </NMessageProvider>
@@ -31,13 +31,25 @@ const theme = computed(() => {
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
-    primaryColor: '#8b5cf6', // dark:#a78bfa
+    primaryColor: '#a57dff', // dark:#a78bfa
     primaryColorHover: '#8b5cf6', // dark:#a78bfa
     primaryColorPressed: '#8b5cf6', // dark:#a78bfa
+    borderRadius: '5px',
   },
-  // Switch: {
-  //   railColorActive: '#8b5cf6',
-  // },
+  Card: {
+    titleFontWeight: 'bold',
+    borderRadius: '10px',
+  },
+  Form: {
+    labelFontWeight: 'bold',
+  },
+  Switch: {
+    railColorActive: '#8b5cf6',
+    loadingColor: '#8b5cf6',
+  },
+  DataTable: {
+    thFontWeight: 'bold',
+  },
 }
 
 definePageMeta({

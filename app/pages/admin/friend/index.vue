@@ -12,8 +12,6 @@
 
           <NButton
             type="primary"
-            strong
-            secondary
             @click="handleAdd"
           >
             New
@@ -40,25 +38,26 @@
     <AdminFriendFormModal
       v-model:visible="pageData.modalVisible"
       :row="pageData.activeRow"
+      :action="pageData.action"
       @after-confirm="handleAfterConfirm"
     />
   </div>
 </template>
 
 <script setup lang="tsx">
-import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NDropdown, NPopconfirm, NSpace, type DataTableColumns, type PaginationProps } from 'naive-ui'
 import admin_friendApi from '~/api/admin-api/friendApi'
+import AppImage from '~/components/AppImage.vue'
+import Popover from '~/components/Popover.vue'
+import { FormModalAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { sleep } from '~/util'
-import { toCatch } from '~/util/toCatch'
 import { FriendStatus, friendStatus, friendStatusOptions } from '~~/type/enum/FriendStatus'
 
 type PageData<T> = {
   pageStatus: PageStatus
   data: T
   activeRow: API_Friend.Model | null
-  action: 'delete' | 'updateField:status' | 'add' | 'edit' | null
+  action: 'update:status' | null | FormModalAction
   modalVisible: boolean
 }
 
@@ -81,34 +80,27 @@ const handleDelete = async (row: API_Friend.Model) => {
 }
 
 const handleEdit = async (row: API_Friend.Model) => {
-  pageData.value.action = 'edit'
+  pageData.value.action = FormModalAction.EDIT
   pageData.value.activeRow = row
   pageData.value.modalVisible = true
 }
 
 const handleAdd = () => {
-  console.log('handleAdd11')
-
-  pageData.value.action = 'add'
+  pageData.value.action = FormModalAction.ADD
   pageData.value.activeRow = null
   pageData.value.modalVisible = true
-
-  console.log('handleAdd ', { ...pageData.value })
 }
 
 const handleUpdateStatus = async (row: API_Friend.Model, newValue: FriendStatus) => {
-  console.log('[handleUpdateStatus] newValue ', newValue)
-
   if (row.status === newValue) return
+
   pageData.value.activeRow = row
-  pageData.value.action = 'updateField:status'
+  pageData.value.action = 'update:status'
   const data: API_Friend.UpdateField = {
     id: row.id,
     field: 'status',
     value: newValue,
   }
-
-  await sleep(1000)
 
   const [err] = await toCatch(admin_friendApi.updateField(data))
   pageData.value.activeRow = null
@@ -159,31 +151,53 @@ const columns: DataTableColumns<API_Friend.Model> = [
     key: 'id',
   },
   {
+    title: 'Blog Name',
+    key: 'blog_name',
+    render: row => (
+      <Popover>
+        {{
+          default: <a href={row.link} target="_blank" class="text-blue">{row.blog_name}</a>,
+          popover: (
+            <div class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl">
+              <a
+                href="link.path"
+                target="_blank"
+                class="text-primary"
+              >
+                { row.link }
+              </a>
+            </div>
+          ),
+        }}
+      </Popover>
+    ),
+  },
+  // {
+  //   title: 'Url',
+  //   key: 'link',
+  //   render: row => <a href={row.link} target="_blank" class="text-blue">{row.link}</a>,
+  // },
+  {
     title: 'Nickname',
     key: 'nickname',
   },
   {
-    title: 'Name',
-    key: 'blog_name',
-  },
-  {
-    title: 'Url',
-    key: 'link',
-    render: row => <a href={row.link} target="_blank" class="text-blue">{row.link}</a>,
-  },
-  {
     title: 'Avatar',
     key: 'avatar',
-    render: row => <img src={row.avatar} class="w-10 h-10 rounded-full"></img>,
+    // render: row => <img src={row.avatar} class="w-10 h-10 rounded-full"></img>,
+    render: row => (
+      <AppImage class="w-10 h-10 rounded bg-gray-1" src={row.avatar}>
+      </AppImage>
+    ),
   },
   // {
   //   title: 'Introduction',
   //   key: 'introduction',
   // },
-  {
-    title: 'Email',
-    key: 'email',
-  },
+  // {
+  //   title: 'Email',
+  //   key: 'email',
+  // },
   {
     title: 'Status',
     key: 'status',
@@ -213,14 +227,16 @@ const columns: DataTableColumns<API_Friend.Model> = [
   {
     title: 'Created At',
     key: 'created_at',
-    render: row => dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
+    width: 180,
+    render: row => dateUtil.format(row.created_at),
   },
   {
     title: 'Operation',
     key: 'id',
+    width: 140,
     render: row => (
       <NSpace>
-        <NButton type="info" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
+        <NButton type="primary" size="small" onClick={() => handleEdit(row)}>Edit</NButton>
 
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>
           {{

@@ -102,7 +102,8 @@ export default defineNuxtConfig({
     ],
     theme: {
       colors: {
-        primary: 'rgb(var(--primary))',
+        'primary': 'rgb(var(--primary))',
+        'admin-primary': '#8b5cf6',
       },
     },
     // preflight: true,
@@ -122,6 +123,7 @@ export default defineNuxtConfig({
           // default size
           props.width = '1.5em'
           props.height = '1.5em'
+          props.display = 'inline-block'
           // customize this @iconify icon in this collection
           // if (collection === "mdi") {
           //   props.width = "1.5em";

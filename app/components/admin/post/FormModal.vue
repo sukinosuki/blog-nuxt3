@@ -1,145 +1,178 @@
 <template>
-  <div>
-    <NModal
-      v-model:show="visible"
-      preset="card"
-      class="w-90% md:w-140"
-      title="Post"
-    >
-      <NForm
-        ref="formRef"
-        :model="postModel"
-        :rules="formRules"
-        read-only
+  <NModal
+    v-model:show="visible"
+    preset="card"
+    class="w-90% md:w-140"
+    :title="`Post #${modalTitle}`"
+  >
+    <div class="flex relative w-100%">
+      <NSpin
+        :show="pageStatus === PageStatus.LOADING"
+        content-class="w-100%"
+        class="flex relative w-100%"
       >
-        <NFormItem
-          class="hidden"
-          label="Id"
-          path="id"
+        <NForm
+          ref="formRef"
+          :model="postModel"
+          :rules="formRules"
+          read-only
+          class="w-100%"
         >
-          <NInputNumber
-            v-model:value="postModel.id"
-          />
-        </NFormItem>
-
-        <NFormItem
-          label="Title"
-
-          path="title"
-        >
-          <NInput
-            v-model:value="postModel.title"
-            maxlength="50"
-            show-count
-          />
-        </NFormItem>
-
-        <NFormItem
-          label="Alias"
-          path="alias"
-        >
-          <NInput
-            v-model:value="postModel.alias"
-            maxlength="50"
-            show-count
-          />
-
-          <template
-            v-if="postModel.alias"
-            #feedback
+          <NFormItem
+            class="hidden"
+            label="Id"
+            path="id"
           >
-            你可以通过 `/api/post/<span class="text-[var(--n-color-target)]">{{ postModel.alias }}</span>` 获取这篇文章
-          </template>
-        </NFormItem>
+            <NInputNumber
+              v-model:value="postModel.id"
+            />
+          </NFormItem>
 
-        <NFormItem
-          label="Category"
-          path="category_id"
-        >
-          <NSelect
-            v-model:value="postModel.category_id"
-            :options="categoryOptions"
-          />
-        </NFormItem>
+          <NFormItem
+            label="Title"
+            path="title"
+          >
+            <NInput
+              v-model:value="postModel.title"
+              maxlength="50"
+              show-count
+            />
+          </NFormItem>
 
-        <NFormItem
-          label="Tags"
-          path="tag_ids"
-        >
-          <NSelect
-            v-model:value="postModel.tag_ids"
-            multiple
-            :max-tag-count="4"
-            :options="tagOptions"
-          />
-        </NFormItem>
+          <NFormItem
+            label="Alias"
+            path="alias"
+          >
+            <NInput
+              v-model:value="postModel.alias"
+              maxlength="50"
+              show-count
+            />
 
-        <NFormItem
-          label="Description"
-          path="description"
-        >
-          <NInput
-            v-model:value="postModel.description"
-            maxlength="200"
-            show-count
-            type="textarea"
-          />
-        </NFormItem>
-
-        <NRow>
-          <NCol :span="12">
-            <NFormItem
-              label="Enabled"
-              path="enabled"
+            <template
+              v-if="postModel.alias"
+              #feedback
             >
-              <NSwitch
-                v-model:value="postModel.enabled"
-              />
-            </NFormItem>
-          </NCol>
+              你可以通过 `/api/post/<span class="text-[var(--n-color-target)]">{{ postModel.alias }}</span>` 获取这篇文章
+            </template>
+          </NFormItem>
 
-          <NCol :span="12">
-            <NFormItem
-              label="Is Sticky"
-              path="is_sticky"
-            >
-              <NSwitch
-                v-model:value="postModel.is_sticky"
-              />
-            </NFormItem>
-          </NCol>
-        </NRow>
-      </NForm>
+          <NFormItem
+            label="Cover"
+            path="cover"
+          >
+            <NInput
+              v-model:value="postModel.cover"
+              maxlength="200"
+              show-count
+            />
+          </NFormItem>
 
-      <div class="flex justify-center mt-10">
-        <NButton
-          class="px-10 "
-          type="primary"
-          :loading="confirmLoading"
-          @click="handleSubmit"
-        >
-          Submit
-        </NButton>
-      </div>
-    </NModal>
-  </div>
+          <div class="pb-4 flex justify-center">
+            <div class="w-100% h-40 bg-gray/10 rounded-md overflow-hidden flex justify-center items-center">
+              <img
+                v-if="postModel.cover"
+                ref="coverRef"
+                class="w-100% h-100% object-cover"
+                :src="postModel.cover"
+                alt=""
+              >
+              <span v-else>Cover preview</span>
+            </div>
+          </div>
+
+          <NFormItem
+            label="Category"
+            path="category_id"
+          >
+            <NSelect
+              v-model:value="postModel.category_id"
+              :options="categoryOptions"
+            />
+          </NFormItem>
+
+          <NFormItem
+            label="Tags"
+            path="tag_ids"
+          >
+            <NSelect
+              v-model:value="postModel.tag_ids"
+              multiple
+              :max-tag-count="4"
+              :options="tagOptions"
+            />
+          </NFormItem>
+
+          <NFormItem
+            label="Description"
+            path="description"
+          >
+            <NInput
+              v-model:value="postModel.description"
+              maxlength="200"
+              show-count
+              type="textarea"
+            />
+          </NFormItem>
+
+          <NRow>
+            <NCol :span="12">
+              <NFormItem
+                label="Enabled"
+                path="enabled"
+              >
+                <NSwitch
+                  v-model:value="postModel.enabled"
+                />
+              </NFormItem>
+            </NCol>
+
+            <NCol :span="12">
+              <NFormItem
+                label="Is Sticky"
+                path="is_sticky"
+              >
+                <NSwitch
+                  v-model:value="postModel.is_sticky"
+                />
+              </NFormItem>
+            </NCol>
+          </NRow>
+        </NForm>
+
+        <div class="flex justify-between mt-10">
+          <NButton @click="visible = false">
+            Cancel
+          </NButton>
+          <NButton
+            class="px-10 !dark-text-white"
+            type="primary"
+            :loading="confirmLoading"
+            @click="handleSubmit"
+          >
+            Submit
+          </NButton>
+        </div>
+      </NSpin>
+    </div>
+  </NModal>
 </template>
 
 <script setup lang="ts">
-import { NButton, NCol, NForm, NFormItem, NInput, NInputNumber, NModal, NRow, NSelect, NSwitch, useMessage, type FormRules } from 'naive-ui'
+import { NButton, NCol, NForm, NFormItem, NInput, NInputNumber, NModal, NRow, NSelect, NSpin, NSwitch, useMessage, type FormRules } from 'naive-ui'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/util/toCatch'
+import { toCatch } from '~/utils/toCatch'
 import admin_postApi from '~/api/admin-api/postApi'
 import admin_tagApi from '~/api/admin-api/tagApi'
 import admin_categoryApi from '~/api/admin-api/categoryApi'
 import { useForm } from '~/hook/useForm'
-import { FormModelAction } from '~/type/enum/formModalAction'
+import { FormModalAction } from '~/type/enum/formModalAction'
 
 type PostForm = {
   id: number | null
   tag_ids: string[]
   category_id: string | null
-} & Pick<API_Post.Model, 'title' | 'alias' | 'description' | 'enabled' | 'is_sticky'>
+} & Pick<API_Post.Model, 'title' | 'alias' | 'description' | 'enabled' | 'is_sticky' | 'cover'>
 
 const visible = defineModel<boolean>('visible', {
   default: false,
@@ -151,15 +184,20 @@ const emit = defineEmits<{
 }>()
 
 const props = defineProps<{
-  action: FormModelAction
+  action: FormModalAction
   row: API_Post.Model | null
 }>()
 
 const message = useMessage()
-const isView = computed(() => props.action === FormModelAction.VIEW)
-// const isAdd = computed(() => props.action === FormModelAction.ADD)
-const isEdit = computed(() => props.action === FormModelAction.EDIT)
+const isView = computed(() => props.action === FormModalAction.VIEW)
+const isEdit = computed(() => props.action === FormModalAction.EDIT)
+const modalTitle = computed(() => {
+  if (isView.value) return 'View'
 
+  if (isEdit.value) return 'Edit'
+
+  return 'Add'
+})
 const pageStatus = ref(PageStatus.LOADING)
 
 const initialForm: PostForm = {
@@ -170,6 +208,7 @@ const initialForm: PostForm = {
   description: '',
   enabled: false,
   alias: '',
+  cover: '',
   is_sticky: false,
 }
 const form = useForm(initialForm)
@@ -201,6 +240,8 @@ const formRules: FormRules = {
   },
 }
 
+const coverRef = ref(null)
+
 watch(visible, (newValue) => {
   console.log('newValue ', newValue)
 
@@ -216,9 +257,11 @@ watch(visible, (newValue) => {
   fetchTagOptions()
   fetchCategoryOptions()
 })
+
 //
 const fetchData = async () => {
   pageStatus.value = PageStatus.LOADING
+  await sleep(2000)
   const [err, res] = await toCatch(admin_postApi.getById(props.row!.id))
 
   if (err || !res) {
@@ -234,6 +277,8 @@ const fetchData = async () => {
   postModel.value.enabled = res.enabled
   postModel.value.is_sticky = res.is_sticky
   postModel.value.alias = res.alias || ''
+  postModel.value.cover = res.cover || ''
+  postModel.value.id = res.id
 }
 
 const fetchTagOptions = async () => {
@@ -266,16 +311,17 @@ const handleSubmit = async () => {
 
   confirmLoading.value = true
 
-  const { title, description, category_id, tag_ids, is_sticky, enabled, alias, id } = postModel.value
+  const { title, description, category_id, tag_ids, is_sticky, enabled, alias, id, cover } = postModel.value
 
   const data: API_Post.Update = {
     id: id!,
+    is_sticky,
+    enabled,
+    cover,
     title: title.trim(),
     description: description.trim(),
     category_id: Number(category_id!),
     tag_ids: tag_ids.map(Number),
-    is_sticky,
-    enabled,
     alias: alias?.trim() || null,
   }
 
