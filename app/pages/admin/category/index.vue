@@ -3,22 +3,24 @@
     <NCard title="Category">
       <template #header-extra>
         <NSpace>
-          <NButton @click="fetchData">
+          <NButton
+            size="small"
+            @click="fetchData"
+          >
             Refresh
             <template #icon>
-              <div class="i-ri:refresh-line" />
+              <i class="i-ri:refresh-line" />
             </template>
           </NButton>
 
           <NButton
+            size="small"
             type="primary"
             @click="handleAdd"
           >
             New
             <template #icon>
-              <i
-                class="i-ri:add-fill"
-              />
+              <i class="i-ri:add-fill" />
             </template>
           </NButton>
         </NSpace>
@@ -27,6 +29,7 @@
       <NDataTable
         :loading="pageData.pageStatus === PageStatus.LOADING"
         :columns="columns"
+        scroll-x="800"
         :data="pageData.data"
       />
     </NCard>
@@ -124,7 +127,6 @@ const columns: DataTableColumns<API_Category.Model> = [
     title: 'Created At',
     key: 'created_at',
     width: 200,
-    // render: row => dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
     render: row => dateUtil.format(row.created_at),
   },
   {
@@ -137,12 +139,11 @@ const columns: DataTableColumns<API_Category.Model> = [
 
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>
           {{
-            default: () => 'Delete this row?',
+            default: () => 'Delete this record?',
             trigger: () => (
               <NButton type="error" size="small">Del</NButton>
             ),
           }}
-
         </NPopconfirm>
       </NSpace>
     ),

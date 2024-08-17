@@ -4,6 +4,7 @@
       <template #header-extra>
         <NSpace>
           <NButton
+            size="small"
             @click="() => fetchData()"
           >
             Refresh
@@ -13,6 +14,7 @@
           </NButton>
 
           <NButton
+            size="small"
             type="primary"
             @click="() => handleAdd()"
           >
@@ -32,6 +34,7 @@
         :columns="columns"
         :data="pageData.data"
         :pagination="pagination"
+        scroll-x="1200"
         @update-page="handleUpdatePage"
       />
     </NCard>
@@ -149,7 +152,6 @@ const columns: DataTableColumns<API_Says.Model> = [
   {
     title: 'Text',
     key: 'text',
-    width: 200,
     ellipsis: {
       tooltip: true,
     },
@@ -157,14 +159,23 @@ const columns: DataTableColumns<API_Says.Model> = [
   {
     title: 'Author',
     key: 'author',
+    width: 140,
+    ellipsis: {
+      tooltip: true,
+    },
   },
   {
     title: 'Source',
     key: 'source',
+    width: 140,
+    ellipsis: {
+      tooltip: true,
+    },
   },
   {
     title: 'Enabled',
     key: 'enabled',
+    width: 80,
     render: row => <NSwitch loading={row.id === pageData.value.activeRow?.id && pageData.value.action === 'update:enabled'} value={row.enabled} onUpdate:value={() => handleToggleEnabled(row)}></NSwitch>,
   },
   {

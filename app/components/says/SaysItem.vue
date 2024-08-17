@@ -1,6 +1,6 @@
 <template>
   <div class="p-3 rounded-md">
-    <p class="text-14px text-black/90 dark-text-white ">
+    <p class="text-14px text-black/90 dark-text-white">
       {{ say.text }}
     </p>
 

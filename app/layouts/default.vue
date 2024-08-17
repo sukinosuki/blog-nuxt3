@@ -4,7 +4,7 @@
       class="py-2 px-2 bg-opacity-60  backdrop-blur-xl fixed w-full top-0 flex justify-around items-center z-999"
       :class="[isLeave ? 'shadow' : '']"
     >
-      <div class="w-100% lg:w-960px xl:w-1280px flex justify-between items-center ">
+      <div class="w-full lg:w-960px xl:w-1280px flex justify-between items-center ">
         <NuxtLink
           href="/sitemap"
           class="md-hidden w-10 h-10 flex justify-center items-center border-rounded-md cursor-pointer border-1px border-gray/30 border-solid rounded-full"
@@ -50,23 +50,22 @@
                     </NuxtLink>
 
                     <template #popover>
-                      <ul class="rounded-md bg-white dark-bg-black backdrop-blur-xl">
-                        <ListHoverEffect
-                          :list="nav.children || []"
-                          effect-class="rounded-md"
-                        >
-                          <template #default="slopProps">
-                            <NuxtLink
-                              :href="slopProps.item.path"
-                              class="flex justify-center items-center group w-30 px-2 h-10 hover:text-primary rounded-md duration-100"
-                            >
-                              <span class="group-hover:translate-x-1 duration-200 line-clamp-1">
-                                {{ slopProps.item.name }}
-                              </span>
-                            </NuxtLink>
-                          </template>
-                        </ListHoverEffect>
-                      </ul>
+                      <ListHoverEffect
+                        :list="nav.children || []"
+                        effect-class="rounded-md"
+                        class="rounded-md bg-white dark-bg-black backdrop-blur-xl"
+                      >
+                        <template #default="slopProps">
+                          <NuxtLink
+                            :href="slopProps.item.path"
+                            class="flex justify-center items-center group w-30 px-2 h-10 hover:text-primary rounded-md duration-100"
+                          >
+                            <span class="group-hover:translate-x-1 duration-200 line-clamp-1">
+                              {{ slopProps.item.name }}
+                            </span>
+                          </NuxtLink>
+                        </template>
+                      </ListHoverEffect>
                     </template>
                   </Popover>
                 </li>

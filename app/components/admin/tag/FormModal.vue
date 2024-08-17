@@ -79,7 +79,7 @@ const visible = defineModel<boolean>('visible', {
 
 const props = defineProps<{
   row?: API_Tag.Model | null
-  action: FormModalAction
+  action: FormModalAction | null
 }>()
 
 const formRules: FormRules = {
@@ -90,7 +90,6 @@ const formRules: FormRules = {
 }
 
 const form = useForm(initialFormModel)
-// const formModel = ref<CategoryForm>({ ...initialFormModel })
 const formModel = form.data
 const formRef = form.ref
 

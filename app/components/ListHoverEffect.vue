@@ -15,13 +15,13 @@
 
     <div
       :class="effectClass"
-      class="absolute bg-primary opacity-20 duration-200 pointer-events-none transform-origin-b"
+      class="absolute bg-primary/10 dark:bg-primary/20 duration-200 pointer-events-none transform-origin-b"
       :style="{
         left: left + 'px',
         top: top + 'px',
         width: width + 'px',
         height: height + 'px',
-        opacity: hovered ? 0.1 : 0,
+        opacity: hovered ? 1 : 0,
         transform: hovered ? 'scale(1)' : 'scale(1.2)',
       }"
     />
@@ -29,7 +29,11 @@
 </template>
 
 <script setup lang="ts" generic="T extends any">
-defineProps<{ list: T[], effectClass?: string }>()
+defineProps<{
+  list: T[]
+  effectClass?: string
+  opacity?: number
+}>()
 
 const itemRef = ref<HTMLElement[] | null>(null)
 

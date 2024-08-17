@@ -8,7 +8,7 @@
       class="py-20 flex"
     >
       <ul class="w-50% mr-2">
-        <li
+        <SaysItem
           v-for="(say, index) in says1"
           :key="say.id"
           v-motion="{
@@ -28,16 +28,13 @@
               },
             },
           }"
-          class="mb-4 hover:scale-90 duration-100"
-        >
-          <SaysItem
-            :say="say"
-            :class="[colors[say.text.length % colors.length]]"
-          />
-        </li>
+          :say="say"
+          class="mb-4 shadow"
+          :class="[colors[say.text.length % colors.length]]"
+        />
       </ul>
       <ul class="w-50% ml-2">
-        <li
+        <SaysItem
           v-for="(say, index) in says2"
           :key="say.id"
           v-motion="{
@@ -54,17 +51,13 @@
                 type: 'spring',
                 stiffness: 250,
                 damping: 15,
-                // mass: 0.5,
               },
             },
           }"
-          class="mb-4"
-        >
-          <SaysItem
-            :say="say"
-            :class="[colors[say.text.length % colors.length]]"
-          />
-        </li>
+          class="mb-4 shadow"
+          :say="say"
+          :class="[colors[say.text.length % colors.length]]"
+        />
       </ul>
     </div>
 

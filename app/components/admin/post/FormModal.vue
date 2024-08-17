@@ -5,18 +5,18 @@
     class="w-90% md:w-140"
     :title="`Post #${modalTitle}`"
   >
-    <div class="flex relative w-100%">
+    <div class="flex relative w-full">
       <NSpin
         :show="pageStatus === PageStatus.LOADING"
-        content-class="w-100%"
-        class="flex relative w-100%"
+        content-class="w-full"
+        class="flex relative w-full"
       >
         <NForm
           ref="formRef"
           :model="postModel"
           :rules="formRules"
           read-only
-          class="w-100%"
+          class="w-full"
         >
           <NFormItem
             class="hidden"
@@ -69,11 +69,11 @@
           </NFormItem>
 
           <div class="pb-4 flex justify-center">
-            <div class="w-100% h-40 bg-gray/10 rounded-md overflow-hidden flex justify-center items-center">
+            <div class="w-full h-40 bg-gray/10 rounded-md overflow-hidden flex justify-center items-center">
               <img
                 v-if="postModel.cover"
                 ref="coverRef"
-                class="w-100% h-100% object-cover"
+                class="w-full h-100% object-cover"
                 :src="postModel.cover"
                 alt=""
               >
@@ -184,7 +184,7 @@ const emit = defineEmits<{
 }>()
 
 const props = defineProps<{
-  action: FormModalAction
+  action: FormModalAction | null | string
   row: API_Post.Model | null
 }>()
 

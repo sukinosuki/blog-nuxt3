@@ -3,7 +3,7 @@
     <img
       :src="src"
       :alt="alt"
-      class="opacity-0 w-100% h-100% duration-100"
+      class="opacity-0 w-full h-full duration-100"
       :class="{ 'opacity-100': isLoaded }"
       @load="handleLoad"
       @error="handleError"

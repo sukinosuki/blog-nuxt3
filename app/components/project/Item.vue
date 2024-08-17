@@ -5,7 +5,7 @@
     class="flex items-center mb-10 px-2 group"
   >
     <div
-      class="w-14 h-14 rounded-xl bg-sky-9/20 group-hover:-translate-y-2 duration-200 overflow-hidden"
+      class="w-14 h-14 rounded-xl bg-gray-3 dark-bg-black shadow group-hover:-translate-y-2 duration-200 overflow-hidden"
     >
       <img
         v-if="project.cover"

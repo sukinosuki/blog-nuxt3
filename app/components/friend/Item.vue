@@ -10,7 +10,7 @@
 
       <NuxtImg
         :src="friend.avatar"
-        class="w-100% h-100% object-cover duration-300 relative z-2 opacity-0"
+        class="w-full h-100% object-cover duration-300 relative z-2 opacity-0"
         loading="lazy"
         :class="{ 'opacity-100': isLoaded }"
         @error="handleImgError"
@@ -27,7 +27,7 @@
             opacity: 1,
           },
         }"
-        class="bg-primary/30 w-100% h-100% flex justify-center items-center text-black/60 dark-text-white text-8 absolute z-1 left-0 top-0"
+        class="bg-primary/30 w-full h-100% flex justify-center items-center text-black/60 dark-text-white text-8 absolute z-1 left-0 top-0"
       > {{ friend.blog_name[0] }}</span>
     </div>
 

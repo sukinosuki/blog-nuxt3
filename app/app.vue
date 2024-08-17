@@ -7,10 +7,7 @@
 <script setup lang="ts">
 import { isClient } from '@vueuse/core'
 
-const runtimeConfig = useRuntimeConfig()
 if (isClient) {
-  console.log('runtimeConfig ', runtimeConfig)
-
   const r = document.querySelector<HTMLElement>(':root')!
 
   const primaryColors = [
@@ -29,6 +26,7 @@ if (isClient) {
 </script>
 
 <style>
+/* view transition reset */
 ::view-transition-old(root), ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
@@ -69,6 +67,7 @@ html.dark {
   color-scheme: dark;
 }
 
+/* medium zoom reset */
 .medium-zoom-overlay {
   z-index: 999;
 }
@@ -85,23 +84,6 @@ html.dark {
   /* filter: blur(1rem); */
   transform: translateY(10px);
 }
-/* .page-enter-active, .page-leave-active {
-  transition: all 0.4s;
-}
-
-.page-enter-from, .page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-} */
-
-/* .layout-enter-active,
-.layout-leave-active {
-  transition: all 0.4s;
-}
-.layout-enter-from,
-.layout-leave-to {
-  filter: grayscale(1);
-} */
 
 .slide-in-move {
   transition: opacity 9.5s linear, transform 9.5s ease-in-out;
@@ -117,14 +99,6 @@ html.dark {
   transition: opacity 9.5s linear, transform 9.5s cubic-bezier(.2,.5,.1,1);
   transition-delay: calc( 0.1s * var(--i) );
 }
-
-/* .slide-in-enter,
-.slide-in-leave-to {
-  opacity: 0;
-}
-
-.slide-in-enter { transform: translateX(-1em); }
-.slide-in-leave-to { transform: translateX(1em); } */
 
 /* naive ui reset */
 html.dark .n-button {

@@ -3,7 +3,10 @@
     <NCard title="Posts">
       <template #header-extra>
         <NSpace>
-          <NButton @click="() => fetchData()">
+          <NButton
+            size="small"
+            @click="() => fetchData()"
+          >
             Refresh
             <template #icon>
               <div class="i-ri:refresh-line" />
@@ -12,6 +15,7 @@
 
           <NButton
             type="primary"
+            size="small"
             @click="() => handleAdd()"
           >
             New
@@ -31,13 +35,14 @@
         :data="pageData.data"
         :pagination="pagination"
         :row-key="rowKey"
+        scroll-x="1200"
         @update:page="handlePageChange"
       />
     </NCard>
 
     <AdminPostFormModal
       v-model:visible="pageData.modalVisible"
-      :action="pageData.modalAction"
+      :action="pageData.action"
       :row="pageData.activeRow"
       @after-confirm="handleAfterConfirm"
     />
@@ -45,7 +50,6 @@
 </template>
 
 <script setup lang="tsx">
-import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, NSwitch, NTag, type DataTableColumns, type PaginationProps } from 'naive-ui'
 import admin_postApi from '~/api/admin-api/postApi'
 import { FormModalAction } from '~/type/enum/formModalAction'
@@ -57,9 +61,8 @@ type PageData<T> = {
   pageStatus: PageStatus
   data: T
   activeRow: API_Post.Model | null
-  action: 'delete' | 'update:enabled' | 'add' | 'edit' | null
+  action: 'delete' | 'update:enabled' | null | FormModalAction
   modalVisible: boolean
-  modalAction: FormModalAction
 }
 
 const pageData = ref<PageData<API_Post.Model[]>>({
@@ -68,7 +71,6 @@ const pageData = ref<PageData<API_Post.Model[]>>({
   activeRow: null,
   action: null,
   modalVisible: false,
-  modalAction: FormModalAction.ADD,
 })
 
 const rowKey = (row: API_Post.Model) => row.id
@@ -81,12 +83,12 @@ const handleDelete = async (row: API_Post.Model) => {
 }
 
 const handleAdd = async () => {
-  pageData.value.modalAction = FormModalAction.ADD
+  pageData.value.action = FormModalAction.ADD
   pageData.value.modalVisible = true
 }
 
 const handleEdit = async (row: API_Post.Model) => {
-  pageData.value.modalAction = FormModalAction.EDIT
+  pageData.value.action = FormModalAction.EDIT
   pageData.value.activeRow = row
   pageData.value.modalVisible = true
 }
@@ -158,10 +160,12 @@ const columns: DataTableColumns<API_Post.Model> = [
   {
     title: 'id',
     key: 'id',
+    width: 80,
   },
   {
     title: 'Title',
     key: 'title',
+    ellipsis: true,
   },
   {
     title: 'Alias',
@@ -212,7 +216,8 @@ const columns: DataTableColumns<API_Post.Model> = [
   {
     title: 'Created At',
     key: 'created_at',
-    render: row => dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
+    width: 160,
+    render: row => dateUtil.format(row.created_at),
   },
   {
     title: 'Operation',

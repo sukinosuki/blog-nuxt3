@@ -30,7 +30,7 @@
 
     <div
       v-if="markdownContent"
-      class="prose text-base prose-truegray no-underline dark:prose-invert max-w-100%"
+      class="prose text-base prose-truegray no-underline dark:prose-invert max-w-full"
     >
       <!-- <MDC
           v-slot="{ data, body }"

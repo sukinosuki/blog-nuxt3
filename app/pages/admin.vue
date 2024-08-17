@@ -31,9 +31,9 @@ const theme = computed(() => {
 
 const themeOverrides: GlobalThemeOverrides = {
   common: {
-    primaryColor: '#a57dff', // dark:#a78bfa
-    primaryColorHover: '#8b5cf6', // dark:#a78bfa
-    primaryColorPressed: '#8b5cf6', // dark:#a78bfa
+    primaryColor: '#8b5cf6', // dark:#a78bfa
+    primaryColorHover: '#a57dff', // dark:#a78bfa
+    primaryColorPressed: '#a57dff', // dark:#a78bfa
     borderRadius: '5px',
   },
   Card: {

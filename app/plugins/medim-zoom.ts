@@ -15,7 +15,8 @@ export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('page:finish', () => {
     console.log('hook page:finish')
 
-    zoom.detach(selector)
+    zoom
+      .detach(selector)
       .attach(selector)
   })
 

@@ -1,15 +1,16 @@
 <template>
-  <span
-    ref="attachDomRef"
-    class="inline-block"
-    @mouseover="handleAttachDomMouseover"
-    @mouseleave="handleAttachDomMouseleave"
-  >
-    <slot />
-  </span>
+  <div>
+    <span
+      ref="attachDomRef"
+      class="inline-block"
+      @mouseover="handleAttachDomMouseover"
+      @mouseleave="handleAttachDomMouseleave"
+    >
+      <slot />
+    </span>
 
-  <Teleport to="body">
-    <!-- v-motion="{
+    <Teleport to="body">
+      <!-- v-motion="{
       initial: {
         opacity: 0,
         x: '-50%',
@@ -23,26 +24,27 @@
         zIndex: 9999,
       },
     }" -->
-    <Transition>
-      <div
-        v-if="visible"
-        ref="popoverRef"
-        :style="{
-          left: (attachDomRect?.width || 0) / 2 + (attachDomRect?.left || 0) + 'px',
-          top: 10 + (attachDomRect?.height || 0) + (attachDomRect?.top || 0) + 'px',
-        }"
-        class="fixed -translate-x-50% z-9999"
-        @mouseover="handlePopoverDomMouseover"
-        @mouseleave="handlePopoverDomeMouseleave"
-      >
-        <!-- <div
+      <Transition>
+        <div
+          v-if="visible"
+          ref="popoverRef"
+          :style="{
+            left: (attachDomRect?.width || 0) / 2 + (attachDomRect?.left || 0) + 'px',
+            top: 10 + (attachDomRect?.height || 0) + (attachDomRect?.top || 0) + 'px',
+          }"
+          class="fixed -translate-x-50% z-9999"
+          @mouseover="handlePopoverDomMouseover"
+          @mouseleave="handlePopoverDomeMouseleave"
+        >
+          <!-- <div
           class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl"
         >
       </div> -->
-        <slot name="popover" />
-      </div>
-    </Transition>
-  </Teleport>
+          <slot name="popover" />
+        </div>
+      </Transition>
+    </Teleport>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -52,16 +54,14 @@ const popoverRef = ref<HTMLSpanElement | null>(null)
 const attachDomRef = ref<HTMLSpanElement | null>(null)
 const attachDomRect = ref<DOMRect | null>(null)
 
-const slots = useSlots()
-const hasPopoverSlot = !!slots['popover']
+// const slots = useSlots()
+// const hasPopoverSlot = !!slots['popover']
 
 const leaveFlag = ref(false)
 const visible = computed(() => {
   return isAttachedDomHovered.value || isPopoverDomHovered.value
 })
 const handleAttachDomMouseover = () => {
-  console.log('attachDomRef.value!.getClientRects()', attachDomRef.value!.getClientRects())
-
   isAttachedDomHovered.value = true
   attachDomRect.value = attachDomRef.value!.getClientRects()[0]!
 }

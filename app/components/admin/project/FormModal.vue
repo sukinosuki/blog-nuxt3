@@ -1,111 +1,106 @@
 <template>
-  <div>
-    <NModal
-      v-model:show="visible"
-      preset="card"
-      class="w-140 max-md-90%"
-      title="Project"
+  <NModal
+    v-model:show="visible"
+    preset="card"
+    class="w-140 max-md-90%"
+    title="Project"
+  >
+    <NForm
+      ref="formRef"
+      label-width="100"
+      :model="formModel"
+      :rules="formRules"
     >
-      <NForm
-        ref="formRef"
-        label-width="100"
-        :model="formModel"
-        :rules="formRules"
+      <NFormItem
+        label="ID"
+        path="id"
+        class="hidden"
       >
-        <NFormItem
-          label="ID"
-          path="id"
-          class="hidden"
-        >
-          <NInputNumber
-            v-model:value="formModel.id"
-            readonly
-          />
-        </NFormItem>
+        <NInputNumber
+          v-model:value="formModel.id"
+          readonly
+        />
+      </NFormItem>
 
-        <NFormItem
-          label="Name"
-          path="name"
-        >
-          <NInput
-            v-model:value="formModel.name"
-            maxlength="50"
-            show-count
-          />
-        </NFormItem>
+      <NFormItem
+        label="Name"
+        path="name"
+      >
+        <NInput
+          v-model:value="formModel.name"
+          maxlength="50"
+          show-count
+        />
+      </NFormItem>
 
-        <NFormItem
-          label="Description"
-          path="description"
-        >
-          <NInput
-            v-model:value="formModel.description"
-            type="textarea"
-            maxlength="100"
-            show-count
-          />
-        </NFormItem>
+      <NFormItem
+        label="Description"
+        path="description"
+      >
+        <NInput
+          v-model:value="formModel.description"
+          type="textarea"
+          maxlength="100"
+          show-count
+        />
+      </NFormItem>
 
-        <NFormItem
-          label="Repository"
-          path="repository"
-        >
-          <NInput
-            v-model:value="formModel.repository"
-            maxlength="200"
-            show-count
-          />
-        </NFormItem>
+      <NFormItem
+        label="Repository"
+        path="repository"
+      >
+        <NInput
+          v-model:value="formModel.repository"
+          maxlength="200"
+          show-count
+        />
+      </NFormItem>
 
-        <NFormItem
-          label="Cover"
-          path="cover"
-        >
-          <NInput
-            v-model:value="formModel.cover"
-            maxlength="200"
-            show-count
-          />
-        </NFormItem>
+      <NFormItem
+        label="Cover"
+        path="cover"
+      >
+        <NInput
+          v-model:value="formModel.cover"
+          maxlength="200"
+          show-count
+        />
+      </NFormItem>
 
-        <NFormItem
-          label="Preview"
-          path="preview"
-        >
-          <NInput
-            v-model:value="formModel.preview"
-            maxlength="200"
-            show-count
-          />
-        </NFormItem>
-      </NForm>
+      <NFormItem
+        label="Preview"
+        path="preview"
+      >
+        <NInput
+          v-model:value="formModel.preview"
+          maxlength="200"
+          show-count
+        />
+      </NFormItem>
+    </NForm>
 
-      <template #footer>
-        <div class="flex justify-between">
-          <NButton @click="visible = false">
-            Cancel
-          </NButton>
-          <NButton
-            type="primary"
-            :loading="confirmLoading"
-            @click="handleConfirm"
-          >
-            Submit
-          </NButton>
-        </div>
-      </template>
-    </NModal>
-  </div>
+    <template #footer>
+      <div class="flex justify-between">
+        <NButton @click="visible = false">
+          Cancel
+        </NButton>
+        <NButton
+          type="primary"
+          :loading="confirmLoading"
+          @click="handleConfirm"
+        >
+          Submit
+        </NButton>
+      </div>
+    </template>
+  </NModal>
 </template>
 
 <script setup lang="tsx">
-import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSpace, useMessage, type FormRules } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, type FormRules } from 'naive-ui'
 import admin_projectApi from '~/api/admin-api/projectApi'
 import { useForm } from '~/hook/useForm'
 import { FormModalAction } from '~/type/enum/formModalAction'
-import { toCatch } from '~/utils/toCatch'
-
-const message = useMessage()
 
 type ProjectForm = {
   id: number | null
@@ -120,7 +115,10 @@ const visible = defineModel<boolean>('visible', {
   required: true,
 })
 
-const props = defineProps<{ row?: API_Project.Model | null, action: FormModalAction }>()
+const props = defineProps<{
+  row?: API_Project.Model | null
+  action: FormModalAction | string | null
+}>()
 
 const formRules: FormRules = {
   name: {
@@ -169,10 +167,8 @@ watch(visible, () => {
 
 // confirm
 const handleConfirm = async () => {
-  const [validateOk, validateMsg] = await form.validate()
-  if (!validateOk || validateMsg) {
-    message.warning(validateMsg || 'validate failed.')
-
+  const [validateOk] = await form.validate()
+  if (!validateOk) {
     return
   }
 

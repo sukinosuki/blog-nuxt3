@@ -209,7 +209,7 @@
               y: 0,
             },
           }"
-          class="flex-inline items-center max-md-w-100% justify-center mb-2 max-md-flex-col"
+          class="flex-inline items-center max-md-w-full justify-center mb-2 max-md-flex-col"
           :duration="200"
           :delay="100 * index + 100"
         >

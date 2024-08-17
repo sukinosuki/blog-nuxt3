@@ -3,15 +3,19 @@
     <NCard title="Projects">
       <template #header-extra>
         <NSpace>
-          <NButton @click="() => fetchData()">
+          <NButton
+            size="small"
+            @click="() => fetchData()"
+          >
             Refresh
             <template #icon>
-              <div class="i-ri:refresh-line" />
+              <i class="i-ri:refresh-line" />
             </template>
           </NButton>
 
           <NButton
             type="primary"
+            size="small"
             @click="() => handleAdd()"
           >
             New
@@ -29,6 +33,7 @@
         :loading="pageData.pageStatus === PageStatus.LOADING"
         :columns="columns"
         :data="pageData.data"
+        scroll-x="1400"
         :pagination="pagination"
         @update-page="handleUpdatePage"
       />
@@ -36,7 +41,7 @@
 
     <AdminProjectFormModal
       v-model:visible="pageData.modalVisible"
-      :action="pageData.action!"
+      :action="pageData.action"
       :row="pageData.activeRow"
       @after-confirm="handleFormModalAfterConfirm"
     />
@@ -44,12 +49,10 @@
 </template>
 
 <script setup lang="tsx">
-import dayjs from 'dayjs'
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns, type PaginationProps } from 'naive-ui'
 import admin_projectApi from '~/api/admin-api/projectApi'
 import { FormModalAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/utils/toCatch'
 
 type PageData<T> = {
   pageStatus: PageStatus
@@ -147,7 +150,7 @@ const columns: DataTableColumns<API_Project.Model> = [
     title: 'Cover',
     key: 'cover',
     width: 100,
-    render: row => row.cover ? <img class="w-10 h-10 rounded-md" src={row.cover}></img> : null,
+    render: row => row.cover ? <img class="w-10 h-10 rounded-md" src={row.cover}></img> : '',
   },
   {
     title: 'Preview',
@@ -155,7 +158,7 @@ const columns: DataTableColumns<API_Project.Model> = [
     ellipsis: {
       tooltip: true,
     },
-    render: row => row.preview ? <a class="text-blue" href={row.preview} target="__blank">{row.preview}</a> : null,
+    render: row => row.preview ? <a class="text-blue" href={row.preview} target="__blank">{row.preview}</a> : '',
   },
   {
     title: 'Repository',
@@ -164,25 +167,17 @@ const columns: DataTableColumns<API_Project.Model> = [
       tooltip: true,
     },
     render: row => <a class="text-blue" href={row.repository} target="__blank">{row.repository}</a>,
-    // render: row => (
-    //   <NTooltip>
-    //     {{
-    //       default: () => row.repository,
-    //       trigger: () => <a class="text-blue" href={row.repository} target="__blank">{row.repository}</a>,
-    //     }}
-    //   </NTooltip>
-    // ) },
   },
   {
     title: 'Created At',
     key: 'created_at',
     width: 160,
-    render: row => dayjs(row.created_at).format('YYYY-MM-DD HH:mm:ss'),
+    render: row => dateUtil.format(row.created_at),
   },
   {
     title: 'Operation',
     key: 'id',
-    width: 200,
+    width: 160,
     render: row => (
       <NSpace>
         <NButton type="primary" size="small" onClick={() => handleEdit(row)}>Edit</NButton>

@@ -3,7 +3,10 @@
     <NCard title="Posts">
       <template #header-extra>
         <NSpace>
-          <NButton @click="() => fetchData()">
+          <NButton
+            size="small"
+            click="() => fetchData()"
+          >
             Refresh
             <template #icon>
               <div class="i-ri:refresh-line" />
@@ -12,6 +15,7 @@
 
           <NButton
             type="primary"
+            size="small"
             @click="handleAdd"
           >
             New
@@ -149,6 +153,7 @@ const columns: DataTableColumns<API_Friend.Model> = [
   {
     title: 'id',
     key: 'id',
+    width: 80,
   },
   {
     title: 'Blog Name',
@@ -156,8 +161,8 @@ const columns: DataTableColumns<API_Friend.Model> = [
     render: row => (
       <Popover>
         {{
-          default: <a href={row.link} target="_blank" class="text-blue">{row.blog_name}</a>,
-          popover: (
+          default: () => <a href={row.link} target="_blank" class="text-blue">{row.blog_name}</a>,
+          popover: () => (
             <div class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl">
               <a
                 href="link.path"
@@ -209,9 +214,9 @@ const columns: DataTableColumns<API_Friend.Model> = [
             size="small"
             secondary
             iconPlacement="right"
-            class="w-100% text-3 "
+            class="w-full text-3 "
             type={row.status === FriendStatus.NORMAL ? 'success' : 'error'}
-            loading={pageData.value.action === 'updateField:status' && pageData.value.activeRow?.id === row.id}
+            loading={pageData.value.action === 'update:status' && pageData.value.activeRow?.id === row.id}
           >
             {/* renderIcon={() => (
               <i
@@ -240,7 +245,7 @@ const columns: DataTableColumns<API_Friend.Model> = [
 
         <NPopconfirm onPositiveClick={() => handleDelete(row)}>
           {{
-            default: () => 'Delete this row?',
+            default: () => 'Delete this record?',
             trigger: () => (
               <NButton type="error" size="small">Del</NButton>
             ),

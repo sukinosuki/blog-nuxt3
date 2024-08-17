@@ -3,15 +3,19 @@
     <NCard title="Tag">
       <template #header-extra>
         <NSpace>
-          <NButton @click="fetchData">
+          <NButton
+            size="small"
+            @click="fetchData"
+          >
             Refresh
             <template #icon>
-              <div class="i-ri:refresh-line" />
+              <i class="i-ri:refresh-line" />
             </template>
           </NButton>
 
           <NButton
             type="primary"
+            size="small"
             @click="() => handleAdd()"
           >
             New
@@ -27,14 +31,16 @@
       <NDataTable
         :loading="pageData.pageStatus === PageStatus.LOADING"
         :columns="columns"
+        scroll-x="700"
         :data="pageData.data"
       />
     </NCard>
 
     <AdminTagFormModal
       v-model:visible="pageData.modalVisible"
-      :action="pageData.action!"
+      :action="pageData.action"
       :row="pageData.activeRow"
+      scroll="800"
       @after-confirm="handleFormModalAfterConfirm"
     />
   </div>
@@ -46,7 +52,6 @@ import { NButton, NCard, NDataTable, NPopconfirm, NSpace, type DataTableColumns 
 import admin_tagApi from '~/api/admin-api/tagApi'
 import { FormModalAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { toCatch } from '~/utils/toCatch'
 
 type PageData<T> = {
   pageStatus: PageStatus
@@ -115,6 +120,9 @@ const columns: DataTableColumns<API_Tag.Model> = [
   {
     title: 'Name',
     key: 'name',
+    ellipsis: {
+      tooltip: true,
+    },
   },
   {
     title: 'Created At',
@@ -124,6 +132,7 @@ const columns: DataTableColumns<API_Tag.Model> = [
   {
     title: 'Operation',
     key: 'id',
+    width: 200,
     render: row => (
       <NSpace>
         <NButton type="primary" size="small" onClick={() => handleEdit(row)}>Edit</NButton>

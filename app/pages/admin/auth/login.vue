@@ -22,14 +22,18 @@
           label="Password"
           path="password"
         >
-          <NInput v-model:value="formModel.password" />
+          <NInput
+            v-model:value="formModel.password"
+            type="password"
+            show-password-on="click"
+          />
         </NFormItem>
       </NForm>
 
       <div class="mt-10">
         <NButton
           type="primary"
-          class="w-100% rounded-full !text-white"
+          class="w-full rounded-full !text-white"
           :loading="confirmLoading"
           @click="handleLogin"
         >

@@ -5,7 +5,7 @@
     >
       <NuxtImg
         ref="imgRef"
-        class="w-100%"
+        class="w-full"
         :class="{ invisible: isLoadError }"
         :src="src"
         :alt="alt"
@@ -17,7 +17,7 @@
 
       <div
         v-if="isLoadError"
-        class="absolute w-100% h-100% absolute top-0 flex justify-center items-center flex-col"
+        class="absolute w-full h-100% absolute top-0 flex justify-center items-center flex-col"
       >
         <span>图片加载失败</span>
 
