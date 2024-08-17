@@ -6,6 +6,9 @@ export default defineNuxtConfig({
   // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
   future: { compatibilityVersion: 4 },
 
+  extends: [
+    './dashboard',
+  ],
   runtimeConfig: {
     api_auth_username: '',
     api_auth_password: '',
@@ -36,10 +39,10 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
   routeRules: {
-    '/admin/**/*': {
+    '/dashboard/**/*': {
       ssr: false,
     },
-    '/admin/**': {
+    '/dashboard/**': {
       ssr: false,
     },
   },

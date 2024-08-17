@@ -7,6 +7,7 @@ export default withNuxt(
   {
     rules: {
       '@typescript-eslint/unified-signatures': 1,
+      'vue/multi-word-component-names': 0,
     },
   },
 )

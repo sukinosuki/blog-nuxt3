@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import saysApi from '~/api/app-api/saysApi'
-import { PageStatus } from '~/type/enum/pageStatus'
+import { PageStatus } from '~~/type/enum/pageStatus'
 
 const loadMoreLoadingRef = ref(null)
 const isLoadMoreLoadingVisible = useElementVisibility(loadMoreLoadingRef)
