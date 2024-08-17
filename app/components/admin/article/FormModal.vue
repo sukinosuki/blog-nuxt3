@@ -258,18 +258,16 @@ const handleSubmit = async () => {
   console.log('data ', data)
 
   const fn = isUpdate ? admin_postApi.update : admin_postApi.add
-  const [err, res] = await toCatch(fn(data))
+  const [err] = await toCatch(fn(data))
   confirmLoading.value = false
   if (err !== null) {
     return
   }
 
-  console.log('res ', res)
-
   message.success('ok')
   await sleep()
 
   // TODO
-  router.push('/admin/post')
+  navigateTo('/admin/post')
 }
 </script>

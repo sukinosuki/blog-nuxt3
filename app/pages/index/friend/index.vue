@@ -51,13 +51,21 @@
 import friendApi from '~/api/app-api/friendApi'
 import { FriendStatus } from '~~/type/enum/FriendStatus'
 
-const data = await useAsyncData('/api/friend', friendApi.get)
+const { data, error } = await useAsyncData('/api/friend', friendApi.get)
+if (error.value) {
+  error.value.fatal = true
+  throw error
+}
 
 const friends = computed(() => {
-  return data.data.value?.filter(friend => friend.status === FriendStatus.NORMAL) || []
+  return data.value?.filter(friend => friend.status === FriendStatus.NORMAL) || []
 })
 
 const outOfContracts = computed(() => {
-  return data.data.value?.filter(friend => friend.status !== FriendStatus.NORMAL) || []
+  return data.value?.filter(friend => friend.status !== FriendStatus.NORMAL) || []
+})
+
+useHead({
+  title: 'Friend',
 })
 </script>

@@ -7,6 +7,24 @@
 <script setup lang="ts">
 import { isClient } from '@vueuse/core'
 
+useSeoMeta({
+  titleTemplate(title) {
+    return title ? `${title} | Miiro` : 'Miiro'
+  },
+})
+
+useServerSeoMeta({
+  robots: 'index, follow',
+  // titleTemplate(title) {
+  //   return title ? `${title} | Miiro` : 'Miiro'
+  // },
+  ogTitle: 'Miiro works\' Site',
+  description: '能为改变自己而努力，我觉得是件厉害的事',
+  // ogDescription: 'og seo meta 描述',
+  // ogImage: 'https://example.com/image.png',
+  // twitterCard: 'summary_large_image',
+})
+
 if (isClient) {
   const r = document.querySelector<HTMLElement>(':root')!
 

@@ -55,8 +55,6 @@ import admin_postApi from '~/api/admin-api/postApi'
 import { FormModalAction } from '~/type/enum/formModalAction'
 import { PageStatus } from '~/type/enum/pageStatus'
 
-const router = useRouter()
-
 type PageData<T> = {
   pageStatus: PageStatus
   data: T
@@ -94,8 +92,7 @@ const handleEdit = async (row: API_Post.Model) => {
 }
 
 const toContentPage = async (row: API_Post.Model) => {
-// TODO
-  router.push(`/admin/post/${row.id}/content`)
+  navigateTo(`/admin/post/${row.id}/content`)
 }
 
 const pagination = reactive<PaginationProps>({

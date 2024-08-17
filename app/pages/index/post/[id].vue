@@ -76,6 +76,10 @@ if (error.value) {
   throw error.value
 }
 
+useHead({
+  title: post.value?.title,
+})
+
 const markdownContent = ref<MDCParserResult | null>(null)
 const markdownParser = useMarkdownParser()
 const md = `---
@@ -125,9 +129,9 @@ async function main(mdc: string) {
 `
 
 onBeforeMount(async () => {
-  markdownContent.value = await parseMarkdown(post.value!.content)
+  // markdownContent.value = await parseMarkdown(post.value!.content)
   // console.log('post.value!.content ', post.value!.content)
-  // markdownContent.value = await markdownParser(post.value!.content)
+  markdownContent.value = await markdownParser(post.value!.content)
 
   setTimeout(() => {
     useNuxtApp().$mediumZoom?.detach(['zoomable']).attach(['zoomable'])

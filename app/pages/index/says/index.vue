@@ -66,9 +66,7 @@
       ref="loadMoreLoadingRef"
       class="flex justify-center py-10"
     >
-      <i
-        class="i-ri:loader-2-line w-5 h-5 animate-spin animate-duration-2000"
-      />
+      <i class="i-ri:loader-2-line w-5 h-5 animate-spin animate-duration-2000" />
     </div>
   </div>
 </template>
@@ -76,7 +74,6 @@
 <script setup lang="ts">
 import saysApi from '~/api/app-api/saysApi'
 import { PageStatus } from '~/type/enum/pageStatus'
-// import { toCatch } from '~/utils/toCatch'
 
 const loadMoreLoadingRef = ref(null)
 const isLoadMoreLoadingVisible = useElementVisibility(loadMoreLoadingRef)
@@ -107,11 +104,19 @@ const colors = [
   'bg-red-1/40',
 ]
 
-const data = await useAsyncData('/api/says', () => saysApi.get({ page: 1, size: pageData.value.size }))
+const { data, error } = await useAsyncData('/api/says', () => saysApi.get({ page: 1, size: pageData.value.size }))
+if (error.value) {
+  error.value.fatal = true
+  throw error
+}
 
-const says1 = ref<API_Says.Model[]>(data.data.value!.slice(0, data.data.value!.length / 2))
+useHead({
+  title: 'Says',
+})
 
-const says2 = ref<API_Says.Model[]>(data.data.value!.slice(data.data.value!.length / 2))
+const says1 = ref<API_Says.Model[]>(data.value!.slice(0, data.value!.length / 2))
+
+const says2 = ref<API_Says.Model[]>(data.value!.slice(data.value!.length / 2))
 
 const fetchData = async () => {
   const params: Api_Query = {

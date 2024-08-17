@@ -13,3 +13,4 @@
 - admin data table刷新分页重置
 - nav、网站信息配置化
 - seo
+- 多应用 https://nuxt.com/docs/guide/directory-structure/pages/#multiple-pages-directories

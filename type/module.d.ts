@@ -14,4 +14,10 @@ declare module '#app' {
 
     $mediumZoom?: Zoom
   }
+
+  // https://nuxt.com/docs/guide/directory-structure/pages/#typing-custom-metadata
+  // interface PageMeta {
+  //   pageType?: string
+  // }
+
 }

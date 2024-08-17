@@ -80,8 +80,6 @@ const form = useForm(initialForm)
 const formRef = form.ref
 const formModel = form.data
 
-const router = useRouter()
-// const message = useMessage()
 const userSession = useUserSession()
 //
 const handleLogin = async () => {
@@ -104,10 +102,12 @@ const handleLogin = async () => {
     return
   }
 
-  userSession.fetch().then(() => {
-    router.push('/admin/post')
-  }).finally(() => {
-    confirmLoading.value = false
-  })
+  userSession.fetch()
+    .then(() => {
+      navigateTo('/admin/post')
+    })
+    .finally(() => {
+      confirmLoading.value = false
+    })
 }
 </script>

@@ -5,7 +5,7 @@
     </h2>
 
     <ul class="md:grid md:grid-cols-4 mt-20">
-      <li
+      <ProjectItem
         v-for="(project, index) in projects"
         :key="project.id"
         v-motion="{
@@ -20,9 +20,8 @@
         }"
         :delay="70 * index"
         :duration="200"
-      >
-        <ProjectItem :project="project" />
-      </li>
+        :project="project"
+      />
     </ul>
   </div>
 </template>
@@ -38,4 +37,8 @@ if (error.value) {
 }
 
 const projects = data
+
+useHead({
+  title: 'Project',
+})
 </script>

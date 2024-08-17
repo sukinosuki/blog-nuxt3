@@ -77,6 +77,9 @@
 import postApi from '~/api/app-api/postApi'
 import { toCatch } from '~/utils/toCatch'
 
+useHead({
+  title: 'Post',
+})
 const LIMIT = 10
 const route = useRoute()
 

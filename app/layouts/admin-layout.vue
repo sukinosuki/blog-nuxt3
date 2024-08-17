@@ -4,9 +4,9 @@
   >
     <div
       v-if="visible"
-      class="flex justify-between pt-30 mb-6 select-none max-md-invisible"
+      class="flex justify-between pt-30 mb-6 select-none"
     >
-      <ul class="flex">
+      <ul class="flex max-md-hidden">
         <li
           v-for="(menu, index) in menus"
           :key="index"
@@ -16,7 +16,6 @@
             class="text-5 px-2 after:content-[''] after:absolute relative after:w-full after:h-2px after:-bottom-2px after:left-0 after:bg-admin-primary after:invisible
             [&.router-link-exact-active]:text-admin-primary active-scale-90 block duration-200 [&.router-link-exact-active>span]:opacity-100 [&.router-link-exact-active>span]:w-auto"
           >
-            <!-- <span class="w-0 opacity-0 inline-block duration-200">#</span> -->
             <span>
               /{{ menu.name }}
             </span>
@@ -93,7 +92,6 @@ const visible = computed(() => {
 })
 
 const userSession = useUserSession()
-const router = useRouter()
 
 //
 const handleLogout = async () => {
@@ -102,7 +100,6 @@ const handleLogout = async () => {
 
   await userSession.clear()
 
-  // TODO
-  router.replace('/admin/auth/login')
+  navigateTo('/admin/auth/login')
 }
 </script>

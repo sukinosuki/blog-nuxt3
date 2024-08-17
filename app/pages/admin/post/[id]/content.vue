@@ -21,15 +21,12 @@
 import Vditor from 'vditor'
 
 import 'vditor/dist/index.css'
-import { NButton, NCard, useMessage } from 'naive-ui'
+import { NButton, NCard } from 'naive-ui'
 import { PageStatus } from '~/type/enum/pageStatus'
-import { sleep } from '~/utils'
 import { toCatch } from '~/utils/toCatch'
 import admin_postApi from '~/api/admin-api/postApi'
 
-const message = useMessage()
 const route = useRoute()
-const router = useRouter()
 const id = Number(route.params.id)
 const isUpdate = id !== 0
 
@@ -93,18 +90,12 @@ const handleSubmit = async () => {
   }
   console.log('data ', data)
 
-  const [err, res] = await toCatch(admin_postApi.updateField(data))
+  const [err] = await toCatch(admin_postApi.updateField(data))
   confirmLoading.value = false
   if (err !== null) {
     return
   }
 
-  console.log('res ', res)
-
-  message.success('ok')
-  await sleep()
-
-  // TODO
-  router.push('/admin/post')
+  navigateTo('/admin/post')
 }
 </script>

@@ -3,7 +3,7 @@
     <a
       :href="repository?.html_url"
       target="_blank"
-      class="shadow no-underline w-full md:w-100 flex items-center p-3 rounded-2xl md:max-w-100 hover:-translate-y-1 duration-200
+      class="shadow no-underline w-full md:w-100 flex items-center p-3 rounded-2xl md:max-w-100
        bg-gray-1 dark-bg-black backdrop-blur-xl overflow-hidden disabled"
     >
       <div class="flex flex-col flex-1 h-80px justify-between">
@@ -39,7 +39,7 @@
       />
     </a>
 
-    <div class="mt-2 p-2 w-full flex justify-center">
+    <div class="mt-2 h-10 w-full flex justify-center items-center">
       <a
         :href="repository?.html_url"
         target="_blank"
