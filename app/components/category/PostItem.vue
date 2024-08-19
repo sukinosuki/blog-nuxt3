@@ -12,16 +12,20 @@
       {{ post.title }}
     </NuxtLink>
 
-    <span class="text-black/70 dark-text-white text-14px">{{ dateUtil.format(post.created_at, 'DD/MM/YYYY') }}</span>
+    <span class="text-black/70 dark-text-white text-14px">{{ publishDate }}</span>
   </div>
 </template>
 
 <script setup lang="ts">
 import { dateUtil } from '#imports'
 
-defineProps<{
+const props = defineProps<{
   post: API_Post.Model
   index: number
   total: number
 }>()
+
+const publishDate = computed(() => {
+  return dateUtil.format(props.post.created_at, 'DD/MM/YYYY')
+})
 </script>

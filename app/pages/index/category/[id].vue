@@ -43,11 +43,14 @@ const route = useRoute()
 
 const id = route.params.id as string
 
-const { data: posts, error } = await useAsyncData(`/api/category/${id}`, () => categoryApi.getPostById(id))
+const { data: posts, error } = await useAsyncData(`/api/category/${id}`, () => categoryApi.getPostById(id), {
+  getCachedData: (key) => {
+    return useNuxtApp().payload.data[key]
+  },
+})
 
 if (error.value) {
-  error.value.fatal = true
-  throw error
+  showError(error.value)
 }
 
 useHead({

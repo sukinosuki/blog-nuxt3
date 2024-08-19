@@ -10,20 +10,6 @@
     </span>
 
     <Teleport to="body">
-      <!-- v-motion="{
-      initial: {
-        opacity: 0,
-        x: '-50%',
-        y: 10,
-        zIndex: 9999,
-      },
-      enter: {
-        opacity: 1,
-        x: '-50%',
-        y: 0,
-        zIndex: 9999,
-      },
-    }" -->
       <Transition>
         <div
           v-if="visible"
@@ -36,10 +22,6 @@
           @mouseover="handlePopoverDomMouseover"
           @mouseleave="handlePopoverDomeMouseleave"
         >
-          <!-- <div
-          class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl"
-        >
-      </div> -->
           <slot name="popover" />
         </div>
       </Transition>

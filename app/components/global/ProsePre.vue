@@ -1,28 +1,33 @@
 <template>
-  <div class="relative group">
-    <button
-      v-if="isSupported"
-      class="absolute right-1 top-1 opacity-0 invisible flex items-center rounded px-2 py-1 z-1 bg-gray-1 group-hover:opacity-100 group-hover:visible duration-200
+  <div class="my-4">
+    <p class="m-0 italic text-14px">
+      {{ language }}
+    </p>
+    <div class="relative group">
+      <button
+        v-if="isSupported"
+        class="absolute right-1 top-1 opacity-0 invisible flex items-center rounded px-2 py-1 z-1 bg-gray-1 group-hover:opacity-100 group-hover:visible duration-200
       hover:bg-gray-2 shadow dark-bg-dark dark-hover:bg-gray-9"
-      @click="handleCopy"
-    >
-      <div
-        class="w-1em h-1em"
-        :class="[copied ? 'i-ri:file-copy-fill' : 'i-ri:file-copy-line']"
-      />
+        @click="handleCopy"
+      >
+        <div
+          class="w-1em h-1em"
+          :class="[copied ? 'i-ri:file-copy-fill' : 'i-ri:file-copy-line']"
+        />
 
-      <span class="ml-1 font-bold text-14px">
-        {{ copied ? 'Copied' : 'Copy' }}
-      </span>
-    </button>
+        <span class="ml-1 font-bold text-14px">
+          {{ copied ? 'Copied' : 'Copy' }}
+        </span>
+      </button>
 
-    <pre
-      ref="preRef"
-      :class="$props.class"
-      class="bg-#f3f3f3 dark-bg-black !p-4 whitespace-normal"
-    >
-            <slot />
-        </pre>
+      <pre
+        ref="preRef"
+        :class="$props.class"
+        class="bg-#f3f3f3 dark-bg-black !p-4 m-0 whitespace-normal"
+      >
+    <slot />
+  </pre>
+    </div>
   </div>
 </template>
 

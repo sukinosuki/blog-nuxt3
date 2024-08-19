@@ -44,12 +44,14 @@ const width = ref(0)
 const height = ref(0)
 
 const handleMouseover = (index: number) => {
+  if (!itemRef.value![index]) return
+
   const {
     offsetTop, // 相对于父级的top.(所以需要是直接子元素)
     offsetLeft, // 相对于低级的left
     clientWidth, // dom宽度
     clientHeight, // dom高度
-  } = itemRef.value![index]!
+  } = itemRef.value![index]
 
   hovered.value = true
   left.value = offsetLeft
@@ -59,7 +61,9 @@ const handleMouseover = (index: number) => {
 }
 
 const handleMouseleave = (index: number) => {
-  const { offsetTop, offsetLeft } = itemRef.value![index]!
+  if (!itemRef.value![index]) return
+
+  const { offsetTop, offsetLeft } = itemRef.value![index]
   left.value = offsetLeft
   top.value = offsetTop
   hovered.value = false

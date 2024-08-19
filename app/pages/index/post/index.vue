@@ -87,9 +87,11 @@ const page = ref(Number(route.query.page || 1))
 
 const loadMoreLoading = ref(false)
 const hasMore = ref(false)
-const { data, error } = await useAsyncData('/api/post', () => postApi.get({
-  page: page.value,
-  size: LIMIT }),
+const { data, error } = await useAsyncData('/api/post', () => postApi.get({ page: page.value, size: LIMIT }), {
+  getCachedData: (key) => {
+    return useNuxtApp().payload.data[key]
+  },
+},
 )
 
 if (error.value) {

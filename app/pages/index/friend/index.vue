@@ -26,7 +26,7 @@
     </ListHoverEffect>
 
     <div
-      v-if="outOfContracts"
+      v-if="outOfContracts.length"
       class="mt-10"
     >
       <h5 class="font-bold">
@@ -51,10 +51,14 @@
 import friendApi from '~/api/app-api/friendApi'
 import { FriendStatus } from '~~/type/enum/FriendStatus'
 
-const { data, error } = await useAsyncData('/api/friend', friendApi.get)
+const { data, error } = await useAsyncData('/api/friend', friendApi.get, {
+  getCachedData: (key) => {
+    return useNuxtApp().payload.data[key]
+  },
+})
+
 if (error.value) {
-  error.value.fatal = true
-  throw error
+  showError(error.value)
 }
 
 const friends = computed(() => {

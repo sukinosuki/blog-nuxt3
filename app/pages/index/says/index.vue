@@ -104,19 +104,26 @@ const colors = [
   'bg-red-1/40',
 ]
 
-const { data, error } = await useAsyncData('/api/says', () => saysApi.get({ page: 1, size: pageData.value.size }))
+definePageMeta({
+  keepalive: true,
+})
+const { data, error } = await useAsyncData('/api/says', () => saysApi.get({ page: 1, size: pageData.value.size }), {
+  getCachedData: (key) => {
+    return useNuxtApp().payload.data[key]
+  },
+})
+
 if (error.value) {
-  error.value.fatal = true
-  throw error
+  showError(error.value)
 }
 
 useHead({
   title: 'Says',
 })
 
-const says1 = ref<API_Says.Model[]>(data.value!.slice(0, data.value!.length / 2))
+const says1 = ref<API_Says.Model[]>(data.value?.slice(0, data.value!.length / 2) || [])
 
-const says2 = ref<API_Says.Model[]>(data.value!.slice(data.value!.length / 2))
+const says2 = ref<API_Says.Model[]>(data.value?.slice(data.value!.length / 2) || [])
 
 const fetchData = async () => {
   const params: Api_Query = {

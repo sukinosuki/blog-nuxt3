@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-const dateUtil = {
+export const dateUtil = {
 
   format(date: string | Date, pattern = 'YYYY-MM-DD HH:mm:ss') {
     return dayjs(date).format(pattern)
@@ -10,5 +10,3 @@ const dateUtil = {
     return this.format(date, 'YYYY年M月D日')
   },
 }
-
-export default dateUtil

@@ -15,9 +15,6 @@ useSeoMeta({
 
 useServerSeoMeta({
   robots: 'index, follow',
-  // titleTemplate(title) {
-  //   return title ? `${title} | Miiro` : 'Miiro'
-  // },
   ogTitle: 'Miiro works\' Site',
   description: '能为改变自己而努力，我觉得是件厉害的事',
   // ogDescription: 'og seo meta 描述',
@@ -93,6 +90,7 @@ html.dark {
   z-index: 1000;
 }
 
+/* transition */
 .page-enter-active, .page-leave-active {
   transition: all 0.2s;
 }
