@@ -23,15 +23,17 @@
         </li>
       </ul>
 
-      <NButton
-        type="tertiary"
-        text
-        class="text-5"
+      <div
+        class="flex items-center cursor-pointer"
         @click="handleLogout"
       >
-        Logout
-        <i class="i-ri:shut-down-line w-1em h-1em ml-1" />
-      </NButton>
+        <button
+          class="text-5 bg-transparent "
+        >
+          Logout
+        </button>
+        <i class="i-ri:shut-down-line w-1.6em h-1.6em ml-2 inline-block" />
+      </div>
     </div>
 
     <slot />
@@ -39,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import { NButton } from 'naive-ui'
 import admin_authApi from '~~/dashboard/api/authApi'
 import { toCatch } from '~/utils/toCatch'
 
@@ -84,9 +85,6 @@ const menus: Menu[] = [
 
 const route = useRoute()
 
-watch(() => route.path, () => {
-  console.log('route ', route)
-})
 const visible = computed(() => {
   return route.name !== 'dashboard-auth-login'
 })

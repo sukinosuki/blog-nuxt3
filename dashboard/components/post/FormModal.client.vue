@@ -198,7 +198,7 @@ const modalTitle = computed(() => {
 
   return 'Add'
 })
-const pageStatus = ref(PageStatus.LOADING)
+const pageStatus = ref<PageStatus | null>(null)
 
 const initialForm: PostForm = {
   id: null,
@@ -243,8 +243,6 @@ const formRules: FormRules = {
 const coverRef = ref(null)
 
 watch(visible, (newValue) => {
-  console.log('newValue ', newValue)
-
   if (!newValue) {
     form.reset()
     return
@@ -261,7 +259,6 @@ watch(visible, (newValue) => {
 //
 const fetchData = async () => {
   pageStatus.value = PageStatus.LOADING
-  await sleep(2000)
   const [err, res] = await toCatch(admin_postApi.getById(props.row!.id))
 
   if (err || !res) {
@@ -298,7 +295,6 @@ const fetchCategoryOptions = async () => {
 
 //
 const handleSubmit = async () => {
-  console.log('form ', postModel.value)
   if (isView.value) {
     visible.value = false
     return

@@ -32,7 +32,7 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     '@nuxt/image',
     'nuxt-auth-utils',
-    'nuxtjs-naive-ui',
+    'nuxtjs-naive-ui', // 需求声明,可以按需加载
     '@nuxt/fonts',
     '@vueuse/motion/nuxt',
     '@vueuse/nuxt',
@@ -74,14 +74,6 @@ export default defineNuxtConfig({
     //   { name: 'eafont', src: '/static/font/eafont.ttf' },
     // ],
   },
-  // mdc: {
-  //   highlight: {
-  //     theme: {
-  //       light: 'github-light',
-  //       dark: 'github-dark',
-  //     },
-  //   },
-  // },
   hub: {
     database: true,
     kv: true,
@@ -151,18 +143,26 @@ export default defineNuxtConfig({
   nitro: {
     experimental: {
       // Enable Server API documentation within NuxtHub
-      openAPI: true,
+      // openAPI: false,
     },
   },
   // Development
   devtools: { enabled: true },
-  // vite: {
-  //   build: {
-  //     rollupOptions: {
-  //       external: [
-  //         'shiki/onig.wasm',
-  //       ],
-  //     },
-  //   },
-  // },
+  vite: {
+    build: {
+      rollupOptions: {
+        // external: [
+        //   // 'shiki/onig.wasm',
+        //   'naive-ui',
+        //   'vue-codemirror',
+        //   'codemirror',
+        // ],
+        // output: {
+        //   chunkFileNames: 'assets/chunk/[hash].js',
+        //   entryFileNames: 'assets/entry/[hash].js',
+        //   assetFileNames: 'assets/[ext]/[hash].[ext]',
+        // },
+      },
+    },
+  },
 })

@@ -19,3 +19,6 @@
 - 抽离admin(dashboard)为单独模块 https://nuxt.com/docs/guide/directory-structure/pages/#multiple-pages-directories
 - scrollbar
 - 登录卡片样式
+- 优化路由跳转方法调用
+- 优化打包后worker体积
+- 上传图片
