@@ -15,6 +15,6 @@ watch(() => appStore.fetchError, (newValue) => {
   console.log('newValue ', newValue)
 
   // TODO:
-  message.error(newValue?.data.message || '服务器异常')
+  message.error(newValue?.data?.message || newValue?.message || '发生异常')
 })
 </script>

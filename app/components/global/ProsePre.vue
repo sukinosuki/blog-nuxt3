@@ -1,9 +1,15 @@
 <template>
   <div class="my-4">
     <p class="m-0 italic text-14px">
-      {{ language }}
+      <span>
+        {{ filename }}
+      </span>
     </p>
-    <div class="relative group">
+    <div class="relative group bg-#f3f3f3 dark-bg-black rounded">
+      <span class="absolute text-3 left-1 top-1 leading-none opacity-0 group-hover:opacity-100 duration-200">
+        {{ language }}
+      </span>
+
       <button
         v-if="isSupported"
         class="absolute right-1 top-1 opacity-0 invisible flex items-center rounded px-2 py-1 z-1 bg-gray-1 group-hover:opacity-100 group-hover:visible duration-200
@@ -23,7 +29,7 @@
       <pre
         ref="preRef"
         :class="$props.class"
-        class="bg-#f3f3f3 dark-bg-black !p-4 m-0 whitespace-normal"
+        class="!p-4 m-0 whitespace-normal"
       >
     <slot />
   </pre>

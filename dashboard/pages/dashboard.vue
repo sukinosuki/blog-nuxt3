@@ -8,7 +8,7 @@
         <NMessageProvider>
           <NuxtLayout name="admin-layout">
             <Wrapper>
-              <NuxtPage class="admin-page selection:bg-admin-primary" />
+              <NuxtPage class="admin-page selection:bg-primary" />
             </Wrapper>
           </NuxtLayout>
         </NMessageProvider>

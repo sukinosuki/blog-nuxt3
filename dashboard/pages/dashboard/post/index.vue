@@ -93,7 +93,7 @@ const handleEdit = async (row: API_Post.Model) => {
 }
 
 const toContentPage = async (row: API_Post.Model) => {
-  navigateTo(`/admin/post/${row.id}/content`)
+  navigateTo(`/dashboard/post/${row.id}/content`)
 }
 
 const pagination = reactive<PaginationProps>({

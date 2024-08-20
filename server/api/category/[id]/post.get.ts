@@ -6,10 +6,16 @@ export default eventHandler(async (event) => {
   const drizzle = useDrizzle()
 
   if (Number.isNaN(Number(id))) {
-    const [category] = await drizzle.select({ id: tables.category.id }).from(tables.category).where(eq(tables.category.alias, id as string))
+    const [category] = await drizzle
+      .select({ id: tables.category.id })
+      .from(tables.category)
+      .where(eq(tables.category.alias, id as string))
 
     if (!category) {
-      return setResponseStatus(event, 404)
+      throw createError({
+        message: 'Record not found',
+        status: 404,
+      })
     }
 
     id = category.id

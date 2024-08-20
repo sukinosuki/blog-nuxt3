@@ -5,8 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import { isClient } from '@vueuse/core'
-
 useSeoMeta({
   titleTemplate(title) {
     return title ? `${title} | Miiro` : 'Miiro'
@@ -22,7 +20,13 @@ useServerSeoMeta({
   // twitterCard: 'summary_large_image',
 })
 
-if (isClient) {
+const route = useRoute()
+
+console.log('route ', route)
+
+if (import.meta.client) {
+  const isDashboardPage = route.path.startsWith('/dashboard')
+
   const r = document.querySelector<HTMLElement>(':root')!
 
   const primaryColors = [
@@ -35,7 +39,11 @@ if (isClient) {
   ]
 
   const index = Math.floor(Math.random() * primaryColors.length)
-  const rgb = primaryColors[index] || '56 189 248'
+  let rgb = primaryColors[index] || '56 189 248'
+  if (isDashboardPage) {
+    rgb = '139 92 246'
+  }
+
   r.style.setProperty('--primary', rgb)
 }
 </script>
@@ -61,6 +69,7 @@ if (isClient) {
   z-index: 999;
 }
 
+/*  */
 :root {
   --primary: 56 189 248;
 }

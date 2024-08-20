@@ -18,7 +18,6 @@
 </template>
 
 <script setup lang="ts">
-import { isClient } from '@vueuse/core'
 import type { NuxtError } from '#app'
 
 const props = defineProps({
@@ -51,7 +50,7 @@ const data = computed<ServerErrorRes | null>(() => {
   return _data
 })
 
-if (isClient) {
+if (import.meta.client) {
   const { statusCode, statusMessage } = props.error || {}
   // Sentry.withScope((scope) => {
   //   scope.setExtra('data', props.error)

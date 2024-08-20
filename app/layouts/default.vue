@@ -28,8 +28,8 @@
           </div> -->
         </div>
 
-        <div class="flex flex-1 justify-center items-center">
-          <div class="fixed flex max-md-hidden">
+        <div class="flex flex-1 justify-center items-center max-md-hidden">
+          <div class="fixed flex">
             <nav
               ref="headerRef"
               class="flex sticky"
@@ -107,12 +107,11 @@
 </template>
 
 <script setup lang="ts">
-import { isClient } from '@vueuse/core'
 import { useFixedHeader } from 'vue-use-fixed-header'
 
 const { default: appConfig } = await import('../../app_config.json')
 
-if (isClient) {
+if (import.meta.server) {
   console.log('appConfig ', appConfig)
 }
 

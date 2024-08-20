@@ -1,10 +1,6 @@
-import { sleep } from '~/utils'
-
 // NOTE:访问的任何地址都会经过该中间件, ge: /、/post、/admin/auth/login、/admin/post、/api/**、/api-admin/**...
 export default eventHandler(async (event) => {
   // console.log('admin auth middleware!!!')
-
-  await sleep(1000)
 
   if (event.path.startsWith('/api-admin')) {
     // would cause the Empty password error

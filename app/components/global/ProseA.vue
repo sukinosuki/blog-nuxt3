@@ -1,5 +1,5 @@
 <template>
-  <Popover>
+  <Popover class="inline-block">
     <span
       ref="linkOuterRef"
       class="group relative flex-inline items-center underline underline-offset-2 hover:underline-op-0 duration-100 after:absolute relative
@@ -21,7 +21,7 @@
       >
         <NuxtLink
           :href="href"
-          :target="target"
+          :target="target || '_blank'"
           class="text-primary"
         >{{ href }}</NuxtLink>
       </div>

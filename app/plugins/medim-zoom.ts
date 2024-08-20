@@ -1,10 +1,9 @@
 import type { Zoom } from 'medium-zoom'
 import mediumZoom from 'medium-zoom'
-import { isClient } from '@vueuse/core'
 import { defineNuxtPlugin } from '#app'
 
 export default defineNuxtPlugin((nuxtApp) => {
-  if (!isClient) return
+  if (import.meta.server) return
 
   const selector = '[zoomable]'
   const zoom: Zoom = mediumZoom(selector, {

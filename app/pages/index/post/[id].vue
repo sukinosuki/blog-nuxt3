@@ -23,6 +23,14 @@
 
     <div
       v-if="markdownContent"
+      v-motion="{
+        initial: {
+          opacity: 0,
+        },
+        enter: {
+          opacity: 1,
+        },
+      }"
       class="prose text-base prose-truegray no-underline dark:prose-invert max-w-full"
     >
       <!-- <MDC
@@ -52,7 +60,7 @@
       v-else
       class="h-100 flex justify-center items-center animate-bounce"
     >
-      <span class="w-4 h-4 rounded-full bg-black" />
+      <span class="w-4 h-4 rounded-full bg-black/30" />
     </div>
   </div>
 </template>

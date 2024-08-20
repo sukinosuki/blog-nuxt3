@@ -1,10 +1,10 @@
 c<template>
   <div>
     <NModal
-      v-model="visible"
+      v-model:show="visible"
       preset="card"
       class="w-200"
-      title="Article"
+      title="Post"
     >
       <NForm
         ref="formRef"

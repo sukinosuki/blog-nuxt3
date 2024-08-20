@@ -50,6 +50,9 @@ export default defineNuxtConfig({
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
+      bodyAttrs: {
+        // class: 'scrollbar scrollbar-rounded scrollbar-w-4px scrollbar-radius-2 scrollbar-track-radius-4 scrollbar-thumb-radius-4',
+      },
     },
     // pageTransition: {
     //   name: 'page',

@@ -13,8 +13,8 @@
         >
           <NuxtLink
             :href="menu.path"
-            class="text-5 px-2 after:content-[''] after:absolute relative after:w-full after:h-2px after:-bottom-2px after:left-0 after:bg-admin-primary after:invisible
-            [&.router-link-exact-active]:text-admin-primary active-scale-90 block duration-200 [&.router-link-exact-active>span]:opacity-100 [&.router-link-exact-active>span]:w-auto"
+            class="text-5 px-2 after:content-[''] after:absolute relative after:w-full after:h-2px after:-bottom-2px after:left-0 after:bg-primary after:invisible
+            [&.router-link-active]:text-primary active-scale-90 block duration-200 [&.router-link-exact-active>span]:opacity-100 [&.router-link-exact-active>span]:w-auto"
           >
             <span>
               /{{ menu.name }}
@@ -51,32 +51,32 @@ type Menu = {
 
 const menus: Menu[] = [
   {
-    name: 'Post',
+    name: 'POST',
     path: '/dashboard/post',
     nameCn: '文章',
   },
   {
-    name: 'Category',
+    name: 'CATEGORY',
     path: '/dashboard/category',
     nameCn: '分类',
   },
   {
-    name: 'Friend',
+    name: 'FRIEND',
     path: '/dashboard/friend',
     nameCn: '友链',
   },
   {
-    name: 'Tag',
+    name: 'TAG',
     path: '/dashboard/tag',
     nameCn: '标签',
   },
   {
-    name: 'Says',
+    name: 'SAYS',
     path: '/dashboard/says',
     nameCn: '语录',
   },
   {
-    name: 'Project',
+    name: 'PROJECT',
     path: '/dashboard/project',
     nameCn: '项目',
   },
