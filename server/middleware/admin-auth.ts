@@ -9,7 +9,8 @@ export default eventHandler(async (event) => {
     })
 
     if (!userSession?.user) {
-      if (!['/api-admin/auth/login', '/api-admin/auth/login/'].includes(event.path)) {
+      // if (!['/api-admin/auth/login', '/api-admin/auth/login/'].includes(event.path)) {
+      if (!event.path.startsWith('/api-admin/auth/login')) {
         throw createError({
           status: 403,
           message: 'Unauthorized',
