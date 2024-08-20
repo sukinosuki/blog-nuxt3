@@ -103,6 +103,11 @@ export default defineNuxtConfig({
     'medium-zoom/dist/style.css',
     '@unocss/reset/tailwind-compat.css',
   ],
+  // 减小build后worker体积
+  sourcemap: {
+    server: false,
+    client: false,
+  },
   unocss: {
     presets: [
       presetUno(),

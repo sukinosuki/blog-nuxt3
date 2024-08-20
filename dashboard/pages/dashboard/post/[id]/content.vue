@@ -54,20 +54,20 @@
             @blur="() => {}"
           />
         </div>
-        <div
+        <!-- <div
           v-if="samplePreviewVisible"
           class="w-50% p-2 max-w-100% max-md-hidden prose text-base prose-truegray dark:prose-invert"
         >
           <MDC :value="code" />
-        </div>
+        </div> -->
       </div>
     </div>
 
-    <PostPreviewModal
+    <!-- <PostPreviewModal
       v-model:visible="previewModalVisible"
       :post="post"
       :content="code"
-    />
+    /> -->
   </div>
 </template>
 

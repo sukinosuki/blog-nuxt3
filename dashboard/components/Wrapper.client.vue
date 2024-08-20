@@ -6,8 +6,6 @@
 import { useMessage } from 'naive-ui'
 import useAppStore from '~/store/app.store'
 
-console.log('admin wrapper')
-
 const appStore = useAppStore()
 const message = useMessage()
 
