@@ -1,4 +1,4 @@
-import { presetUno, presetAttributify, presetIcons, presetTypography } from 'unocss'
+import { presetUno, presetIcons, presetTypography, presetWebFonts } from 'unocss'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -12,8 +12,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     api_auth_username: '',
     api_auth_password: '',
-
     public: {
+      hubEnv222: process.env.NUXT_HUB_ENV,
       test: '1',
       env: 'preview',
       sentry: {
@@ -22,6 +22,7 @@ export default defineNuxtConfig({
       sentry_dsn: '',
     },
   },
+
   // Nuxt Modules
   // https://nuxt.com/modules
   modules: [
@@ -32,12 +33,21 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     '@nuxt/image',
     'nuxt-auth-utils',
-    'nuxtjs-naive-ui', // 需求声明,可以按需加载
-    '@nuxt/fonts',
+    // 需要声明,可以按需加载: https://www.naiveui.com/en-US/os-theme/docs/nuxtjs
+    'nuxtjs-naive-ui',
+    // '@nuxt/fonts',
     '@vueuse/motion/nuxt',
     '@vueuse/nuxt',
     '@pinia/nuxt',
+    '@nuxtjs/seo',
   ],
+  site: {
+    // url: process.env.NUXT_HUB_ENV === 'development' ? 'http://localhost:3000' : 'https://miiro.ro',
+    // url: 'https://miiro-blog2.pages.dev',
+    // name: 'Miiro',
+    // description: '能为改变自己而努力, 我觉得是件厉害的事',
+    defaultLocale: 'zh-CN', // not needed if you have @nuxtjs/i18n installed
+  },
   routeRules: {
     '/dashboard/**/*': {
       ssr: false,
@@ -46,33 +56,10 @@ export default defineNuxtConfig({
       ssr: false,
     },
   },
-  app: {
-    head: {
-      charset: 'utf-8',
-      viewport: 'width=device-width, initial-scale=1',
-      bodyAttrs: {
-        // class: 'scrollbar scrollbar-rounded scrollbar-w-4px scrollbar-radius-2 scrollbar-track-radius-4 scrollbar-thumb-radius-4',
-      },
-    },
-    // pageTransition: {
-    //   name: 'page',
-    //   mode: 'out-in',
-    // },
-    // layoutTransition: { name: 'layout', mode: 'out-in' },
-  },
   eslint: {
     config: {
       stylistic: true,
     },
-  },
-  fonts: {
-    assets: {
-      // The baseURL where font files are served.
-      prefix: '/_fonts/',
-    },
-    // families: [
-    //   { name: 'eafont', src: '/static/font/eafont.ttf' },
-    // ],
   },
   hub: {
     database: true,
@@ -104,13 +91,39 @@ export default defineNuxtConfig({
     presets: [
       presetUno(),
       presetIcons(),
-      // presetAttributify(),
+      // presetAttributify(), // 与vususe motion v-motion :delay有冲突
       presetTypography(),
+      presetWebFonts({
+        provider: 'google',
+        // customFetch: url => fetch(url).then(it => it.data),
+        fonts: {
+          // 'sans': 'Roboto',
+          // mono: ['Fira Code', 'Fira Mono:400,700'],
+          // josefin: ['Josefin+Sans'],
+          // mplusrounded1c: 'M PLUS Rounded 1c',
+          // lxgw: 'LXGW+WenKai+Mono+TC',
+          // these will extend the default theme
+          sans: 'Roboto',
+          mono: ['Fira Code', 'Fira Mono:400,700'],
+          // custom ones
+          lobster: 'Lobster',
+          lato: [
+            {
+              name: 'Lato',
+              weights: ['400', '700'],
+              italic: true,
+            },
+            {
+              name: 'sans-serif',
+              provider: 'none',
+            },
+          ],
+        },
+      }),
     ],
     theme: {
       colors: {
-        'primary': 'rgb(var(--primary))',
-        'admin-primary': '#8b5cf6',
+        primary: 'rgb(var(--primary))',
       },
     },
     // preflight: true,

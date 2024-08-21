@@ -14,7 +14,7 @@
 
         <div class="flex relative">
           <NuxtLink href="/">
-            <NuxtImg
+            <AppImage
               class="w-12 h-12 rounded-xl shadow-2xl"
               src="https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30pib8ra1mi6g5p82lhqlnd033mv9rrg?imageView2/2/w/540/format/webp|imageMogr2/strip2"
             />
@@ -44,7 +44,7 @@
                   <Popover>
                     <NuxtLink
                       :href="nav.path"
-                      class="flex h-10 items-center px-4"
+                      class="flex h-10 items-center px-4 text-4"
                     >
                       {{ nav.name }}
                     </NuxtLink>

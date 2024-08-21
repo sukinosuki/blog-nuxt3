@@ -23,17 +23,20 @@
 
     <div
       v-if="markdownContent"
-      v-motion="{
-        initial: {
-          opacity: 0,
-        },
-        enter: {
-          opacity: 1,
-        },
-      }"
-      class="prose text-base prose-truegray no-underline dark:prose-invert max-w-full"
+      class="flex"
     >
-      <!-- <MDC
+      <div
+        v-motion="{
+          initial: {
+            opacity: 0,
+          },
+          enter: {
+            opacity: 1,
+          },
+        }"
+        class="prose text-base prose-truegray no-underline dark:prose-invert max-w-full flex-1"
+      >
+        <!-- <MDC
             v-slot="{ data, body }"
             :value="markdownContent"
           >
@@ -48,17 +51,23 @@
               />
             </article>
           </MDC> -->
-      <ClientOnly>
-        <MDCRenderer
-          :body="markdownContent.body"
-          :data="markdownContent.data"
-        />
-      </ClientOnly>
+        <ClientOnly>
+          <MDCRenderer
+            class="js-toc-content"
+            :body="markdownContent.body"
+            :data="markdownContent.data"
+          />
+        </ClientOnly>
+      </div>
+
+      <!-- <div class="ml-4 mt-20 sticky top-60 w-50 self-start">
+        <div class="js-toc w-50 " />
+      </div> -->
     </div>
 
     <div
       v-else
-      class="h-100 flex justify-center items-center animate-bounce"
+      class="h-50 mt-50 flex justify-center items-center animate-bounce"
     >
       <span class="w-4 h-4 rounded-full bg-black/30" />
     </div>
@@ -139,17 +148,12 @@ async function main(mdc: string) {
 `
 
 onMounted(async () => {
-  const start = new Date()
-  console.log('start.getTime() ', start.getTime())
-
   if (!post.value!.content) return
 
   markdownContent.value = await markdownParser(post.value!.content)
 
-  // console.log('parsed ', new Date().getTime() - start.getTime())
-
   setTimeout(() => {
-    useNuxtApp().$mediumZoom?.detach(['zoomable']).attach(['zoomable'])
+    useNuxtApp().$mediumZoom?.detach('[zoomable]').attach('[zoomable]')
   }, 1000)
 })
 </script>

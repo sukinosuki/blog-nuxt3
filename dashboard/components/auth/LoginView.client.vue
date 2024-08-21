@@ -1,63 +1,62 @@
 <template>
   <div class="flex justify-center items-center px-3 h-100vh">
-    <div class="w-100 rounded-2xl bg-white dark-bg-black px-4 py-10">
-      <h4 class="text-10 text-center">
-        Login
-      </h4>
-
-      <NForm
-        ref="formRef"
-        :model="formModel"
-        class="mt-10"
-        :rules="formRules"
+    <PerspectiveRotateEffect>
+      <div
+        class="w-100 rounded-2xl bg-white dark-bg-black px-4 py-10"
       >
-        <NFormItem
-          label="Username"
-          path="username"
-        >
-          <NInput v-model:value="formModel.username" />
-        </NFormItem>
+        <h4 class="text-10 text-center">
+          Login
+        </h4>
 
-        <NFormItem
-          label="Password"
-          path="password"
+        <NForm
+          ref="formRef"
+          :model="formModel"
+          class="mt-10"
+          :rules="formRules"
         >
-          <NInput
-            v-model:value="formModel.password"
-            type="password"
-            show-password-on="click"
-          />
-        </NFormItem>
-      </NForm>
+          <NFormItem
+            label="Username"
+            path="username"
+          >
+            <NInput v-model:value="formModel.username" />
+          </NFormItem>
 
-      <div class="mt-10">
-        <NButton
-          type="primary"
-          class="w-full rounded-full !text-white"
-          :loading="confirmLoading"
-          @click="handleLogin"
-        >
-          Submit
-        </NButton>
+          <NFormItem
+            label="Password"
+            path="password"
+          >
+            <NInput
+              v-model:value="formModel.password"
+              type="password"
+              show-password-on="click"
+            />
+          </NFormItem>
+        </NForm>
+
+        <div class="mt-10">
+          <NButton
+            type="primary"
+            class="w-full rounded-full !text-white"
+            :loading="confirmLoading"
+            @click="handleLogin"
+          >
+            Submit
+          </NButton>
+        </div>
       </div>
-    </div>
+    </PerspectiveRotateEffect>
   </div>
 </template>
 
 <script setup lang="ts">
 import { NButton, NForm, NFormItem, NInput, type FormRules } from 'naive-ui'
 import authApi from '~~/dashboard/api/authApi'
-// import { useForm } from '~~/dashboard/composables/useForm'
-import { toCatch } from '~/utils/toCatch'
 
 definePageMeta({
   layout: 'default',
 })
 
-  type LoginForm = {
-    username: string
-    password: string
-  }
+type LoginForm = API_Auth.Login
 
 const confirmLoading = ref(false)
 const initialForm: LoginForm = {

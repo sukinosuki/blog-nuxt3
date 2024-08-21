@@ -4,7 +4,7 @@
       <div class="flex flex-col justify-center">
         <h2 class="text-10 font-normal flex max-md-justify-center">
           <span
-            v-for="(letter, index) in 'Hi, I\'m'"
+            v-for="(letter, index) in hi"
             :key="index"
             v-motion="{
               initial: {
@@ -16,17 +16,17 @@
                 opacity: 1,
               },
             }"
-            :delay="index * 30"
+            :delay="index * hiStaggerDelay"
             class="inline-block"
             :class="[letter === ' ' ? 'mx-1' : '']"
           >
             {{ letter }}
           </span>
 
-          <div class="ml-1">
+          <div class="ml-2">
             <span class="font-bold text-sky">
               <span
-                v-for="(letter, index) in ' hanami'"
+                v-for="(letter, index) in username"
                 :key="index + letter"
                 v-motion="{
                   initial: {
@@ -38,7 +38,7 @@
                     opacity: 1,
                   },
                 }"
-                :delay="400 + (index * 30)"
+                :delay="hiAnimateCompleteDuration + (index * usernameStaggerDelay)"
                 class="inline-block"
               >{{ letter }}</span>
             </span>
@@ -47,7 +47,7 @@
 
         <p class="text-6 mt-4 flex max-md-justify-center">
           <span
-            v-for="(letter, index) in ' A NodeJS Full Stack'"
+            v-for="(letter, index) in des1"
             :key="index"
             v-motion="{
               initial: {
@@ -61,7 +61,7 @@
             }"
             class="inline-block"
             :class="[letter === ' ' ? 'mx-1' :'']"
-            :delay="(index * 30) + 1000"
+            :delay="(index * des1StaggerDelay) + usernameAnimateCompleteDuration"
           >
             {{ letter }}
           </span>
@@ -69,7 +69,7 @@
 
         <p class="text-6 mt-4 flex max-md-justify-center">
           <span
-            v-for="(letter, index) in 'An independent developer coding with love.'"
+            v-for="(letter, index) in des2"
             :key="index"
             v-motion="{
               initial: {
@@ -83,7 +83,7 @@
             }"
             class="inline-block text-14px"
             :class="[letter === ' ' ? 'mx-1' : '']"
-            :delay="(20 * index) + 2000"
+            :delay="(des2StaggerDelay * index) + des1AnimateCompleteDuration"
             :duration="200"
           >
             {{ letter }}
@@ -106,7 +106,7 @@
             }"
             :duration="200"
             class="flex-inline mr-2"
-            :delay="index * 100 + 3000"
+            :delay="index * socialLinksStaggerDelay + des2AnimateCompleteDuration"
           >
             <Popover>
               <div>
@@ -114,7 +114,6 @@
                   target="_blank"
                   :href="link.path"
                   class="w-10 h-10 flex items-center justify-center rounded-full text-white shadow-2xl "
-
                   :class="link.color"
                 >
                   <div
@@ -141,15 +140,15 @@
       </div>
 
       <div class="flex items-center max-md:pt-20">
-        <NuxtImg
+        <AppImage
           v-motion="{
             initial: {
               opacity: 0,
             },
-            enter: {
+            visibleOnce: {
               opacity: 1,
               transition: {
-                delay: 4000,
+                delay: socialLinksAnimateCompleteDuration,
               },
             },
           }"
@@ -157,6 +156,23 @@
           src="https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30pib8ra1mi6g5p82lhqlnd033mv9rrg?imageView2/2/w/540/format/webp|imageMogr2/strip2"
         />
       </div>
+    </div>
+
+    <div class="py-30 flex justify-center">
+      <span
+        v-motion="{
+          initial: {
+            opacity: 0,
+          },
+          visibleOnce: {
+            opacity: 1,
+            transition: {
+              delay: socialLinksAnimateCompleteDuration + 1000,
+            },
+          },
+        }"
+        class="text-13px"
+      >能为改变自己而努力，我觉得是件厉害的事</span>
     </div>
 
     <div class="py-20">
@@ -189,7 +205,7 @@
           }"
           :delay="300"
         >
-          <p class="text-4 mt-4">
+          <p class="text-14px mt-4">
             也要前进
           </p>
         </Motion>
@@ -210,8 +226,8 @@
             },
           }"
           class="flex-inline items-center max-md-w-full justify-center mb-2 max-md-flex-col"
-          :duration="200"
-          :delay="100 * index + 100"
+          :duration="150"
+          :delay="70 * index + 100"
         >
           <NuxtLink
             :href="blogLink.path"
@@ -245,7 +261,17 @@ type SocialLink = {
   color?: string
 } & BlogLink
 
-const socialLinks: SocialLink[] = [
+const hi = ref('Hi, I\'m')
+const username = ref('桜花秋水')
+const des1 = ref('A NodeJS Full Stack')
+const des2 = ref('An independent developer coding with love.')
+const hiStaggerDelay = ref(30)
+const usernameStaggerDelay = ref(30)
+const des1StaggerDelay = ref(20)
+const des2StaggerDelay = ref(10)
+const socialLinksStaggerDelay = ref(100)
+
+const socialLinks = ref<SocialLink[]>([
   {
     icon: 'i-ri:bilibili-line',
     name: 'Bilibili',
@@ -270,7 +296,7 @@ const socialLinks: SocialLink[] = [
     path: 'mailto:miiro444@outlook.com',
     color: 'bg-gray',
   },
-]
+])
 
 const blogLinks: BlogLink[] = [
   {
@@ -304,4 +330,24 @@ const blogLinks: BlogLink[] = [
     path: '/',
   },
 ]
+
+const hiAnimateCompleteDuration = computed(() => {
+  return hi.value.length * hiStaggerDelay.value
+})
+
+const usernameAnimateCompleteDuration = computed(() => {
+  return hiAnimateCompleteDuration.value + username.value.length * usernameStaggerDelay.value + 200
+})
+
+const des1AnimateCompleteDuration = computed(() => {
+  return usernameAnimateCompleteDuration.value + des1.value.length * des1StaggerDelay.value + 200
+})
+
+const des2AnimateCompleteDuration = computed(() => {
+  return des1AnimateCompleteDuration.value + des2StaggerDelay.value * des2.value.length + 300
+})
+
+const socialLinksAnimateCompleteDuration = computed(() => {
+  return des2AnimateCompleteDuration.value + socialLinks.value.length * socialLinksStaggerDelay.value + 300
+})
 </script>

@@ -4,7 +4,7 @@
       :href="repository?.html_url"
       target="_blank"
       class="shadow no-underline w-full md:w-100 flex items-center p-3 rounded-2xl md:max-w-100
-       bg-gray-1 dark-bg-black backdrop-blur-xl overflow-hidden disabled"
+       bg-gray-1/50 dark-bg-[#1e293b99] backdrop-blur-xl overflow-hidden disabled"
     >
       <div class="flex flex-col flex-1 h-80px justify-between">
         <div
@@ -35,7 +35,7 @@
 
       <div
         v-if="!repository"
-        class="bg-slate-200 dark-bg-black rounded absolute top-0 left-0 w-full h-100% z-1 "
+        class="bg-slate-100 dark-bg-gray-7 rounded absolute top-0 left-0 w-full h-100% z-1 "
       />
     </a>
 

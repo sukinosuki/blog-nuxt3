@@ -5,16 +5,18 @@
 </template>
 
 <script setup lang="ts">
-useSeoMeta({
-  titleTemplate(title) {
-    return title ? `${title} | Miiro` : 'Miiro'
-  },
-})
+// modules配置了@nuxtjs/seo不能使用 useSeoMeta设置title?
+// useSeoMeta({
+// useHead({
+//   titleTemplate(title) {
+//     return title ? `${title} | Miiro` : 'Miiro'
+//   },
+// })
 
 useServerSeoMeta({
   robots: 'index, follow',
   ogTitle: 'Miiro works\' Site',
-  description: '能为改变自己而努力，我觉得是件厉害的事',
+  description: '能为改变自己而努力, 我觉得是件厉害的事',
   // ogDescription: 'og seo meta 描述',
   // ogImage: 'https://example.com/image.png',
   // twitterCard: 'summary_large_image',
@@ -22,9 +24,9 @@ useServerSeoMeta({
 
 const route = useRoute()
 
-console.log('route ', route)
-
 if (import.meta.client) {
+  console.log('runtime config ', useRuntimeConfig())
+
   const isDashboardPage = route.path.startsWith('/dashboard')
 
   const r = document.querySelector<HTMLElement>(':root')!
@@ -69,7 +71,11 @@ if (import.meta.client) {
   z-index: 999;
 }
 
-/*  */
+@font-face {
+  font-family: eafont;
+  src: url('/static/font/eafont.ttf');
+}
+
 :root {
   --primary: 56 189 248;
 }
@@ -79,12 +85,12 @@ if (import.meta.client) {
 }
 
 body {
-  background-color: #f9f9f9;
+  background-color: white;
   font-family: eafont;
 }
 
 html.dark body {
-  background-color: #222;
+  background-color: #111;
 }
 
 html.dark {
@@ -106,27 +112,31 @@ html.dark {
 
 .page-enter-from, .page-leave-to {
   opacity: 0;
-  /* filter: blur(1rem); */
+  filter: blur(1rem);
   transform: translateY(10px);
-}
-
-.slide-in-move {
-  transition: opacity 9.5s linear, transform 9.5s ease-in-out;
-}
-
-.slide-in-leave-active {
-  transition: opacity 9.4s linear, transform 9.4s cubic-bezier(.5,0,.7,.4);
-    /* //cubic-bezier(.7,0,.7,1); */
-  transition-delay: calc( 0.1s * (var(--total) - var(--i)) );
-}
-
-.slide-in-enter-active {
-  transition: opacity 9.5s linear, transform 9.5s cubic-bezier(.2,.5,.1,1);
-  transition-delay: calc( 0.1s * var(--i) );
 }
 
 /* naive ui reset */
 html.dark .n-button {
   color: white !important;
+}
+
+/* toc reset */
+.toc-list {
+  padding-left: 20px;
+}
+.toc-list-item {
+  font-size: 16px;
+}
+.toc-list-item .toc-link {
+  transition: .2s;
+}
+.toc-list-item .toc-link::before{
+  display: none;
+}
+.toc-list-item .toc-link.is-active-link {
+  margin-left: -10px;
+  color: rgb(var(--primary));
+  font-weight: normal
 }
 </style>

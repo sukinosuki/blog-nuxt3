@@ -1,12 +1,12 @@
 <template>
   <div class="my-4">
-    <p class="m-0 italic text-14px">
+    <p class="m-0 text-14px">
       <span>
         {{ filename }}
       </span>
     </p>
-    <div class="relative group bg-#f3f3f3 dark-bg-black rounded">
-      <span class="absolute text-3 left-1 top-1 leading-none opacity-0 group-hover:opacity-100 duration-200">
+    <div class="relative group bg-[#f8fafc] dark-bg-[#1e293b99] rounded">
+      <span class="absolute text-3 left-1 top-1 leading-none opacity-0 group-hover:opacity-100 duration-200 italic">
         {{ language }}
       </span>
 

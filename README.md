@@ -6,7 +6,7 @@
 - ~~文字列表动画~~
 - 评论
 - ~~切换light/dark模式时文字颜色变换有延迟~~
-- 请求错误提示
+- ~~请求错误提示~~
 - api参数校验/转换
 - ~~ssr 请求失败错误上报、页面展示~~
 - ~~mdc pre code样式~~
@@ -16,9 +16,10 @@
 - nav、网站信息配置化
 - ~~seo~~
 - ~~useAsyncData缓存避免访问过的页面再次请求加快页面展示~~
-- 抽离admin(dashboard)为单独模块 https://nuxt.com/docs/guide/directory-structure/pages/#multiple-pages-directories
+- ~~抽离admin(dashboard)为单独模块~~ https://nuxt.com/docs/guide/directory-structure/pages/#multiple-pages-directories
 - scrollbar
-- 登录卡片样式
+- ~~登录卡片样式~~
 - 优化路由跳转方法调用
-- 优化打包后worker体积
+- ~~优化打包后worker体积~~
 - 上传图片
+- 整理package依赖

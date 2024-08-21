@@ -24,15 +24,13 @@
       </ul>
 
       <div
-        class="flex items-center cursor-pointer"
+        class="flex items-center cursor-pointer active-scale-90 duration-200"
         @click="handleLogout"
       >
-        <button
-          class="text-5 bg-transparent "
-        >
+        <button class="text-5 bg-transparent">
           Logout
         </button>
-        <i class="i-ri:shut-down-line w-1.6em h-1.6em ml-2 inline-block" />
+        <i class="i-ri:shut-down-line w-1.3em h-1.3em ml-1 inline-block" />
       </div>
     </div>
 
