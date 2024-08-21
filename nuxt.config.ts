@@ -38,15 +38,35 @@ export default defineNuxtConfig({
     // '@nuxt/fonts',
     '@vueuse/motion/nuxt',
     '@vueuse/nuxt',
-    '@pinia/nuxt',
     '@nuxtjs/seo',
+    // '@nuxtjs/sitemap',
+    // '@nuxtjs/robots',
+    '@pinia/nuxt',
   ],
   site: {
-    // url: process.env.NUXT_HUB_ENV === 'development' ? 'http://localhost:3000' : 'https://miiro.ro',
-    // url: 'https://miiro-blog2.pages.dev',
-    // name: 'Miiro',
-    // description: '能为改变自己而努力, 我觉得是件厉害的事',
-    defaultLocale: 'zh-CN', // not needed if you have @nuxtjs/i18n installed
+    // 通过 .env - NUXT_PUBLIC_SITE_URL 配置
+    // url: '',
+    // 可通过 .env - NUXT_SITE_NAME 配置
+    name: 'Miiro',
+    // 可通过 .env - NUXT_SITE_DESCRIPTION 配置
+    description: '能为改变自己而努力, 我觉得是件厉害的事. miiro, hanami, 樱花秋水, 桜花秋水, sukinosuki',
+    // defaultLocale: 'zh-CN', // not needed if you have @nuxtjs/i18n installed
+  },
+  // 需要手动声明robots配置 sitemap才会生效?
+  robots: {
+    disallow: ['/dashboard'],
+    // allow: '/',
+  },
+  // linkChecker: {
+  //   enabled: false,
+  // },
+  // modules声明@nuxtjs/seo后，需要声明不启用ogImage，会造成打包后的worker超过1m?
+  // 也可以不引入@nuxtjs/seo, 单独引入@nuxtjs/sitemap, @nuxtjs/robots
+  ogImage: {
+    enabled: false,
+  },
+  schemaOrg: {
+    identity: 'Person',
   },
   routeRules: {
     '/dashboard/**/*': {
@@ -54,6 +74,7 @@ export default defineNuxtConfig({
     },
     '/dashboard/**': {
       ssr: false,
+      // robots: false,
     },
   },
   eslint: {

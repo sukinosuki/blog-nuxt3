@@ -14,7 +14,7 @@
 - post页面复制文字popover
 - admin data table刷新分页重置
 - nav、网站信息配置化
-- ~~seo~~
+- seo
 - ~~useAsyncData缓存避免访问过的页面再次请求加快页面展示~~
 - ~~抽离admin(dashboard)为单独模块~~ https://nuxt.com/docs/guide/directory-structure/pages/#multiple-pages-directories
 - scrollbar

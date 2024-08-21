@@ -21,8 +21,10 @@
     "@nuxt/image": "^1.7.0",
     "@nuxthub/core": "^0.7.0",
     "@nuxtjs/mdc": "^0.8.3",
+    "@nuxtjs/robots": "^4.1.2",
     "@nuxtjs/sentry": "^8.0.7",
     "@nuxtjs/seo": "2.0.0-rc.18",
+    "@nuxtjs/sitemap": "6.0.0-beta.2",
     "@pinia/nuxt": "^0.5.3",
     "@sentry/vue": "^8.25.0",
     "@vueuse/motion": "^2.2.3",
@@ -36,6 +38,7 @@
     "nuxt-auth-utils": "^0.3.2",
     "nuxtjs-naive-ui": "^1.0.2",
     "pinia": "^2.2.1",
+    "sitemap": "^8.0.0",
     "vue-codemirror": "^6.1.1",
     "vue-use-fixed-header": "^2.0.3"
   },

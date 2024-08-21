@@ -13,14 +13,14 @@
 //   },
 // })
 
-useServerSeoMeta({
-  robots: 'index, follow',
-  ogTitle: 'Miiro works\' Site',
-  description: '能为改变自己而努力, 我觉得是件厉害的事',
-  // ogDescription: 'og seo meta 描述',
-  // ogImage: 'https://example.com/image.png',
-  // twitterCard: 'summary_large_image',
-})
+// useServerSeoMeta({
+//   // robots: 'index, follow',
+//   // ogTitle: 'Miiro works\' Site',
+//   // ogDescription: 'ogDescription',
+//   // ogImage: 'ogImage',
+//   // description: '能为改变自己而努力, 我觉得是件厉害的事',
+//   // twitterCard: 'summary_large_image22',
+// })
 
 const route = useRoute()
 
