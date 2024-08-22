@@ -4,18 +4,14 @@
 // NOTE:访问的任何地址都会经过该中间件, ge: /、/post、/admin/auth/login、/admin/post、/api/**、/api-admin/**...
 
 export default eventHandler(async (event) => {
-  // if (event.path.startsWith('/api-admin')) {
-  // const token = await getToken({ event })
-  // const userSession = await getServerSession(event).catch(() => {
+  if (event.path.startsWith('/api-admin')) {
+    const userSession = await getUserSession(event).catch(() => {})
 
-  // })
-  // console.log('userSession ', userSession)
-
-  // if (!userSession?.user) {
-  //   throw createError({
-  //     status: 403,
-  //     message: 'Unauthorized',
-  //   })
-  // }
-  // }
+    if (!userSession?.user && !event.path.startsWith('/api-admin/auth/login')) {
+      throw createError({
+        status: 403,
+        message: 'Unauthorized',
+      })
+    }
+  }
 })

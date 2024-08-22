@@ -2,8 +2,9 @@
   <div class="bg-sky">
     thinking page
 
-    <p>status: {{ status }}</p>
-    <p>data: {{ data }}</p>
+    <p>loggedIn: {{ loggedIn }}</p>
+    <p>user: {{ user }}</p>
+    <p>session: {{ session }}</p>
 
     <button @click="handleSignOut">
       sign out
@@ -16,11 +17,12 @@ definePageMeta({
   // auth: true,
   middleware: 'dashboard-auth',
 })
-const { status, data, signOut } = useAuth()
+
+const { loggedIn, user, session, fetch, clear } = useUserSession()
 
 const handleSignOut = () => {
-  signOut({
-    callbackUrl: '/',
+  clear().then(() => {
+    navigateTo('/')
   })
 }
 // ssr获取数据

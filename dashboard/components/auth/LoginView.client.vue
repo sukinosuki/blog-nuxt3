@@ -8,13 +8,7 @@
           Login
         </h4>
 
-        <button
-          v-for="provider in providers"
-          :key="provider.id"
-          @click="signIn(provider.id)"
-        >
-          Sign in with {{ provider.name }}
-        </button>
+        <a href="/api/auth/github">Login with GitHub</a>
 
         <NForm
           ref="formRef"
@@ -62,10 +56,6 @@ import authApi from '~~/dashboard/api/authApi'
 
 definePageMeta({
   // layout: 'default',
-  auth: {
-    unauthenticatedOnly: true,
-    navigateAuthenticatedTo: '/',
-  },
 })
 
 type LoginForm = API_Auth.Login
@@ -91,10 +81,10 @@ const form = useForm(initialForm)
 const formRef = form.ref
 const formModel = form.data
 
-const { signIn, getProviders } = useAuth()
-// const userSession = useUserSession()
-const providers = await getProviders()
-console.log('providers ', providers)
+// const { signIn, getProviders } = useAuth()
+const userSession = useUserSession()
+// const providers = await getProviders()
+// console.log('providers ', providers)
 
 //
 const handleLogin = async () => {
@@ -111,22 +101,18 @@ const handleLogin = async () => {
     password: formModel.value.password,
   }
 
-  const res = await signIn('credentials', data, {
-  })
-  console.log('res ', res)
+  const [err] = await toCatch(authApi.login(data))
+  if (err) {
+    confirmLoading.value = false
+    return
+  }
 
-  // const [err] = await toCatch(authApi.login(data))
-  // if (err) {
-  //   confirmLoading.value = false
-  //   return
-  // }
-
-  // userSession.fetch()
-  //   .then(() => {
-  //     navigateTo('/dashboard/post')
-  //   })
-  //   .finally(() => {
-  //     confirmLoading.value = false
-  //   })
+  userSession.fetch()
+    .then(() => {
+      navigateTo('/dashboard/post')
+    })
+    .finally(() => {
+      confirmLoading.value = false
+    })
 }
 </script>
