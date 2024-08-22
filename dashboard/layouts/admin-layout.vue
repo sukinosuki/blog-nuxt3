@@ -87,14 +87,14 @@ const visible = computed(() => {
   return route.name !== 'dashboard-auth-login'
 })
 
-const userSession = useUserSession()
+// const userSession = useUserSession()
 
 //
 const handleLogout = async () => {
   const [err] = await toCatch(admin_authApi.logout())
   if (err) return
 
-  await userSession.clear()
+  // await userSession.clear()
 
   navigateTo('/dashboard/auth/login')
 }

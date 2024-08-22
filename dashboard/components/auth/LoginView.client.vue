@@ -8,6 +8,14 @@
           Login
         </h4>
 
+        <button
+          v-for="provider in providers"
+          :key="provider.id"
+          @click="signIn(provider.id)"
+        >
+          Sign in with {{ provider.name }}
+        </button>
+
         <NForm
           ref="formRef"
           :model="formModel"
@@ -53,7 +61,11 @@ import { NButton, NForm, NFormItem, NInput, type FormRules } from 'naive-ui'
 import authApi from '~~/dashboard/api/authApi'
 
 definePageMeta({
-  layout: 'default',
+  // layout: 'default',
+  auth: {
+    unauthenticatedOnly: true,
+    navigateAuthenticatedTo: '/',
+  },
 })
 
 type LoginForm = API_Auth.Login
@@ -79,7 +91,11 @@ const form = useForm(initialForm)
 const formRef = form.ref
 const formModel = form.data
 
-const userSession = useUserSession()
+const { signIn, getProviders } = useAuth()
+// const userSession = useUserSession()
+const providers = await getProviders()
+console.log('providers ', providers)
+
 //
 const handleLogin = async () => {
   const [validateOk] = await form.validate()
@@ -95,18 +111,22 @@ const handleLogin = async () => {
     password: formModel.value.password,
   }
 
-  const [err] = await toCatch(authApi.login(data))
-  if (err) {
-    confirmLoading.value = false
-    return
-  }
+  const res = await signIn('credentials', data, {
+  })
+  console.log('res ', res)
 
-  userSession.fetch()
-    .then(() => {
-      navigateTo('/dashboard/post')
-    })
-    .finally(() => {
-      confirmLoading.value = false
-    })
+  // const [err] = await toCatch(authApi.login(data))
+  // if (err) {
+  //   confirmLoading.value = false
+  //   return
+  // }
+
+  // userSession.fetch()
+  //   .then(() => {
+  //     navigateTo('/dashboard/post')
+  //   })
+  //   .finally(() => {
+  //     confirmLoading.value = false
+  //   })
 }
 </script>

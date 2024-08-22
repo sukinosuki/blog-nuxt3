@@ -111,7 +111,7 @@ import { useFixedHeader } from 'vue-use-fixed-header'
 
 const { default: appConfig } = await import('../../app_config.json')
 
-if (import.meta.server) {
+if (!import.meta.server) {
   console.log('appConfig ', appConfig)
 }
 

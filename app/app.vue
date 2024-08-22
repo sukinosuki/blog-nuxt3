@@ -5,23 +5,6 @@
 </template>
 
 <script setup lang="ts">
-// modules配置了@nuxtjs/seo不能使用 useSeoMeta设置title?
-// useSeoMeta({
-// useHead({
-//   titleTemplate(title) {
-//     return title ? `${title} | Miiro` : 'Miiro'
-//   },
-// })
-
-// useServerSeoMeta({
-//   // robots: 'index, follow',
-//   // ogTitle: 'Miiro works\' Site',
-//   // ogDescription: 'ogDescription',
-//   // ogImage: 'ogImage',
-//   // description: '能为改变自己而努力, 我觉得是件厉害的事',
-//   // twitterCard: 'summary_large_image22',
-// })
-
 const route = useRoute()
 
 if (import.meta.client) {
@@ -85,7 +68,7 @@ if (import.meta.client) {
 }
 
 body {
-  background-color: white;
+  background-color: #f9f9f9;
   font-family: eafont;
 }
 

@@ -7,7 +7,10 @@ export { sql, eq, and, or } from 'drizzle-orm'
 export const tables = schema
 
 export function useDrizzle() {
-  return drizzle(hubDatabase(), { schema, logger: true })
+  return drizzle(hubDatabase(), {
+    schema,
+    //  logger: true
+  })
 }
 
 export type Tag = typeof schema.tag.$inferSelect

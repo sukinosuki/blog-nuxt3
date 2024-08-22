@@ -35,31 +35,25 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     // 需要声明,可以按需加载: https://www.naiveui.com/en-US/os-theme/docs/nuxtjs
     'nuxtjs-naive-ui',
-    // '@nuxt/fonts',
     '@vueuse/motion/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/seo',
-    // '@nuxtjs/sitemap',
-    // '@nuxtjs/robots',
     '@pinia/nuxt',
+    '@sidebase/nuxt-auth',
   ],
   site: {
-    // 通过 .env - NUXT_PUBLIC_SITE_URL 配置
+    // url- 通过 .env - NUXT_PUBLIC_SITE_URL 配置
     // url: '',
-    // 可通过 .env - NUXT_SITE_NAME 配置
+    // name- 可通过 .env - NUXT_SITE_NAME 配置
     name: 'Miiro',
-    // 可通过 .env - NUXT_SITE_DESCRIPTION 配置
+    // description- 可通过 .env - NUXT_SITE_DESCRIPTION 配置
     description: '能为改变自己而努力, 我觉得是件厉害的事. miiro, hanami, 樱花秋水, 桜花秋水, sukinosuki',
     // defaultLocale: 'zh-CN', // not needed if you have @nuxtjs/i18n installed
   },
-  // 需要手动声明robots配置 sitemap才会生效?
+  // 需要手动声明robots配置, sitemap才会生效?
   robots: {
     disallow: ['/dashboard'],
-    // allow: '/',
   },
-  // linkChecker: {
-  //   enabled: false,
-  // },
   // modules声明@nuxtjs/seo后，需要声明不启用ogImage，会造成打包后的worker超过1m?
   // 也可以不引入@nuxtjs/seo, 单独引入@nuxtjs/sitemap, @nuxtjs/robots
   ogImage: {
@@ -68,10 +62,20 @@ export default defineNuxtConfig({
   schemaOrg: {
     identity: 'Person',
   },
-  routeRules: {
-    '/dashboard/**/*': {
-      ssr: false,
+  auth: {
+    isEnabled: true,
+    baseURL: process.env.AUTH_BASE_URL,
+    provider: {
+      type: 'authjs',
     },
+    globalAppMiddleware: {
+      // isEnabled: true,
+    },
+  },
+  routeRules: {
+    // '/dashboard/**/*': {
+    //   ssr: false,
+    // },
     '/dashboard/**': {
       ssr: false,
       // robots: false,
@@ -100,8 +104,8 @@ export default defineNuxtConfig({
   },
   // https://nuxt.com/docs/getting-started/styling#the-css-property
   css: [
-    'medium-zoom/dist/style.css',
     '@unocss/reset/tailwind-compat.css',
+    'medium-zoom/dist/style.css',
   ],
   // 减小build后worker体积
   sourcemap: {
@@ -112,23 +116,17 @@ export default defineNuxtConfig({
     presets: [
       presetUno(),
       presetIcons(),
-      // presetAttributify(), // 与vususe motion v-motion :delay有冲突
+      // presetAttributify(), // 与vususe motion v-motion :delay属性有冲突
       presetTypography(),
       presetWebFonts({
         provider: 'google',
-        // customFetch: url => fetch(url).then(it => it.data),
         fonts: {
-          // 'sans': 'Roboto',
-          // mono: ['Fira Code', 'Fira Mono:400,700'],
-          // josefin: ['Josefin+Sans'],
-          // mplusrounded1c: 'M PLUS Rounded 1c',
-          // lxgw: 'LXGW+WenKai+Mono+TC',
-          // these will extend the default theme
-          sans: 'Roboto',
-          mono: ['Fira Code', 'Fira Mono:400,700'],
+          'sans': 'Roboto',
+          'mono': ['Fira Code', 'Fira Mono:400,700'],
           // custom ones
-          lobster: 'Lobster',
-          lato: [
+          'm-plus-rounded-1c': 'M+PLUS+Rounded+1c',
+          'lxgw-wenkai-tc': 'LXGW+WenKai+Mono+TC',
+          'lato': [
             {
               name: 'Lato',
               weights: ['400', '700'],

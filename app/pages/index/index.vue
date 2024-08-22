@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex flex-row max-md:justify-center max-md:items-center max-md:flex-col py-10 md:min-h-70vh justify-between mx-auto">
-      <div class="flex flex-col justify-center font-lobster">
+      <div class="flex flex-col justify-center">
         <h2 class="text-10 font-normal flex max-md-justify-center">
           <span
             v-for="(letter, index) in hi"
@@ -24,7 +24,7 @@
           </span>
 
           <div class="ml-2">
-            <span class="font-bold text-sky">
+            <span class="font-bold text-sky font-lxgw-wenkai-tc">
               <span
                 v-for="(letter, index) in username"
                 :key="index + letter"
@@ -251,6 +251,9 @@
 </template>
 
 <script setup lang="ts">
+definePageMeta({
+  auth: false,
+})
 type BlogLink = {
   icon: string
   name: string
