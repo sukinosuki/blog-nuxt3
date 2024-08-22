@@ -27,7 +27,7 @@
     "@nuxtjs/sitemap": "6.0.0-beta.2",
     "@pinia/nuxt": "^0.5.3",
     "@sentry/vue": "^8.25.0",
-    "@sidebase/nuxt-auth": "0.7.0-rc.0",
+    "@sidebase/nuxt-auth": "0.8.2",
     "@vueuse/motion": "^2.2.3",
     "codemirror": "^6.0.1",
     "dayjs": "^1.11.12",
