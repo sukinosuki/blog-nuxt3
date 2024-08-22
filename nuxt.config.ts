@@ -12,6 +12,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     api_auth_username: '',
     api_auth_password: '',
+    authOrigin: process.env.AUTH_ORIGIN,
     public: {
       hubEnv222: process.env.NUXT_HUB_ENV,
       test: '1',
@@ -32,7 +33,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxtjs/mdc',
     '@nuxt/image',
-    'nuxt-auth-utils',
+    // 'nuxt-auth-utils',
     // 需要声明,可以按需加载: https://www.naiveui.com/en-US/os-theme/docs/nuxtjs
     'nuxtjs-naive-ui',
     '@vueuse/motion/nuxt',
@@ -69,7 +70,7 @@ export default defineNuxtConfig({
       type: 'authjs',
     },
     globalAppMiddleware: {
-      // isEnabled: true,
+      isEnabled: false,
     },
   },
   routeRules: {

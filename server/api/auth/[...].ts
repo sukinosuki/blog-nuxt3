@@ -5,11 +5,11 @@ import { NuxtAuthHandler } from '#auth'
 export default NuxtAuthHandler({
   // TODO: SET A STRONG SECRET, SEE https://sidebase.io/nuxt-auth/configuration/nuxt-auth-handler#secret
   secret: process.env.AUTH_SECRET || 'my-auth-secret',
-  pages: {
-    // signIn: '/dashboard/auth/login',
-    // error: '/auth/error',
-    // verifyRequest: '/auth/verify-request',
-  },
+  // pages: {
+  //   // signIn: '/dashboard/auth/login',
+  //   // error: '/auth/error',
+  //   // verifyRequest: '/auth/verify-request',
+  // },
   // TODO: ADD YOUR OWN AUTHENTICATION PROVIDER HERE, READ THE DOCS FOR MORE: https://sidebase.io/nuxt-auth
   providers: [
     // @ts-expect-error You need to use .default here for it to work during SSR. May be fixed via Vite at some point

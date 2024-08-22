@@ -5,16 +5,17 @@ import { getServerSession } from '#auth'
 
 export default eventHandler(async (event) => {
   if (event.path.startsWith('/api-admin')) {
-    const userSession = await getServerSession(event)
-    console.log('userSession ', userSession)
+    // const token = await getToken({ event })
+    // const userSession = await getServerSession(event).catch(() => {
 
-    if (!userSession?.user) {
-      // if (!event.path.startsWith('/api-admin/auth/login')) {
-      throw createError({
-        status: 403,
-        message: 'Unauthorized',
-      })
-      // }
-    }
+    // })
+    // console.log('userSession ', userSession)
+
+    // if (!userSession?.user) {
+    //   throw createError({
+    //     status: 403,
+    //     message: 'Unauthorized',
+    //   })
+    // }
   }
 })
