@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     api_auth_username: '',
     api_auth_password: '',
-    authOrigin: process.env.AUTH_ORIGIN,
+    authOrigin: process.env.NUXT_AUTH_ORIGIN,
     public: {
       hubEnv222: process.env.NUXT_HUB_ENV,
       test: '1',
@@ -65,13 +65,14 @@ export default defineNuxtConfig({
   },
   auth: {
     isEnabled: true,
+    // disableServerSideAuth: true,
     baseURL: process.env.AUTH_BASE_URL,
     provider: {
       type: 'authjs',
     },
-    globalAppMiddleware: {
-      isEnabled: false,
-    },
+    // globalAppMiddleware: {
+    //   isEnabled: false,
+    // },
   },
   routeRules: {
     // '/dashboard/**/*': {
