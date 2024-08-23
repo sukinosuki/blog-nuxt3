@@ -1,7 +1,7 @@
 <template>
   <div>
     <header
-      class="py-2 px-2 bg-opacity-60  backdrop-blur-xl fixed w-full top-0 flex justify-around items-center z-999"
+      class="py-2 px-2 bg-opacity-60 left-0 backdrop-blur-xl fixed w-full top-0 flex justify-around items-center z-999"
       :class="[isLeave ? 'shadow' : '']"
     >
       <div class="w-full lg:w-960px xl:w-1280px flex justify-between items-center ">

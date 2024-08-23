@@ -1,62 +1,60 @@
 <template>
   <div class="flex justify-center items-center px-3 h-100vh">
-    <PerspectiveRotateEffect>
-      <div
-        class="w-100 rounded-2xl bg-white dark-bg-black px-4 py-10"
+    <div
+      class="w-100 rounded-2xl bg-white dark-bg-black px-4 py-10"
+    >
+      <h4 class="text-10 text-center">
+        Login
+      </h4>
+
+      <NForm
+        ref="formRef"
+        :model="formModel"
+        class="mt-10"
+        :rules="formRules"
       >
-        <h4 class="text-10 text-center">
-          Login
-        </h4>
-
-        <a href="/api/auth/github">Login with GitHub</a>
-
-        <NForm
-          ref="formRef"
-          :model="formModel"
-          class="mt-10"
-          :rules="formRules"
+        <NFormItem
+          label="Username"
+          path="username"
         >
-          <NFormItem
-            label="Username"
-            path="username"
-          >
-            <NInput v-model:value="formModel.username" />
-          </NFormItem>
+          <NInput v-model:value="formModel.username" />
+        </NFormItem>
 
-          <NFormItem
-            label="Password"
-            path="password"
-          >
-            <NInput
-              v-model:value="formModel.password"
-              type="password"
-              show-password-on="click"
-            />
-          </NFormItem>
-        </NForm>
+        <NFormItem
+          label="Password"
+          path="password"
+        >
+          <NInput
+            v-model:value="formModel.password"
+            type="password"
+            show-password-on="click"
+          />
+        </NFormItem>
+      </NForm>
 
-        <div class="mt-10">
-          <NButton
-            type="primary"
-            class="w-full rounded-full !text-white"
-            :loading="confirmLoading"
-            @click="handleLogin"
-          >
-            Submit
-          </NButton>
-        </div>
+      <div class="mt-2">
+        <NButton
+          type="primary"
+          class="w-full rounded-full !text-white"
+          :loading="confirmLoading"
+          @click="handleLogin"
+        >
+          Submit
+        </NButton>
+
+        <a
+          class="w-full mt-15 block bg-gray/10 shadow h-34px flex justify-center items-center rounded-full gap-x-1 leading-none"
+          href="/api/auth/github"
+        ><i class="i-simple-icons:github block w-1.1em h-1.1em" />
+          Login with GitHub</a>
       </div>
-    </PerspectiveRotateEffect>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { NButton, NForm, NFormItem, NInput, type FormRules } from 'naive-ui'
 import authApi from '~~/dashboard/api/authApi'
-
-definePageMeta({
-  // layout: 'default',
-})
 
 type LoginForm = API_Auth.Login
 

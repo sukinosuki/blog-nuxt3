@@ -105,7 +105,7 @@ html.dark .n-button {
 }
 
 /* toc reset */
-.toc-list {
+/* .toc-list {
   padding-left: 20px;
 }
 .toc-list-item {
@@ -121,5 +121,30 @@ html.dark .n-button {
   margin-left: -10px;
   color: rgb(var(--primary));
   font-weight: normal
+} */
+
+/* scrollbar reset */
+/* ::-webkit-scrollbar {
+  width: 6px;
+  padding: 2px;
+  margin: 4px;
 }
+::-webkit-scrollbar-track {
+  background-color: orange;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  width: 6px;
+  background-color: #ddd;
+}
+::-webkit-scrollbar-thumb:hover {
+  cursor: pointer
+}
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #222;
+}
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+} */
 </style>

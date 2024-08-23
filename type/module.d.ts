@@ -8,7 +8,6 @@ declare module 'nuxt/dist/app/nuxt' {
 }
 
 declare module '#app' {
-
   interface NuxtApp {
     $sentry?: Client
 

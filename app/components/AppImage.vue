@@ -1,14 +1,13 @@
 <template>
   <div class="overflow-hidden relative bg-gray-1 dark:bg-white/10">
-    <img
+    <NuxtImg
       :src="src"
       :alt="alt"
       class="opacity-0 w-full h-full duration-100"
       :class="{ 'opacity-100': isLoaded }"
       @load="handleLoad"
       @error="handleError"
-    >
-
+    />
     <template v-if="isError">
       <slot />
     </template>
@@ -20,6 +19,7 @@ defineProps<{
   src: string
   alt?: string
 }>()
+
 const isError = ref(false)
 const isLoaded = ref(false)
 

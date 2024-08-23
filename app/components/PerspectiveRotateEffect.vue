@@ -1,5 +1,5 @@
 <template>
-  <div
+  <span
     ref="boxRef"
     :style="{
       transform: cardTransform,
@@ -7,7 +7,7 @@
     }"
   >
     <slot />
-  </div>
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -20,9 +20,9 @@ const props = defineProps<{
 const { elementX, elementY, isOutside, elementHeight, elementWidth } = useMouseInElement(boxRef)
 
 const cardTransform = computed(() => {
-  if (!isOutside.value) return ''
+  if (isOutside.value) return ''
 
-  const MAX_ROTATION = props.maxRotation || 2
+  const MAX_ROTATION = props.maxRotation || 6
   const rX = (MAX_ROTATION / 2 - (elementY.value / elementHeight.value) * MAX_ROTATION).toFixed(2)
   const rY = ((elementX.value / elementWidth.value) * MAX_ROTATION - MAX_ROTATION / 2).toFixed(2)
 
