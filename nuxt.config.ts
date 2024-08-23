@@ -128,17 +128,17 @@ export default defineNuxtConfig({
           // custom ones
           'm-plus-rounded-1c': 'M+PLUS+Rounded+1c',
           'lxgw-wenkai-tc': 'LXGW+WenKai+Mono+TC',
-          'lato': [
-            {
-              name: 'Lato',
-              weights: ['400', '700'],
-              italic: true,
-            },
-            {
-              name: 'sans-serif',
-              provider: 'none',
-            },
-          ],
+          // 'lato': [
+          //   {
+          //     name: 'Lato',
+          //     weights: ['400', '700'],
+          //     italic: true,
+          //   },
+          //   {
+          //     name: 'sans-serif',
+          //     provider: 'none',
+          //   },
+          // ],
         },
       }),
     ],
@@ -148,6 +148,7 @@ export default defineNuxtConfig({
       },
     },
     // preflight: true,
+    // enabled `@unocss/preset-icons`
     icons: {
       extraProperties: {
         display: 'inline-block',
@@ -172,7 +173,7 @@ export default defineNuxtConfig({
           // }
         },
       },
-    }, // enabled `@unocss/preset-icons`
+    },
   },
   nitro: {
     experimental: {

@@ -12,7 +12,7 @@
 - ~~mdc pre code样式~~
 - 替换markdown编辑器
 - post页面复制文字popover
-- admin data table刷新分页重置
+- ~~admin data table刷新分页重置~~
 - nav、网站信息配置化
 - ~~seo~~
 - ~~useAsyncData缓存避免访问过的页面再次请求加快页面展示~~
@@ -23,4 +23,4 @@
 - ~~优化打包后worker体积~~
 - 上传图片
 - 整理package依赖
-- oauth登录
+- ~~oauth登录~~

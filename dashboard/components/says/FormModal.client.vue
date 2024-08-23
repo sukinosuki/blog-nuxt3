@@ -87,6 +87,7 @@ import { NButton, NForm, NFormItem, NInput, NInputNumber, NModal, NSwitch, useMe
 import admin_saysApi from '~~/dashboard/api/saysApi'
 import { useForm } from '~~/dashboard/composables/useForm'
 import { toCatch } from '~/utils/toCatch'
+import type { FormModalAction } from '~~/type/enum/formModalAction'
 
 const message = useMessage()
 
@@ -103,7 +104,10 @@ const visible = defineModel<boolean>('visible', {
   required: true,
 })
 
-const props = defineProps<{ row?: API_Says.Model | null }>()
+const props = defineProps<{
+  row?: API_Says.Model | null
+  action: FormModalAction | null | string
+}>()
 
 const formRules: FormRules = {
   text: {

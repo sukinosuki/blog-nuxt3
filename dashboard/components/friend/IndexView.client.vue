@@ -35,7 +35,7 @@
         :data="pageData.data"
         :pagination="pagination"
         :row-key="rowKey"
-        @update:page="page => fetchData(page)"
+        @update:page="handlePageChange"
       />
     </NCard>
 
@@ -118,11 +118,11 @@ const pagination = reactive<PaginationProps>({
   page: 1,
 })
 
-const fetchData = async (page = 1) => {
+const fetchData = async () => {
   pageData.value.pageStatus = PageStatus.LOADING
 
   const params: API_Post.Get = {
-    page,
+    page: pagination.page!,
     size: pagination.pageSize!,
   }
 
@@ -132,14 +132,23 @@ const fetchData = async (page = 1) => {
   if (err || !res) return
 
   pageData.value.data = res.list || []
-  pagination.page = page
   pagination.pageCount = Math.ceil(res.total / pagination.pageSize!)
 }
 
 const handleAfterConfirm = () => {
+  if (pageData.value.action === FormModalAction.ADD) {
+    pagination.page = 1
+  }
+
   pageData.value.modalVisible = false
   pageData.value.activeRow = null
   pageData.value.action = null
+
+  fetchData()
+}
+
+const handlePageChange = (page: number) => {
+  pagination.page = page
   fetchData()
 }
 
@@ -158,11 +167,6 @@ const columns: DataTableColumns<API_Friend.Model> = [
     key: 'blog_name',
     render: row => <a href={row.link} target="_blank">{row.blog_name}</a>,
   },
-  // {
-  //   title: 'Url',
-  //   key: 'link',
-  //   render: row => <a href={row.link} target="_blank" class="text-blue">{row.link}</a>,
-  // },
   {
     title: 'Nickname',
     key: 'nickname',
@@ -170,20 +174,11 @@ const columns: DataTableColumns<API_Friend.Model> = [
   {
     title: 'Avatar',
     key: 'avatar',
-    // render: row => <img src={row.avatar} class="w-10 h-10 rounded-full"></img>,
     render: row => (
       <AppImage class="w-10 h-10 rounded bg-gray-1" src={row.avatar}>
       </AppImage>
     ),
   },
-  // {
-  //   title: 'Introduction',
-  //   key: 'introduction',
-  // },
-  // {
-  //   title: 'Email',
-  //   key: 'email',
-  // },
   {
     title: 'Status',
     key: 'status',

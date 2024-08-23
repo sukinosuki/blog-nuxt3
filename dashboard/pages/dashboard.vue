@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 definePageMeta({
-  // middleware: ['dashboard-auth'],
+  middleware: ['dashboard-auth'],
   pageTransition: {
     name: 'page',
     mode: 'out-in',

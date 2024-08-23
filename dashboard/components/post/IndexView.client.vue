@@ -56,13 +56,13 @@ import postApi from '~~/dashboard/api/postApi'
 import { FormModalAction } from '~~/type/enum/formModalAction'
 import { PageStatus } from '~~/type/enum/pageStatus'
 
-  type PageData<T> = {
-    pageStatus: PageStatus
-    data: T
-    activeRow: API_Post.Model | null
-    action: 'delete' | 'update:enabled' | null | FormModalAction
-    modalVisible: boolean
-  }
+type PageData<T> = {
+  pageStatus: PageStatus
+  data: T
+  activeRow: API_Post.Model | null
+  action: 'delete' | 'update:enabled' | null | FormModalAction
+  modalVisible: boolean
+}
 
 const pageData = ref<PageData<API_Post.Model[]>>({
   data: [],
@@ -103,11 +103,11 @@ const pagination = reactive<PaginationProps>({
 })
 
 //
-const fetchData = async (page = 1) => {
+const fetchData = async () => {
   pageData.value.pageStatus = PageStatus.LOADING
 
   const params: API_Post.Get = {
-    page,
+    page: pagination.page!,
     size: pagination.pageSize!,
   }
 
@@ -117,12 +117,13 @@ const fetchData = async (page = 1) => {
   if (err || !res) return
 
   pageData.value.data = res.list
-  pagination.page = page
+
   pagination.pageCount = Math.ceil(res.total / pagination.pageSize!)
 }
 
 const handlePageChange = (page: number) => {
-  fetchData(page)
+  pagination.page = page
+  fetchData()
 }
 
 const handleToggleValue = async (row: API_Post.Model, field: keyof API_Post.Model) => {
@@ -147,11 +148,14 @@ const handleToggleValue = async (row: API_Post.Model, field: keyof API_Post.Mode
 
 const handleAfterConfirm = () => {
   pageData.value.modalVisible = false
+  if (pageData.value.action === FormModalAction.ADD) {
+    pagination.page = 1
+  }
   fetchData()
 }
 
 onMounted(() => {
-  fetchData(1)
+  fetchData()
 })
 
 const columns: DataTableColumns<API_Post.Model> = [

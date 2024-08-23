@@ -3,11 +3,6 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   console.log('admin auth middleware')
 
-  // throw createError({
-  //   message: 'Unauthorized',
-  //   status: 401,
-  // })
-
   // 页面刷新时需要调用fetch才可以正确获取是否登录
   // https://github.com/atinux/nuxt-auth-utils/issues/126
   if (!loggedIn.value) {

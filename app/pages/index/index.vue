@@ -45,7 +45,7 @@
           </div>
         </h2>
 
-        <p class="text-6 mt-4 flex max-md-justify-center">
+        <p class="text-6 mt-4 flex max-md-justify-center font-m-plus-rounded-1c">
           <span
             v-for="(letter, index) in des1"
             :key="index"

@@ -54,13 +54,13 @@ import projectApi from '~~/dashboard/api/projectApi'
 import { FormModalAction } from '~~/type/enum/formModalAction'
 import { PageStatus } from '~~/type/enum/pageStatus'
 
-  type PageData<T> = {
-    pageStatus: PageStatus
-    data: T
-    activeRow: API_Project.Model | null
-    action: FormModalAction | null
-    modalVisible: boolean
-  }
+type PageData<T> = {
+  pageStatus: PageStatus
+  data: T
+  activeRow: API_Project.Model | null
+  action: FormModalAction | null
+  modalVisible: boolean
+}
 
 const pageData = ref<PageData<API_Project.Model[]>>({
   data: [],
@@ -98,17 +98,20 @@ const handleAdd = async () => {
 }
 
 const handleFormModalAfterConfirm = () => {
+  if (pageData.value.action === FormModalAction.ADD) {
+    pagination.page = 1
+  }
   pageData.value.modalVisible = false
   pageData.value.activeRow = null
   fetchData()
 }
 
 //
-const fetchData = async (page = 1) => {
+const fetchData = async () => {
   pageData.value.pageStatus = PageStatus.LOADING
 
   const params: API_Project.Get = {
-    page,
+    page: pagination.page!,
     size: pagination.pageSize!,
   }
   const [err, res] = await toCatch(projectApi.get(params))
@@ -116,12 +119,12 @@ const fetchData = async (page = 1) => {
   if (err || !res) return
 
   pageData.value.data = res.list
-  pagination.page = page
   pagination.pageCount = Math.ceil(res.total / pagination.pageSize!)
 }
 
 const handleUpdatePage = (page: number) => {
-  fetchData(page)
+  pagination.page = page
+  fetchData()
 }
 
 onMounted(() => {
@@ -188,7 +191,6 @@ const columns: DataTableColumns<API_Project.Model> = [
               <NButton type="error" size="small">Del</NButton>
             ),
           }}
-
         </NPopconfirm>
       </NSpace>
     ),

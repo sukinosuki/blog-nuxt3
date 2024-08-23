@@ -20,9 +20,7 @@
           >
             New
             <template #icon>
-              <i
-                class="i-ri:add-fill"
-              />
+              <i class="i-ri:add-fill" />
             </template>
           </NButton>
         </NSpace>
@@ -42,6 +40,7 @@
     <SaysFormModal
       v-model:visible="pageData.modalVisible"
       :row="pageData.activeRow"
+      :action="pageData.action"
       @after-confirm="handleFormModalAfterConfirm"
     />
   </div>
@@ -51,13 +50,14 @@
 import { NButton, NCard, NDataTable, NPopconfirm, NSpace, NSwitch, type DataTableColumns, type PaginationProps } from 'naive-ui'
 import projectApi from '~~/dashboard/api/projectApi'
 import saysApi from '~~/dashboard/api/saysApi'
+import { FormModalAction } from '~~/type/enum/formModalAction'
 import { PageStatus } from '~~/type/enum/pageStatus'
 
   type PageData<T> = {
     pageStatus: PageStatus
     data: T
     activeRow: API_Says.Model | null
-    action: 'delete' | 'update:enabled' | null
+    action: 'delete' | 'update:enabled' | null | FormModalAction
     modalVisible: boolean
   }
 
@@ -88,12 +88,13 @@ const handleToggleEnabled = async (row: API_Says.Model) => {
   pageData.value.action = null
   if (err) return
 
-  fetchData(pagination.page)
+  fetchData()
 }
 
 const handleEdit = (row: API_Says.Model) => {
   pageData.value.modalVisible = true
   pageData.value.activeRow = row
+  pageData.value.action = FormModalAction.EDIT
 }
 
 //
@@ -108,20 +109,24 @@ const handleDelete = async (row: API_Says.Model) => {
 const handleAdd = async () => {
   pageData.value.modalVisible = true
   pageData.value.activeRow = null
+  pageData.value.action = FormModalAction.ADD
 }
 
 const handleFormModalAfterConfirm = () => {
+  if (pageData.value.action === FormModalAction.ADD) {
+    pagination.page = 1
+  }
+  fetchData()
   pageData.value.modalVisible = false
   pageData.value.activeRow = null
-  fetchData()
 }
 
 //
-const fetchData = async (page = 1) => {
+const fetchData = async () => {
   pageData.value.pageStatus = PageStatus.LOADING
 
   const params: API_Project.Get = {
-    page,
+    page: pagination.page!,
     size: pagination.pageSize!,
   }
   const [err, res] = await toCatch(saysApi.get(params))
@@ -129,12 +134,12 @@ const fetchData = async (page = 1) => {
   if (err || !res) return
 
   pageData.value.data = res.list
-  pagination.page = page
   pagination.pageCount = Math.ceil(res.total / pagination.pageSize!)
 }
 
 const handleUpdatePage = (page: number) => {
-  fetchData(page)
+  pagination.page = page
+  fetchData()
 }
 
 onMounted(() => {
@@ -196,7 +201,6 @@ const columns: DataTableColumns<API_Says.Model> = [
               <NButton type="error" size="small">Del</NButton>
             ),
           }}
-
         </NPopconfirm>
       </NSpace>
     ),
