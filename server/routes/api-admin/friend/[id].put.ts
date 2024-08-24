@@ -9,13 +9,13 @@ export default defineEventHandler(async (event) => {
   await drizzle
     .update(tables.friend)
     .set({
-      blog_name: data.blog_name,
-      nickname: data.nickname,
-      avatar: data.avatar,
+      site_name: data.site_name,
+      nickname: data.nickname || null,
+      avatar: data.avatar || null,
       link: data.link,
       status: data.status,
       introduction: data.introduction,
-      email: data.email,
+      email: data.email || null,
       updated_at: new Date(),
     })
     .where(eq(tables.friend.id, id))

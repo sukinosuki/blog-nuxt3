@@ -163,9 +163,9 @@ const columns: DataTableColumns<API_Friend.Model> = [
     width: 80,
   },
   {
-    title: 'Blog Name',
-    key: 'blog_name',
-    render: row => <a href={row.link} target="_blank">{row.blog_name}</a>,
+    title: 'Site Name',
+    key: 'site_name',
+    render: row => <a href={row.link} target="_blank">{row.site_name}</a>,
   },
   {
     title: 'Nickname',
@@ -175,9 +175,14 @@ const columns: DataTableColumns<API_Friend.Model> = [
     title: 'Avatar',
     key: 'avatar',
     render: row => (
-      <div class="w-10 h-10 rounded overflow-hidden bg-gray-1">
-        <AppImage class="w-full h-full" src={row.avatar}>
-        </AppImage>
+      <div class="w-10 h-10 rounded overflow-hidden bg-gray/10 dark-bg-gray/10">
+        {
+          row.avatar
+          && (
+            <AppImage class="w-full h-full" src={row.avatar}>
+            </AppImage>
+          )
+        }
       </div>
     ),
   },

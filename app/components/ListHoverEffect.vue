@@ -15,7 +15,7 @@
 
     <div
       :class="effectClass"
-      class="absolute bg-primary/10 dark:bg-primary/20 duration-200 pointer-events-none transform-origin-b"
+      class="absolute bg-primary/10 dark:bg-primary/20 duration-200 pointer-events-none transform-origin-c"
       :style="{
         left: left + 'px',
         top: top + 'px',

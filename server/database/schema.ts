@@ -31,7 +31,7 @@ export const post = sqliteTable('post', {
 
   enabled: integer('enabled', { mode: 'boolean' }).notNull(),
 
-  is_sticky: integer('is_sticky', { mode: 'boolean' }).notNull(),
+  is_pin_to_top: integer('is_pin_to_top', { mode: 'boolean' }).notNull(),
 
   cover: text('cover').notNull(),
 })
@@ -60,10 +60,10 @@ export const says = sqliteTable('says', {
 
 export const friend = sqliteTable('friend', {
   id: integer('id').primaryKey({ autoIncrement: true }),
-  nickname: text('nickname').notNull(),
-  blog_name: text('blog_name').notNull(),
-  avatar: text('avatar').notNull(),
-  email: text('email').notNull(),
+  site_name: text('site_name').notNull(),
+  avatar: text('avatar'),
+  email: text('email'),
+  nickname: text('nickname'),
   introduction: text('introduction').notNull(),
   link: text('link').notNull(),
   created_at: integer('created_at', { mode: 'timestamp' }).notNull(),

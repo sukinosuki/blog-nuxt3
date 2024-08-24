@@ -3,15 +3,7 @@ declare namespace API_Friend {
 
     type Get = Api_Query
 
-    type Add = {
-      nickname: string
-      email: string
-      blog_name: string
-      link: string
-      introduction: string
-      avatar: string
-      status: number
-    }
+    type Add = Pick<Model, 'avatar' | 'status' | 'nickname' | 'email' | 'link' | 'introduction' | 'site_name'>
 
     type Update = {
       id: number

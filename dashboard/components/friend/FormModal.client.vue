@@ -12,11 +12,11 @@ c<template>
         :rules="formRules"
       >
         <NFormItem
-          label="Blog Name"
-          path="blog_name"
+          label="Site Name"
+          path="site_name"
         >
           <NInput
-            v-model:value="formModel.blog_name"
+            v-model:value="formModel.site_name"
             maxlength="50"
             show-count
           />
@@ -58,6 +58,7 @@ c<template>
         <div class="flex justify-center">
           <div class="h-20">
             <AppImage
+              v-if="formModel.avatar"
               class="w-20 h-20 rounded-lg"
               :src="formModel.avatar"
               alt=""
@@ -142,7 +143,7 @@ const message = useMessage()
 
 type FriendForm = {
   id: number | null
-} & Pick<API_Friend.Model, 'avatar' | 'blog_name' | 'email' | 'introduction' | 'nickname' | 'link' | 'status'>
+} & Pick<API_Friend.Model, 'avatar' | 'site_name' | 'email' | 'introduction' | 'nickname' | 'link' | 'status'>
 
 const emit = defineEmits<{
   (e: 'after-confirm'): void
@@ -151,7 +152,7 @@ const emit = defineEmits<{
 const initialForm: FriendForm = {
   id: null,
   avatar: '',
-  blog_name: '',
+  site_name: '',
   email: '',
   introduction: '',
   nickname: '',
@@ -165,26 +166,26 @@ const { data: formModel, ref: formRef } = form
 const confirmLoading = ref(false)
 
 const formRules: FormRules = {
-  avatar: {
+  // avatar: {
+  //   required: true,
+  //   trigger: ['change'],
+  // },
+  site_name: {
     required: true,
     trigger: ['change'],
   },
-  blog_name: {
-    required: true,
-    trigger: ['change'],
-  },
-  email: {
-    required: true,
-    trigger: ['change'],
-  },
+  // email: {
+  //   required: true,
+  //   trigger: ['change'],
+  // },
   introduction: {
     required: true,
     trigger: ['change'],
   },
-  nickname: {
-    required: true,
-    trigger: ['change'],
-  },
+  // nickname: {
+  //   required: true,
+  //   trigger: ['change'],
+  // },
   link: {
     required: true,
     trigger: ['change'],
@@ -199,7 +200,7 @@ watch(visible, () => {
       form.data.value.email = props.row.email
       form.data.value.introduction = props.row.introduction
       form.data.value.nickname = props.row.nickname
-      form.data.value.blog_name = props.row.blog_name
+      form.data.value.site_name = props.row.site_name
       form.data.value.link = props.row.link
       form.data.value.status = props.row.status
     }
@@ -218,12 +219,12 @@ const handleSubmit = async () => {
 
   confirmLoading.value = true
 
-  const { nickname, blog_name, link, email, avatar, introduction, id, status } = formModel.value
+  const { nickname, site_name, link, email, avatar, introduction, id, status } = formModel.value
 
   const data: API_Friend.Update = {
     id: id!,
     nickname,
-    blog_name,
+    site_name,
     link,
     email,
     avatar,

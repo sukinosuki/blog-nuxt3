@@ -22,7 +22,7 @@ export default eventHandler(async (event) => {
       title: true,
       created_at: true,
       enabled: true,
-      is_sticky: true,
+      is_pin_to_top: true,
       cover: true,
       alias: true,
       description: true,
@@ -33,7 +33,7 @@ export default eventHandler(async (event) => {
     ),
     limit: size,
     offset: (page - 1) * size, // TODO: 传递string时不生效
-    orderBy: [desc(tables.post.id)],
+    orderBy: [desc(tables.post.is_pin_to_top), desc(tables.post.id)],
     with: {
       category: {
         columns: {

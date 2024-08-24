@@ -2,9 +2,14 @@
   <div>
     <div :class="[samplePreviewVisible?'':'md-max-w-768px mx-auto']">
       <div class="flex justify-between">
-        <div>
-          <span class="text-primary italic font-bold">{{ post?.title }}</span>
+        <div class="flex items-center gap-x-2">
+          <i
+            class="i-ri:arrow-left-line w-2em h-2em block color-primary cursor-pointer active-scale-90 duration-200"
+            @click="handleBack"
+          />
+          <span class="text-primary text-5 italic font-bold">{{ post?.title }}</span>
         </div>
+
         <div class="flex items-center">
           <NSpace class="flex items-center">
             <div
@@ -72,7 +77,6 @@
 </template>
 
 <script setup lang="ts">
-// https://github.com/surmon-china/vue-codemirror
 import { NButton, NSpace } from 'naive-ui'
 import { Codemirror } from 'vue-codemirror'
 import { oneDark } from '@codemirror/theme-one-dark'
@@ -88,7 +92,7 @@ const pageStatus = ref(PageStatus.LOADING)
 const samplePreviewVisible = ref(false)
 
 const confirmLoading = ref(false)
-
+const router = useRouter()
 const post = ref<API_Post.Model | null>(null)
 
 const code = ref('')
@@ -141,6 +145,10 @@ const handleSubmit = async () => {
   }
 
   navigateTo('/dashboard/post')
+}
+
+const handleBack = () => {
+  router.back()
 }
 
 onMounted(() => {

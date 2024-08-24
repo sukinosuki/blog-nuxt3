@@ -156,6 +156,8 @@ watch(isLoadMoreLoadingVisible, (newValue) => {
 
 watch(() => pageData.value.loadMoreStatus, () => {
   if (pageData.value.loadMoreStatus === PageStatus.LOADING) {
+    console.log('加载更多')
+
     fetchData()
   }
 })

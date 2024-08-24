@@ -205,12 +205,12 @@ const columns: DataTableColumns<API_Post.Model> = [
   },
   {
     title: 'Pin top',
-    key: 'is_sticky',
+    key: 'is_pin_to_top',
     render: row => (
       <NSwitch
         loading={pageData.value.activeRow === row && pageData.value.action === 'update:enabled'}
-        value={row.is_sticky}
-        onUpdateValue={() => handleToggleValue(row, 'is_sticky')}
+        value={row.is_pin_to_top}
+        onUpdateValue={() => handleToggleValue(row, 'is_pin_to_top')}
       >
       </NSwitch>
     ),

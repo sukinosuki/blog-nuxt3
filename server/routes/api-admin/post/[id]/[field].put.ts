@@ -3,14 +3,14 @@ export default defineEventHandler(async (event) => {
 
   const { value } = await readBody<API_Post.UpdateField>(event)
 
-  type ValidFieldKey = keyof Pick<API_Post.Model, 'enabled' | 'content' | 'is_sticky'>
+  type ValidFieldKey = keyof Pick<API_Post.Model, 'enabled' | 'content' | 'is_pin_to_top'>
 
-  const validField: ValidFieldKey[] = ['content', 'enabled', 'is_sticky']
+  const validField: ValidFieldKey[] = ['content', 'enabled', 'is_pin_to_top']
   if (!validField.includes(field as ValidFieldKey)) {
     // setResponseStatus(event, 404)
     throw createError({
       status: 400,
-      message: '',
+      message: `field only in [${validField}]`,
     })
   }
 

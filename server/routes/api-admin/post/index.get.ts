@@ -24,7 +24,7 @@ export default eventHandler(async (event) => {
       title: true,
       created_at: true,
       enabled: true,
-      is_sticky: true,
+      is_pin_to_top: true,
       cover: true,
       alias: true,
       description: true,

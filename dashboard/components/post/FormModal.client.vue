@@ -53,7 +53,7 @@
               v-if="postModel.alias"
               #feedback
             >
-              你可以通过 `/api/post/<span class="text-[var(--n-color-target)]">{{ postModel.alias }}</span>` 获取这篇文章
+              你可以通过 接口`/api/post/<span class="text-[var(--n-color-target)]">{{ postModel.alias }}</span>`, 页面`/post/<span class="text-[var(--n-color-target)]">{{ postModel.alias }}</span>` 获取/访问这篇文章
             </template>
           </NFormItem>
 
