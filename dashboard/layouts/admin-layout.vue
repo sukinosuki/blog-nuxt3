@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mx-auto px-3 lg:w-90%"
+    class="mx-auto pb-10 px-3 lg:w-90%"
   >
     <div
       v-if="visible"
@@ -78,6 +78,11 @@ const menus: Menu[] = [
     name: 'PROJECT',
     path: '/dashboard/project',
     nameCn: '项目',
+  },
+  {
+    name: 'R2',
+    path: '/dashboard/r2',
+    nameCn: 'r2储存',
   },
 ]
 

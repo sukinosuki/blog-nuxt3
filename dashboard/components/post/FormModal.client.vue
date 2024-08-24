@@ -69,15 +69,26 @@
           </NFormItem>
 
           <div class="pb-4 flex justify-center">
-            <div class="w-full h-40 bg-gray/10 rounded-md overflow-hidden flex justify-center items-center">
+            <div class="w-full h-40 bg-gray/10 rounded-md overflow-hidden flex justify-center items-center relative group">
               <img
                 v-if="postModel.cover"
                 ref="coverRef"
-                class="w-full h-100% object-cover"
-                :src="postModel.cover"
+                class="w-full h-100% object-contain"
+                :src="postModel.cover.startsWith('http') ? postModel.cover : `/api-admin/r2/${postModel.cover}`"
                 alt=""
               >
-              <span v-else>Cover preview</span>
+              <label
+                for="cover-file-input"
+                class="bg-black/30 opacity-0 w-full h-full absolute left-0 top-0 flex justify-center items-center group-hover-opacity-100 duration-200 cursor-pointer"
+              >
+                <i class="i-ri:image-add-fill color-white w-5em h-5em block opacity-0 group-hover-scale-70 group-hover:opacity-100 duration-200" />
+              </label>
+              <input
+                id="cover-file-input"
+                type="file"
+                class="hidden"
+                @change="handleFileChange"
+              >
             </div>
           </div>
 
@@ -167,6 +178,7 @@ import admin_tagApi from '~~/dashboard/api/tagApi'
 import admin_categoryApi from '~~/dashboard/api/categoryApi'
 import { useForm } from '~~/dashboard/composables/useForm'
 import { FormModalAction } from '~~/type/enum/formModalAction'
+import r2Api from '~~/dashboard/api/r2Api'
 
 type PostForm = {
   id: number | null
@@ -331,5 +343,22 @@ const handleSubmit = async () => {
   message.success('ok')
 
   emit('after-confirm')
+}
+
+const handleFileChange = async (e: Event) => {
+  const element = e.currentTarget as HTMLInputElement
+  if (!element.files) return
+
+  const file = element.files[0]
+  if (!file) return
+
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('category', 'post')
+
+  const [err, res] = await toCatch(r2Api.upload(formData))
+  if (err || !res) return
+
+  form.data.value.cover = res.pathname
 }
 </script>

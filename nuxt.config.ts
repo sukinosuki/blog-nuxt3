@@ -23,6 +23,12 @@ export default defineNuxtConfig({
       sentry_dsn: '',
     },
   },
+  image: {
+    provider: 'cloudflare',
+    cloudflare: {
+      // baseUrl: '',
+    },
+  },
 
   // Nuxt Modules
   // https://nuxt.com/modules
@@ -91,7 +97,7 @@ export default defineNuxtConfig({
   hub: {
     database: true,
     kv: true,
-    // blob: true,
+    blob: true,
     cache: true,
   },
   colorMode: {

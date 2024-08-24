@@ -14,10 +14,14 @@
 
         <div class="flex relative">
           <NuxtLink href="/">
-            <AppImage
-              class="w-12 h-12 rounded-xl shadow-2xl"
-              src="https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30pib8ra1mi6g5p82lhqlnd033mv9rrg?imageView2/2/w/540/format/webp|imageMogr2/strip2"
-            />
+            <div class="w-12 h-12 rounded-xl shadow-2xl bg-gray/10 overflow-hidden">
+              <ClientOnly>
+                <AppImage
+                  class="w-full h-full"
+                  src="/avatar.png"
+                />
+              </ClientOnly>
+            </div>
           </NuxtLink>
 
           <!-- <div class="ml-4">

@@ -51,10 +51,10 @@
 <script setup lang="tsx">
 import { NButton, NCard, NDataTable, NDropdown, NPopconfirm, NSpace, type DataTableColumns, type PaginationProps } from 'naive-ui'
 import friendApi from '~~/dashboard/api/friendApi'
-import AppImage from '~/components/AppImage.vue'
 import { FormModalAction } from '~~/type/enum/formModalAction'
 import { PageStatus } from '~~/type/enum/pageStatus'
 import { FriendStatus, friendStatus, friendStatusOptions } from '~~/type/enum/FriendStatus'
+import AppImage from '~/components/AppImage.vue'
 
   type PageData<T> = {
     pageStatus: PageStatus
@@ -175,8 +175,10 @@ const columns: DataTableColumns<API_Friend.Model> = [
     title: 'Avatar',
     key: 'avatar',
     render: row => (
-      <AppImage class="w-10 h-10 rounded bg-gray-1" src={row.avatar}>
-      </AppImage>
+      <div class="w-10 h-10 rounded overflow-hidden bg-gray-1">
+        <AppImage class="w-full h-full" src={row.avatar}>
+        </AppImage>
+      </div>
     ),
   },
   {
@@ -190,7 +192,7 @@ const columns: DataTableColumns<API_Friend.Model> = [
             size="small"
             secondary
             iconPlacement="right"
-            class="w-full text-3 "
+            class="w-full text-3 h-24px"
             type={row.status === FriendStatus.NORMAL ? 'success' : 'error'}
             loading={pageData.value.action === 'update:status' && pageData.value.activeRow?.id === row.id}
           >

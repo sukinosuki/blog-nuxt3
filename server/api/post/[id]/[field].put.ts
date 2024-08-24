@@ -9,17 +9,6 @@ export default defineEventHandler(async (event) => {
     return
   }
 
-  // const db = hubDatabase()
-
-  // console.log('id ', id)
-  // console.log('value ', value)
-  // console.log('field ', field)
-
-  // await db
-  //   .prepare('UPDATE article SET enabled = ?2 WHERE id = ?3')
-  //   .bind(field, value, id)
-  //   .run()
-
   const drizzle = useDrizzle()
 
   await drizzle

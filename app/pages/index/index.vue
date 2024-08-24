@@ -140,7 +140,7 @@
       </div>
 
       <div class="flex items-center max-md:pt-20">
-        <AppImage
+        <div
           v-motion="{
             initial: {
               opacity: 0,
@@ -152,9 +152,15 @@
               },
             },
           }"
-          class="w-50 h-50 rounded-full"
-          src="https://sns-avatar-qc.xhscdn.com/avatar/1040g2jo30pib8ra1mi6g5p82lhqlnd033mv9rrg?imageView2/2/w/540/format/webp|imageMogr2/strip2"
-        />
+          class="bg-gray/10 w-50 h-50 rounded-full overflow-hidden"
+        >
+          <ClientOnly>
+            <AppImage
+              class="w-full h-full"
+              src="/avatar.png"
+            />
+          </ClientOnly>
+        </div>
       </div>
     </div>
 

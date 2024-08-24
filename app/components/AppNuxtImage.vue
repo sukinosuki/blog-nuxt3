@@ -1,12 +1,12 @@
 <template>
-  <img
+  <NuxtImg
     :src="src"
     :alt="alt"
-    class="opacity-0 duration-200"
+    class="opacity-0 duration-100"
     :class="{ 'opacity-100': isLoaded }"
     @load="handleLoad"
     @error="handleError"
-  >
+  />
 </template>
 
 <script setup lang="ts">

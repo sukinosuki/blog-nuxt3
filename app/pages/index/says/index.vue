@@ -121,9 +121,10 @@ useHead({
   title: 'Says',
 })
 
-const says1 = ref<API_Says.Model[]>(data.value?.slice(0, data.value!.length / 2) || [])
-
-const says2 = ref<API_Says.Model[]>(data.value?.slice(data.value!.length / 2) || [])
+pageData.value.hasMore = data.value?.length === pageData.value.size
+const half = Math.ceil(data.value!.length / 2)
+const says1 = ref<API_Says.Model[]>(data.value?.slice(0, half) || [])
+const says2 = ref<API_Says.Model[]>(data.value?.slice(half) || [])
 
 const fetchData = async () => {
   const params: Api_Query = {
@@ -136,8 +137,9 @@ const fetchData = async () => {
     return
   }
 
-  says1.value = says1.value.concat(res.slice(0, res.length / 2))
-  says2.value = says2.value.concat(res.slice(res.length / 2))
+  const _half = Math.ceil(res.length / 2)
+  says1.value = says1.value.concat(res.slice(0, _half))
+  says2.value = says2.value.concat(res.slice(_half))
 
   pageData.value.hasMore = res?.length === pageData.value.size
   pageData.value.loadMoreStatus = PageStatus.SUCCESS

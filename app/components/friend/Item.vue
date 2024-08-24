@@ -8,14 +8,16 @@
       class="w-20 h-20 rounded-lg overflow-hidden relative bg-sky-1/40"
     >
 
-      <NuxtImg
-        :src="friend.avatar"
-        class="w-full h-100% object-cover duration-300 relative z-2 opacity-0"
-        loading="lazy"
-        :class="{ 'opacity-100': isLoaded }"
-        @error="handleImgError"
-        @load="handleLoad"
-      />
+      <ClientOnly>
+        <img
+          :src="friend.avatar"
+          class="w-full h-100% object-cover duration-300 relative z-2 opacity-0"
+          loading="lazy"
+          :class="{ 'opacity-100': isLoaded }"
+          @error="handleImgError"
+          @load="handleLoad"
+        >
+      </ClientOnly>
 
       <span
         v-if="isLoadedError"
