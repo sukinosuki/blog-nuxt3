@@ -8,18 +8,12 @@ export default defineTask({
 
   async run({ payload, context }) {
     // console.log('run db migration task..., payload: ', payload)
-    const res = await migrate(useDrizzle(), { migrationsFolder: 'server/database/migrations' })
-      .then(() => {
-        return 'Database migrations done'
-      })
-      .catch((err) => {
-        return err
-      })
+    await migrate(useDrizzle(), { migrationsFolder: 'server/database/migrations' })
 
-    console.log('execute db:migrate ', res)
+    console.log('execute db:migrate ')
 
     return {
-      result: res,
+      result: 'ok',
     }
   },
 })
