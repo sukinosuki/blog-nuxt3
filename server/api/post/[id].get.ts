@@ -1,4 +1,5 @@
 export default defineEventHandler(async (event) => {
+  const start = new Date()
   const id = getRouterParam(event, 'id')
 
   const drizzle = useDrizzle()
@@ -41,6 +42,8 @@ export default defineEventHandler(async (event) => {
 
   post.tags = post?.post2tag.map(item => item.tag)
   delete post?.post2tag
+
+  post.take = new Date().getTime() - start.getTime()
 
   return post
 })

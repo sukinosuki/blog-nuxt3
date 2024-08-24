@@ -1,6 +1,6 @@
 import { count, desc } from 'drizzle-orm'
 
-export default eventHandler(async (event) => {
+export default cachedEventHandler(async (event) => {
   const drizzle = useDrizzle()
 
   let { page, size, category_id } = getQuery<API_Post.Get>(event)
@@ -63,4 +63,6 @@ export default eventHandler(async (event) => {
   })
 
   return list
+}, {
+  maxAge: 60 * 60,
 })
