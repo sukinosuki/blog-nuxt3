@@ -24,7 +24,7 @@
           </span>
 
           <div class="ml-2">
-            <span class="font-bold text-sky font-lxgw-wenkai-tc">
+            <span class="font-bold text-sky">
               <span
                 v-for="(letter, index) in username"
                 :key="index + letter"
@@ -45,7 +45,7 @@
           </div>
         </h2>
 
-        <p class="text-6 mt-4 flex max-md-justify-center font-m-plus-rounded-1c">
+        <p class="text-6 mt-4 flex max-md-justify-center">
           <span
             v-for="(letter, index) in des1"
             :key="index"
@@ -112,7 +112,7 @@
               <div>
                 <a
                   target="_blank"
-                  :href="link.path"
+                  :href="link.link"
                   class="w-10 h-10 flex items-center justify-center rounded-full text-white shadow-2xl "
                   :class="link.color"
                 >
@@ -126,7 +126,7 @@
               <template #popover>
                 <div class="p-2 shadow-xl rounded-xl bg-white/80 dark-bg-black backdrop-blur-xl">
                   <a
-                    :href="link.path"
+                    :href="link.link"
                     target="_blank"
                     class="text-primary"
                   >
@@ -257,21 +257,16 @@
 </template>
 
 <script setup lang="ts">
+const appConfig = useAppConfig()
+console.log('appConfig ', appConfig)
+
 definePageMeta({
   auth: false,
 })
-type BlogLink = {
-  icon: string
-  name: string
-  path: string
-}
-
-type SocialLink = {
-  color?: string
-} & BlogLink
 
 const hi = ref('Hi, I\'m')
-const username = ref('桜花秋水')
+// const username = ref('桜花秋水')
+const username = computed(() => appConfig.me.name)
 const des1 = ref('A NodeJS Full Stack')
 const des2 = ref('An independent developer coding with love.')
 const hiStaggerDelay = ref(30)
@@ -280,32 +275,33 @@ const des1StaggerDelay = ref(20)
 const des2StaggerDelay = ref(10)
 const socialLinksStaggerDelay = ref(100)
 
-const socialLinks = ref<SocialLink[]>([
-  {
-    icon: 'i-ri:bilibili-line',
-    name: 'Bilibili',
-    path: 'https://space.bilibili.com/672111',
-    color: 'bg-sky',
-  },
-  {
-    icon: 'i-simple-icons:xiaohongshu',
-    name: '小红书',
-    path: 'https://www.xiaohongshu.com/user/profile/6502ac75000000001603b403',
-    color: 'bg-red',
-  },
-  {
-    icon: 'i-ri:github-line',
-    name: 'Github',
-    path: 'https://github.com/sukinosuki',
-    color: 'bg-black',
-  },
-  {
-    icon: 'i-ri:mail-line',
-    name: 'Email',
-    path: 'mailto:miiro444@outlook.com',
-    color: 'bg-gray',
-  },
-])
+const socialLinks = computed(() => appConfig.social)
+// const socialLinks = ref<SocialLink[]>([
+//   {
+//     icon: 'i-ri:bilibili-line',
+//     name: 'Bilibili',
+//     path: 'https://space.bilibili.com/672111',
+//     color: 'bg-sky',
+//   },
+//   {
+//     icon: 'i-simple-icons:xiaohongshu',
+//     name: '小红书',
+//     path: 'https://www.xiaohongshu.com/user/profile/6502ac75000000001603b403',
+//     color: 'bg-red',
+//   },
+//   {
+//     icon: 'i-ri:github-line',
+//     name: 'Github',
+//     path: 'https://github.com/sukinosuki',
+//     color: 'bg-black',
+//   },
+//   {
+//     icon: 'i-ri:mail-line',
+//     name: 'Email',
+//     path: 'mailto:miiro444@outlook.com',
+//     color: 'bg-gray',
+//   },
+// ])
 
 const blogLinks: BlogLink[] = [
   {

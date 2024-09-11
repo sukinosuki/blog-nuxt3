@@ -113,14 +113,11 @@
 <script setup lang="ts">
 import { useFixedHeader } from 'vue-use-fixed-header'
 
-const { default: appConfig } = await import('../../app_config.json')
-
-if (!import.meta.server) {
-  console.log('appConfig ', appConfig)
-}
+const appConfig = useAppConfig()
+// console.log('appConfig ', appConfig)
 
 const headerRef = ref(null)
-const { styles, isEnter, isLeave } = useFixedHeader(headerRef)
+const { styles, isLeave } = useFixedHeader(headerRef)
 
 const navs = appConfig.navs
 

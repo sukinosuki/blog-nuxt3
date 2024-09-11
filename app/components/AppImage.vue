@@ -3,7 +3,7 @@
     :src="src"
     :alt="alt"
     class="opacity-0 duration-200"
-    :class="{ 'opacity-100': isLoaded }"
+    :class="{ '!opacity-100': isLoaded }"
     @load="handleLoad"
     @error="handleError"
   >

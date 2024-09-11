@@ -140,11 +140,11 @@
 
             <NCol :span="12">
               <NFormItem
-                label="Is Sticky"
-                path="is_sticky"
+                label="Pin top"
+                path="is_pin_to_top"
               >
                 <NSwitch
-                  v-model:value="postModel.is_sticky"
+                  v-model:value="postModel.is_pin_to_top"
                 />
               </NFormItem>
             </NCol>
@@ -184,7 +184,7 @@ type PostForm = {
   id: number | null
   tag_ids: string[]
   category_id: string | null
-} & Pick<API_Post.Model, 'title' | 'alias' | 'description' | 'enabled' | 'is_sticky' | 'cover'>
+} & Pick<API_Post.Model, 'title' | 'alias' | 'description' | 'enabled' | 'is_pin_to_top' | 'cover'>
 
 const visible = defineModel<boolean>('visible', {
   default: false,
@@ -221,7 +221,7 @@ const initialForm: PostForm = {
   enabled: false,
   alias: '',
   cover: '',
-  is_sticky: false,
+  is_pin_to_top: false,
 }
 const form = useForm(initialForm)
 const postModel = form.data
@@ -284,7 +284,7 @@ const fetchData = async () => {
   postModel.value.tag_ids = res.tags?.map(tag => tag.id + '') || []
   postModel.value.description = res.description
   postModel.value.enabled = res.enabled
-  postModel.value.is_sticky = res.is_sticky
+  postModel.value.is_pin_to_top = res.is_pin_to_top
   postModel.value.alias = res.alias || ''
   postModel.value.cover = res.cover || ''
   postModel.value.id = res.id
@@ -319,11 +319,11 @@ const handleSubmit = async () => {
 
   confirmLoading.value = true
 
-  const { title, description, category_id, tag_ids, is_sticky, enabled, alias, id, cover } = postModel.value
+  const { title, description, category_id, tag_ids, is_pin_to_top, enabled, alias, id, cover } = postModel.value
 
   const data: API_Post.Update = {
     id: id!,
-    is_sticky,
+    is_pin_to_top,
     enabled,
     cover,
     title: title.trim(),

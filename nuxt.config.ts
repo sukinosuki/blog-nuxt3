@@ -1,14 +1,15 @@
 import { presetUno, presetIcons, presetTypography, presetWebFonts } from 'unocss'
 
+// import appConfigData from './app.config'
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   // Nuxt 4 directory structure and features
   // https://nuxt.com/docs/getting-started/upgrade#testing-nuxt-4
   future: { compatibilityVersion: 4 },
-
   extends: [
     './dashboard',
   ],
+  // appConfig: appConfigData,
   runtimeConfig: {
     api_auth_username: '',
     api_auth_password: '',
@@ -40,13 +41,11 @@ export default defineNuxtConfig({
     '@nuxtjs/mdc',
     '@nuxt/image',
     'nuxt-auth-utils',
-    // 需要声明,可以按需加载: https://www.naiveui.com/en-US/os-theme/docs/nuxtjs
     'nuxtjs-naive-ui',
     '@vueuse/motion/nuxt',
     '@vueuse/nuxt',
     '@nuxtjs/seo',
     '@pinia/nuxt',
-    // '@sidebase/nuxt-auth',
   ],
   site: {
     // url- 通过 .env - NUXT_PUBLIC_SITE_URL 配置
@@ -149,7 +148,6 @@ export default defineNuxtConfig({
         display: 'inline-block',
       },
       collections: {
-        // solar: () => import('@iconify-json/solar/icons.json').then(i => i.default),
         ri: () => import('@iconify-json/ri/icons.json').then(i => i.default),
         simpleicons: () => import('@iconify-json/simple-icons/icons.json').then(i => i.default),
         // 'my-icons': FileSystemIconLoader('./assets/icons', svg => svg.replace('/#fff/', 'currentColor')),
@@ -179,21 +177,21 @@ export default defineNuxtConfig({
   },
   // Development
   devtools: { enabled: true },
-  vite: {
-    build: {
-      rollupOptions: {
-        // external: [
-        //   // 'shiki/onig.wasm',
-        //   'naive-ui',
-        //   'vue-codemirror',
-        //   'codemirror',
-        // ],
-        // output: {
-        //   chunkFileNames: 'assets/chunk/[hash].js',
-        //   entryFileNames: 'assets/entry/[hash].js',
-        //   assetFileNames: 'assets/[ext]/[hash].[ext]',
-        // },
-      },
-    },
-  },
+  // vite: {
+  //   build: {
+  //     rollupOptions: {
+  //       // external: [
+  //       //   // 'shiki/onig.wasm',
+  //       //   'naive-ui',
+  //       //   'vue-codemirror',
+  //       //   'codemirror',
+  //       // ],
+  //       // output: {
+  //       //   chunkFileNames: 'assets/chunk/[hash].js',
+  //       //   entryFileNames: 'assets/entry/[hash].js',
+  //       //   assetFileNames: 'assets/[ext]/[hash].[ext]',
+  //       // },
+  //     },
+  //   },
+  // },
 })

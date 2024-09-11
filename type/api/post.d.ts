@@ -7,7 +7,7 @@ declare namespace API_Post {
 
     type Add = {
       tag_ids: number[]
-    } & Pick<Model, 'title' | 'category_id' | 'description' | 'enabled' | 'is_sticky' | 'alias' | 'cover'>
+    } & Pick<Model, 'title' | 'category_id' | 'description' | 'enabled' | 'is_pin_to_top' | 'alias' | 'cover'>
 
     type Update = {
       id: number
