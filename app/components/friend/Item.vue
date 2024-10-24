@@ -13,7 +13,7 @@
           :src="friend.avatar"
           class="w-full h-100% object-cover duration-300 relative z-2 opacity-0"
           loading="lazy"
-          :class="{ 'opacity-100': isLoaded }"
+          :class="{ '!opacity-100': isLoaded }"
           @error="handleImgError"
           @load="handleLoad"
         >
@@ -30,11 +30,11 @@
           },
         }"
         class="bg-primary/30 w-full h-100% flex justify-center items-center text-black/60 dark-text-white text-8 absolute z-1 left-0 top-0"
-      > {{ friend.blog_name[0] }}</span>
+      > {{ friend.site_name[0] }}</span>
     </div>
 
     <h4 class="text-4 font-bold mt-4 text-black/90 dark-text-white ">
-      {{ friend.blog_name }}
+      {{ friend.site_name }}
     </h4>
     <p class="text-center text-13px mt-2 text-black/70 dark-text-white">
       {{ friend.introduction }}
