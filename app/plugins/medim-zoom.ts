@@ -12,8 +12,6 @@ export default defineNuxtPlugin((nuxtApp) => {
 
   // (re-)init for newly rendered page, also to work in SPA mode (client-side routing)
   nuxtApp.hook('page:finish', () => {
-    console.log('hook page:finish')
-
     zoom
       .detach(selector)
       .attach(selector)

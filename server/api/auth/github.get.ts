@@ -18,8 +18,6 @@ export default oauthGitHubEventHandler({
   },
 
   onError(event, error) {
-    console.log('github oauth error: ', error)
-
     return sendRedirect(event, '/')
   },
 })

@@ -6,8 +6,6 @@ export const toCatch = <T>(promise: Promise<T>): Promise<[FetchError | null, T |
       return [null, res] as [FetchError | null, T | null]
     })
     .catch((err: FetchError) => {
-      console.log('err ', err)
-
       useAppStore().setFetchError(err)
 
       return [err, null]

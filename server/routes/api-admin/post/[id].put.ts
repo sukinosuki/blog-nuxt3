@@ -9,7 +9,6 @@ export default defineEventHandler(async (event) => {
       message: 'post not found',
     })
   }
-  console.log('id ', id)
 
   const drizzle = useDrizzle()
 

@@ -8,8 +8,6 @@
 const route = useRoute()
 
 if (import.meta.client) {
-  console.log('runtime config ', useRuntimeConfig())
-
   const isDashboardPage = route.path.startsWith('/dashboard')
 
   const r = document.querySelector<HTMLElement>(':root')!

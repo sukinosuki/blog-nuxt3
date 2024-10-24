@@ -258,7 +258,6 @@
 
 <script setup lang="ts">
 const appConfig = useAppConfig()
-console.log('appConfig ', appConfig)
 
 definePageMeta({
   auth: false,
